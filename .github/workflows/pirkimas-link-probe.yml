@@ -1,0 +1,31 @@
+name: Pirkimas link probe (temporary)
+
+# TEMPORARY (ticket #11): reads the hosted notices and a few public portal pages to settle
+# the Pirkimas links and the procedure names. Prints counts, procedure names and masked
+# portal paths only; writes nothing. Removed after use.
+on:
+  push:
+    branches: [ticket-11]
+    paths:
+      - scripts/pirkimas-link-probe.mjs
+      - .github/workflows/pirkimas-link-probe.yml
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Probe
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          FETCHER_CONTACT: ${{ secrets.FETCHER_CONTACT }}
+        run: node scripts/pirkimas-link-probe.mjs
