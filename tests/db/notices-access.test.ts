@@ -4,7 +4,7 @@ import { walkNotices, type FeedRecord } from '../../loader/notices.ts'
 
 const url = process.env.TEST_DATABASE_URL
 if (!url) throw new Error('TEST_DATABASE_URL is not set. Run the tests with: npm test')
-const sql = postgres(url, { max: 1, onnotice: () => {} })
+const sql = postgres(url, { max: 1, prepare: false, onnotice: () => {} })
 afterAll(() => sql.end())
 
 const today = (() => {
@@ -78,6 +78,11 @@ describe('the notices table', () => {
   it.each(['anon', 'authenticated'] as const)('can be read by %s', async (role) => {
     const rows = await asRole(role, 'select id, title from public.notices where id = 5101')
     expect(rows).toEqual([{ id: '5101', title: 'Pirkimas 5101' }])
+  })
+
+  it.each(['anon', 'authenticated'] as const)('tells %s whether a Notice is open', async (role) => {
+    const rows = await asRole(role, 'select public.notice_is_open(n) as open from public.notices n where id = 5101')
+    expect(rows).toEqual([{ open: true }])
   })
 
   it.each(CLIENTS)('cannot be written by %s', async (role) => {

@@ -1,10 +1,10 @@
 import postgres from 'postgres'
 import { afterAll, describe, expect, it } from 'vitest'
-import { openNoticesByKind, walkNotices, type FeedRecord } from '../../loader/notices.ts'
+import { openNoticesByKind, unrecognisedKinds, walkNotices, type FeedRecord } from '../../loader/notices.ts'
 
 const url = process.env.TEST_DATABASE_URL
 if (!url) throw new Error('TEST_DATABASE_URL is not set. Run the tests with: npm test')
-const sql = postgres(url, { max: 1, onnotice: () => {} })
+const sql = postgres(url, { max: 1, prepare: false, onnotice: () => {} })
 afterAll(() => sql.end())
 
 const feedTime = (daysFromNow: number) => {
@@ -79,5 +79,16 @@ describe('open Notices by kind, for the run summary', () => {
       qualification_system: after.qualification_system - before.qualification_system,
       unknown: after.unknown - before.unknown,
     }).toEqual({ tender: 2, market_consultation: 1, dps: 0, dps_contract: 1, qualification_system: 0, unknown: 1 })
+  })
+
+  it('names the notice type and procedure of each unknown kind', async () => {
+    await load(
+      rec(6201, { cftInvolves: 'notice.type.other', procedure: 'Design contest' }),
+      rec(6202, { cftInvolves: 'notice.type.other', procedure: 'Design contest', status: 'Awarded' }),
+      rec(6203, { cftInvolves: null, procedure: 'Open' }),
+    )
+    const rows = await unrecognisedKinds(sql)
+    expect(rows).toContainEqual({ feed_type: 'notice.type.other', procedure_type: 'Design contest', count: 2 })
+    expect(rows).toContainEqual({ feed_type: '(none)', procedure_type: 'Open', count: 1 })
   })
 })

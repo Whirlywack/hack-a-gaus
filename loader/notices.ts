@@ -115,21 +115,27 @@ export type Notice = {
   date_invalid: boolean
 }
 
-/** Text as written, or null when it is missing or blank. */
-const text = (v: unknown): string | null => (typeof v === 'string' && v.trim() !== '' ? v : null)
+/**
+ * Text as written, or null when it is missing or blank. Postgres refuses NUL in text, so
+ * every string the loader stores passes through here and loses it: one poisoned record
+ * cannot abort a page through any column.
+ */
+const text = (v: unknown): string | null => {
+  if (typeof v !== 'string') return null
+  const s = v.replaceAll('\u0000', '')
+  return s.trim() === '' ? null : s
+}
 /** A short coded value (status, procedure), trimmed, or null. */
 const code = (v: unknown): string | null => text(v)?.trim() ?? null
 
 /** Map one feed record to a Notice. The record must have a numeric id (see walkNotices). */
-export function mapNotice(raw: FeedRecord): Notice {
-  // Postgres refuses NUL in text and jsonb. Strip the \u0000 escape from every string
-  // field in one pass, so one poisoned record cannot abort a batch through any column.
-  const rec = JSON.parse(JSON.stringify(raw).replace(/\\u0000/g, '')) as FeedRecord
+export function mapNotice(rec: FeedRecord): Notice {
   const published = feedTimeToUtc(rec.datePublished)
   // For a Market consultation this field holds the reply date.
   const deadline = feedTimeToUtc(rec.tenderSubmissionDeadline, deadlineYearMax())
-
-  const codes = typeof rec.cpvCodes === 'string' ? rec.cpvCodes.split(',').map((c) => c.trim()).filter(Boolean) : []
+  const codes = (text(rec.cpvCodes) ?? '').split(',').map((c) => c.trim()).filter(Boolean)
+  const procedure = code(rec.procedure)
+  const feedType = code(rec.cftInvolves)
 
   // "0" is the feed's placeholder for "not stated", never a real estimate of 0 EUR.
   const value = rec.estimatedValue == null ? NaN : Number(String(rec.estimatedValue))
@@ -137,7 +143,7 @@ export function mapNotice(raw: FeedRecord): Notice {
 
   return {
     id: rec.id as number,
-    kind: kindOf(rec),
+    kind: kindOf({ cftInvolves: feedType, procedure }),
     title: text(rec.title),
     buyer_name: text(rec.caName),
     published_at: published.utc,
@@ -145,10 +151,10 @@ export function mapNotice(raw: FeedRecord): Notice {
     status: code(rec.status),
     cpv_main: codes[0] ?? null,
     cpv_codes: codes,
-    procedure_type: code(rec.procedure),
+    procedure_type: procedure,
     evaluation: code(rec.evaluationMechanism),
     in_lots: lots === 'true' ? true : lots === 'false' ? false : null,
-    feed_type: code(rec.cftInvolves),
+    feed_type: feedType,
     estimated_value: Number.isFinite(value) && value > 0 ? value : null,
     date_invalid: published.invalid || deadline.invalid,
   }
@@ -274,6 +280,94 @@ export async function openNoticesByKind(sql: Sql): Promise<Record<Kind, number>>
   const counts = Object.fromEntries(KINDS.map((k) => [k, 0])) as Record<Kind, number>
   for (const r of rows) counts[r.kind] = r.open
   return counts
+}
+
+export type Unrecognised = { feed_type: string; procedure_type: string; count: number }
+
+/** The feed's notice type and procedure pairs stored as unknown, most frequent first. */
+export async function unrecognisedKinds(sql: Sql): Promise<Unrecognised[]> {
+  return sql<Unrecognised[]>`
+    select coalesce(feed_type, '(none)') as feed_type,
+           coalesce(procedure_type, '(none)') as procedure_type,
+           count(*)::int as count
+    from public.notices
+    where kind = 'unknown'
+    group by 1, 2
+    order by 3 desc, 1, 2
+    limit 20`
+}
+
+const KIND_LABELS: Record<Kind, string> = {
+  tender: 'Plain tenders',
+  market_consultation: 'Market consultations',
+  dps: 'Dynamic purchasing systems',
+  dps_contract: 'Specific contracts inside a DPS',
+  qualification_system: 'Qualification systems',
+  unknown: 'Unknown',
+}
+
+const vilniusMinute = new Intl.DateTimeFormat('sv-SE', {
+  timeZone: 'Europe/Vilnius',
+  year: 'numeric',
+  month: '2-digit',
+  day: '2-digit',
+  hour: '2-digit',
+  minute: '2-digit',
+})
+
+/** The run's summary, in Markdown, for the GitHub job summary and the log. */
+export function runSummary({
+  walk,
+  open,
+  unrecognised,
+  seconds,
+}: {
+  walk: WalkResult
+  open: Record<Kind, number>
+  unrecognised: Unrecognised[]
+  seconds: number
+}): string {
+  const newest = walk.newestPublished ? `${vilniusMinute.format(new Date(walk.newestPublished))} Vilnius` : 'none'
+  const holes = walk.holes.length ? `; pages still empty after a re-fetch: ${walk.holes.map((p) => `page ${p}`).join(', ')}` : ''
+  const lines = [
+    '## Notices loaded',
+    '',
+    `${walk.total} records in ${seconds} s; ${walk.skipped} skipped${holes}. Newest publication: ${newest}.`,
+    '',
+    '| Open now | Notices |',
+    '|---|---|',
+    ...KINDS.map((k) => `| ${KIND_LABELS[k]} | ${open[k]} |`),
+    '',
+  ]
+  if (unrecognised.length > 0) {
+    lines.push(
+      'Stored as unknown (notice type / procedure: Notices, any status):',
+      '',
+      ...unrecognised.map((u) => `- ${u.feed_type} / ${u.procedure_type}: ${u.count}`),
+      '',
+    )
+  }
+  return lines.join('\n')
+}
+
+/** The text with every secret masked, and the password inside a connection string too. */
+export function redact(text: string, secrets: Array<string | undefined>): string {
+  const masks = new Set<string>()
+  for (const s of secrets) {
+    if (!s) continue
+    masks.add(s)
+    try {
+      const { password } = new URL(s)
+      if (password) {
+        masks.add(password)
+        masks.add(decodeURIComponent(password))
+      }
+    } catch {
+      // Not a URL: masked as it is.
+    }
+  }
+  // Longest first, so a string that holds a shorter one is masked whole.
+  return [...masks].sort((a, b) => b.length - a.length).reduce((out, m) => out.split(m).join('***'), text)
 }
 
 // The feed caps a page at 1,000 records (HTTP 400 above that, since 23 October 2026).

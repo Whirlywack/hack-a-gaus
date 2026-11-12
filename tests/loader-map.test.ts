@@ -89,9 +89,15 @@ describe('a feed record as a Notice', () => {
   })
 
   it('strips NUL from every text field, because Postgres refuses it', () => {
-    const row = mapNotice({ ...record, title: 'a\u0000b', caName: 'c\u0000' })
+    const row = mapNotice({ ...record, title: 'a\u0000b', caName: 'c\u0000', status: 'Bid\u0000 submission', cpvCodes: '4523\u00003000' })
     expect(row.title).toBe('ab')
     expect(row.buyer_name).toBe('c')
+    expect(row.status).toBe('Bid submission')
+    expect(row.cpv_codes).toEqual(['45233000'])
+  })
+
+  it('keeps a title that spells out a backslash escape', () => {
+    expect(mapNotice({ ...record, title: 'Kodas \\u0000 tekste' }).title).toBe('Kodas \\u0000 tekste')
   })
 
   it('stores empty text as missing', () => {

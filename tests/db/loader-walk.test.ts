@@ -4,7 +4,8 @@ import { walkNotices, type FeedRecord, type FetchPage } from '../../loader/notic
 
 const url = process.env.TEST_DATABASE_URL
 if (!url) throw new Error('TEST_DATABASE_URL is not set. Run the tests with: npm test')
-const sql = postgres(url, { max: 1, onnotice: () => {} })
+// The loader's own connection options (loader/run.ts), so the tests run its statements as it does.
+const sql = postgres(url, { max: 1, prepare: false, onnotice: () => {} })
 afterAll(() => sql.end())
 
 // A feed time n days from now, in the feed's format and Vilnius time.

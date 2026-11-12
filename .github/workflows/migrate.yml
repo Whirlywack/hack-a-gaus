@@ -1,0 +1,40 @@
+name: Apply migrations
+
+# Applies supabase/migrations/ to the hosted database: on every push to main, by hand,
+# and as the first job of every notice load (load-notices.yml), so the loader never runs
+# against a schema that has not been migrated. A run with nothing new to apply is a no-op.
+#
+# DATABASE_URL is the session pooler's connection string (GitHub's runners have no IPv6
+# for the direct one), percent-encoded. It is passed only through the environment and is
+# never printed.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  workflow_call:
+    secrets:
+      DATABASE_URL:
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    # One migration run at a time against the hosted database, whichever workflow starts it.
+    concurrency:
+      group: hosted-database-migrations
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+      - uses: supabase/setup-cli@v1
+        with:
+          version: 2.120.0
+      # --include-all: tickets built in parallel can merge a migration dated before one
+      # already applied; it is applied too, instead of failing the push.
+      - name: Apply migrations
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: supabase db push --db-url "$DATABASE_URL" --include-all --yes

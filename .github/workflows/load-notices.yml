@@ -1,0 +1,44 @@
+name: Load notices
+
+# Every hour, and by hand (Run workflow): apply any pending migrations, then walk the
+# open-notice feed into the hosted database (loader/run.ts). The run's summary gives the
+# number of open Notices of each kind. GitHub schedules only from main, and may start a
+# scheduled run late, so run it by hand before the demo.
+on:
+  schedule:
+    - cron: '17 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# One load at a time. A load still waiting is replaced by a newer one.
+concurrency:
+  group: load-notices
+  cancel-in-progress: false
+
+jobs:
+  migrate:
+    uses: ./.github/workflows/migrate.yml
+    secrets:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+  load:
+    needs: migrate
+    runs-on: ubuntu-latest
+    # A full walk is ~84 pages of 1,000 records, a few minutes when the feed is healthy.
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      # The key and the connection string reach the loader only through the environment;
+      # it masks both in any error it prints.
+      - name: Load notices
+        env:
+          VPT_API_KEY: ${{ secrets.VPT_API_KEY }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: node loader/run.ts
