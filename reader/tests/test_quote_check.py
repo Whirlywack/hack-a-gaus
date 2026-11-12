@@ -138,19 +138,25 @@ class StrictQuoteMatching(unittest.TestCase):
 
 @unittest.skipUnless(os.path.isdir(REAL_TEXT), "real tender texts not present")
 class QuoteCheckOnRealTenders(unittest.TestCase):
+    # The one key quote that is not in the converted text, even by hand (ticket #4's closing comment).
+    KNOWN_UNFOUND = [("10384200", "other_requirements[8]")]
+
+    def tender_ids(self):
+        return sorted(d for d in os.listdir(REAL_TEXT) if os.path.isdir(os.path.join(REAL_TEXT, d)))
+
+    def test_every_hand_checked_key_has_its_tender_text(self):
+        keys = sorted(f[:-5] for f in os.listdir(KEYS) if f.endswith(".json"))
+        self.assertEqual(len(keys), 15)
+        self.assertEqual(self.tender_ids(), keys)
+
     def test_hand_checked_keys_pass_their_own_quote_check(self):
-        ids = sorted(d for d in os.listdir(REAL_TEXT) if os.path.isdir(os.path.join(REAL_TEXT, d)))
-        self.assertTrue(ids)
-        for tid in ids:
-            key_path = os.path.join(KEYS, tid + ".json")
-            if not os.path.exists(key_path):
-                continue
-            with self.subTest(tender=tid):
-                with open(key_path, encoding="utf-8") as f:
-                    key = json.load(f)
-                result = check_record(key, load_texts(os.path.join(REAL_TEXT, tid)))
-                # tolerate a few key quotes that were paraphrased; report them via the subtest
-                self.assertLessEqual(len(result["unfound_quotes"]), 3, result["unfound_quotes"])
+        unfound = []
+        for tid in self.tender_ids():
+            with open(os.path.join(KEYS, tid + ".json"), encoding="utf-8") as f:
+                key = json.load(f)
+            result = check_record(key, load_texts(os.path.join(REAL_TEXT, tid)))
+            unfound += [(tid, u["field"]) for u in result["unfound_quotes"]]
+        self.assertEqual(unfound, self.KNOWN_UNFOUND)
 
 
 if __name__ == "__main__":
