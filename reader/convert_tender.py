@@ -132,13 +132,14 @@ def convert_tree(docs_dir, text_dir, converters=None):
         if sum(i.file_size for i in infos) > MAX_ZIP_BYTES:
             entries.append(_entry(name, "skipped", reason="zip too big to unpack"))
             continue
+        folder = name[:-4]  # as the handoff's extract.py: members of x.zip are x/<member>
         labels = set()
         with tempfile.TemporaryDirectory() as td:
             for idx, i in enumerate(infos):
                 member = _safe_name(i.filename)
-                label = name + "/" + member
+                label = folder + "/" + member
                 if label in labels:  # same base name twice: keep both texts apart
-                    label = "%s/%d_%s" % (name, idx, member)
+                    label = "%s/%d_%s" % (folder, idx, member)
                 labels.add(label)
                 # Unpacked under the member's index, so names never clash and never leave td.
                 dst = os.path.join(td, "%d_%s" % (idx, member))
