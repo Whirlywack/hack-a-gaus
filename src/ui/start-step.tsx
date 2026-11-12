@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 
-import { Btn, Icon, TextBtn, Wordmark } from './ui'
+import { Btn, Icon, Wordmark } from './ui'
 import { Field } from './parts'
 import { useWide } from './mode'
 import { t } from '../copy/register'
@@ -33,9 +33,6 @@ export function StartStep() {
     <div className="su-acts">
       <div className="su-primary">
         <Btn kind="primary" wide trailing={<Icon name="arrow-right" size={18} />}>{t('start.next')}</Btn>
-      </div>
-      <div className="su-under">
-        <TextBtn>{t('start.codeLink')}</TextBtn>
       </div>
     </div>
   )

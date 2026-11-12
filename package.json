@@ -8,7 +8,7 @@
     "start": "next start",
     "typecheck": "tsc --noEmit",
     "test": "bash scripts/test-db.sh",
-    "test:unit": "vitest run"
+    "test:unit": "vitest run --exclude 'tests/db/**'"
   },
   "dependencies": {
     "@base-ui/react": "1.9.0",
