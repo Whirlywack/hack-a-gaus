@@ -61,28 +61,34 @@ def normalise(s):
     return re.sub(r"\s+", " ", s).strip().lower()
 
 
+# A quote must be long enough that finding it in a tender is not an accident. The 15 hand-checked
+# keys and the sonnet_alone readings have no segment under 33 characters and never use "...".
+MIN_SEGMENT_CHARS = 20
+MAX_SEGMENTS = 3
+
+
 def _segments(quote):
+    """The quote's normalised pieces, split at '...'. Empty pieces are dropped after normalising."""
     parts = re.split(r"\s*(?:\.\.\.|…|\[\.\.\.\]|\[…\])\s*", quote)
-    return [normalise(p) for p in parts if p.strip()]
+    return [n for n in (normalise(p) for p in parts) if n]
 
 
-def quote_found(quote, normalised_texts):
-    """True if the quote (its segments, in order, where it has '...') is in one file."""
-    if not isinstance(quote, str):
+def quote_found(quote, normalised_texts, file):
+    """True if the quote (its segments, in order, where it has '...') is in the named file.
+    A quote with no segment, too many, or a segment under MIN_SEGMENT_CHARS is never found."""
+    if not isinstance(quote, str) or not isinstance(file, str) or file not in normalised_texts:
         return False
     segs = _segments(quote)
-    if not segs:
+    if not segs or len(segs) > MAX_SEGMENTS or any(len(s) < MIN_SEGMENT_CHARS for s in segs):
         return False
-    for text in normalised_texts.values():
-        pos = 0
-        for seg in segs:
-            i = text.find(seg, pos)
-            if i < 0:
-                break
-            pos = i + len(seg)
-        else:
-            return True
-    return False
+    text = normalised_texts[file]
+    pos = 0
+    for seg in segs:
+        i = text.find(seg, pos)
+        if i < 0:
+            return False
+        pos = i + len(seg)
+    return True
 
 
 def _single_state(entry, ok):
@@ -103,7 +109,7 @@ def check_record(record, texts):
 
     for key in SINGLE_FIELDS:
         entry = record.get(key)
-        ok = isinstance(entry, dict) and quote_found(entry.get("quote"), norm)
+        ok = isinstance(entry, dict) and quote_found(entry.get("quote"), norm, entry.get("file"))
         if isinstance(entry, dict) and entry.get("quote") and not ok:
             unfound.append({"field": key, "quote": entry["quote"]})
         states[key] = _single_state(entry, ok)
@@ -111,10 +117,10 @@ def check_record(record, texts):
     for key in LIST_FIELDS + OTHER_LIST_FIELDS:
         kept = []
         for i, item in enumerate(record.get(key) or []):
-            if isinstance(item, dict) and quote_found(item.get("quote"), norm):
+            if isinstance(item, dict) and quote_found(item.get("quote"), norm, item.get("file")):
                 kept.append(item)
             else:
-                unfound.append({"field": "%s[%d]" % (key, i), "quote": (item or {}).get("quote")})
+                unfound.append({"field": "%s[%d]" % (key, i), "quote": item.get("quote") if isinstance(item, dict) else None})
         found[key] = kept
         if key in LIST_FIELDS:
             states[key] = "required" if kept else "not_found"
