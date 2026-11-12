@@ -11,13 +11,15 @@ on:
         required: true
         default: "10383512"
 
-permissions:
-  contents: read
-  packages: read
+permissions: {}
 
 jobs:
   read:
     runs-on: ubuntu-latest
+    # packages: read pulls the reader image from ghcr.io.
+    permissions:
+      contents: read
+      packages: read
     timeout-minutes: 30
     container:
       image: ghcr.io/whirlywack/gaus-reader:latest
@@ -28,7 +30,7 @@ jobs:
       FETCHER_CONTACT: ${{ secrets.FETCHER_CONTACT }}
       TENDER_ID: ${{ inputs.tender_id }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
       - name: Tools on the image
         run: |
           soffice --version | cut -c1-40
@@ -40,7 +42,7 @@ jobs:
         run: python3 -I reader/fetch_tender.py "$TENDER_ID" "$RUNNER_TEMP/work" "$RUNNER_TEMP/docs"
       - name: Convert
         run: python3 -I reader/convert_tender.py "$RUNNER_TEMP/docs" "$RUNNER_TEMP/text" "$RUNNER_TEMP/report.json"
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: conversion-report-${{ env.TENDER_ID }}
           path: ${{ runner.temp }}/report.json

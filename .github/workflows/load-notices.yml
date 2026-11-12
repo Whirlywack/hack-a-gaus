@@ -9,8 +9,7 @@ on:
     - cron: '17 * * * *'
   workflow_dispatch:
 
-permissions:
-  contents: read
+permissions: {}
 
 # One load at a time. A load still waiting is replaced by a newer one.
 concurrency:
@@ -20,17 +19,21 @@ concurrency:
 jobs:
   migrate:
     uses: ./.github/workflows/migrate.yml
+    permissions:
+      contents: read
     secrets:
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
   load:
     needs: migrate
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     # A full walk is ~84 pages of 1,000 records, a few minutes when the feed is healthy.
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: 24
           cache: npm
