@@ -21,7 +21,17 @@ CONTEXT_WINDOW = 1_000_000
 MAX_OUTPUT = 32_000
 # Room left for the system prompt, the answer and tokenizer drift.
 INPUT_BUDGET = CONTEXT_WINDOW - MAX_OUTPUT - 20_000
-PRICE_PER_MTOK = {"input": 2.0, "output": 10.0}  # claude-sonnet-5-5
+# USD per million tokens: (prompt tokens up to which the rate holds or None, input, output).
+# Claude Haiku 5.5 has a second rate card for prompts over 100 000 tokens.
+PRICES = {
+    "claude-sonnet-5-5": [(None, 2.0, 10.0)],
+    "claude-sonnet-5": [(None, 2.0, 10.0)],
+    "claude-haiku-5-5": [(100_000, 0.10, 0.50), (None, 0.50, 2.50)],
+}
+# An answering model not in the table (a server-side fallback, say) is priced at this rate.
+UNKNOWN_MODEL_PRICE = (None, 10.0, 50.0)
+# Only these models take the API's server-side refusal fallback; Claude Haiku 5.5 has none.
+FALLBACK_MODELS = {"claude-sonnet-5-5"}
 KEY_PATH = os.path.expanduser("~/.config/gaus/anthropic-key")
 LEDGER_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "live_spend.json")
 
@@ -215,8 +225,11 @@ def _count(client, model, system, user):
     ).input_tokens
 
 
-def _usd(input_tokens, output_tokens):
-    return (input_tokens * PRICE_PER_MTOK["input"] + output_tokens * PRICE_PER_MTOK["output"]) / 1e6
+def usd(model, input_tokens, output_tokens):
+    """What a call costs in USD at the model's rate for a prompt of this length."""
+    for limit, price_in, price_out in PRICES.get(model, [UNKNOWN_MODEL_PRICE]):
+        if limit is None or input_tokens <= limit:
+            return (input_tokens * price_in + output_tokens * price_out) / 1e6
 
 
 def append_ledger(path, entry):
@@ -251,23 +264,24 @@ def read_tender(folder, client, today=None, ledger_path=LEDGER_PATH, input_budge
     if n > input_budget:
         raise ReadFailed("the tender's only file does not fit the model's window")
 
+    fallback = {"betas": [FALLBACK_BETA], "fallbacks": "default"} if model in FALLBACK_MODELS else {}
     with client.beta.messages.stream(
         model=model,
         max_tokens=MAX_OUTPUT,
-        betas=[FALLBACK_BETA],
-        fallbacks="default",
         system=system,
         messages=[{"role": "user", "content": user}],
         output_config={"format": {"type": "json_schema", "schema": RECORD_SCHEMA}},
+        **fallback,
     ) as stream:
         final = stream.get_final_message()
 
     usage = final.usage
+    cost = round(usd(final.model, usage.input_tokens, usage.output_tokens), 6)
     append_ledger(ledger_path, {
         "date": today or datetime.date.today().isoformat(),
         "label": label, "tender": tender_id, "model": final.model,
         "input_tokens": usage.input_tokens, "output_tokens": usage.output_tokens,
-        "usd": round(_usd(usage.input_tokens, usage.output_tokens), 6),
+        "usd": cost,
     })
 
     # The stop reason comes before the content.
@@ -287,6 +301,8 @@ def read_tender(folder, client, today=None, ledger_path=LEDGER_PATH, input_budge
         "files_skipped": skipped,
         "model": final.model,
         "date": today or datetime.date.today().isoformat(),
+        "usage": {"counted_input_tokens": n, "input_tokens": usage.input_tokens,
+                  "output_tokens": usage.output_tokens, "usd": cost},
     })
     return reading
 

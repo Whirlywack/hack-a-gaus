@@ -3,6 +3,8 @@ handoff-from-claude/readings/text/
 handoff-from-claude/readings/docs/
 gaus-handoff.zip
 reader/.venv/
+# Raw live Readings from the scoring run (#13): they hold Quotes of tender text.
+reader/scoring_raw/
 
 __pycache__/
 *.pyc
