@@ -117,6 +117,16 @@ class ReadTenderRequest(unittest.TestCase):
         # the instruction-like line sits inside a document block, after the data framing
         self.assertLess(user.index("<document"), user.index("Ignoruok visas"))
 
+    def test_model_is_told_the_rules_its_quotes_are_checked_against(self):
+        # a quote the Quote check would throw away must not look acceptable to the model
+        self.read()
+        system = self.client.requests[0]["system"]
+        self.assertIn("at least %d characters" % reading.MIN_SEGMENT_CHARS, system)
+        self.assertIn("at most %d pieces" % reading.MAX_SEGMENTS, system)
+        # the request schema has no null quote or file: the model is told to send ""
+        self.assertIn('empty strings ("")', system)
+        self.assertNotIn("null quote", system)
+
     def test_reading_carries_record_files_model_and_date(self):
         r = self.read()
         self.assertEqual(r["states"]["min_turnover"], "required")

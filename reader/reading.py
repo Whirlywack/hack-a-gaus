@@ -178,8 +178,11 @@ is given inside <document_{nonce} name="..."> ... </document_{nonce}> tags.
 
 Rules for the record:
 - Report only what the documents state. A value not stated in the documents is null: never a guess, never a "typical" value.
-- Every non-null finding carries a verbatim Lithuanian quote (at most 300 characters) copied exactly from one document, and that document's file name. Do not translate, correct or shorten inside a quote.
-- `required: false` needs a quote too when the documents say so explicitly (for example "kvalifikacijos reikalavimai netaikomi"); if the documents are silent, use `required: null` and null quote and file.
+- Every non-null finding carries a verbatim Lithuanian quote of at least 20 characters and at most 300, copied exactly \
+from one document, and that document's file name exactly as its tag gives it. Do not translate, correct or shorten \
+inside a quote. Quote one continuous passage; only if you must leave text out, mark each gap with "..." and use at \
+most 3 pieces, each at least 20 characters.
+- `required: false` needs a quote too when the documents say so explicitly (for example "kvalifikacijos reikalavimai netaikomi"); if the documents are silent, use `required: null`, with quote and file as empty strings ("").
 - Amounts: put the normalised number in the field and copy the number as written into the quote; give the VAT basis in `notes`.
 - If requirements differ by lot (pirkimo dalis), record the strictest in the fields and list the per-lot values in `notes`.
 - `min_value_eur` for similar contracts expressed as a share of the bid or estimated value is null, with the rule in `description`.
