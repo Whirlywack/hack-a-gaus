@@ -15,3 +15,8 @@ supabase/.temp/
 supabase/.branches/
 __pycache__/
 *.pyc
+
+# Local agent tooling (worktrees live in .claude/worktrees/)
+.claude/
+.playwright-mcp/
+.serena/
