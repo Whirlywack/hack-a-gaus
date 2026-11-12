@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Conversion functions copied unchanged from handoff-from-claude/reader/cascade/convert.py
 (docx_to_text, soffice_to_docx, pdf_to_text and their helpers). The handoff's hard-coded
-paths, its main(), its skip rules and its digit-density check were dropped. Its clean() is
-in convert_tender.py, which drives these."""
+paths and its main() were dropped. Its clean(), skip rules and digit-density check are in
+convert_tender.py, which drives these."""
 import os, re, subprocess
 import docx
 
