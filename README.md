@@ -27,7 +27,8 @@ Tests that need the database live in `tests/db/`. Everything else runs without D
 
 - `.github/workflows/load-notices.yml` runs every hour from `main`, and by hand (Actions, Load notices, Run workflow). It first applies pending migrations, then runs `node loader/run.ts`. The run summary gives the open Notices of each kind.
 - `.github/workflows/migrate.yml` applies `supabase/migrations/` to the hosted database on every push to `main`, by hand, and before every load.
-- Both read the Actions secrets `VPT_API_KEY` and `DATABASE_URL` (the session pooler's string, percent-encoded). Neither is printed.
+- Both read the Actions secrets `VPT_API_KEY` and `DATABASE_URL` (the session pooler's string, percent-encoded). Neither is printed. Both connect with TLS verify-full: the server's certificate and hostname are checked against Supabase's root CAs in `supabase/supabase-root-ca.crt` (`loader/db.ts`).
+- Client roles (`anon`, `authenticated`, `service_role`) read `public.notices` through a grant per column, so a column added later is unreadable until a migration grants it. `anon` and `authenticated` see only the kinds shown, `tender` and `market_consultation`.
 
 To run a load from a machine that has the secrets: `VPT_API_KEY=… DATABASE_URL=… node loader/run.ts`.
 

@@ -6,7 +6,9 @@ name: Apply migrations
 #
 # DATABASE_URL is the session pooler's connection string (GitHub's runners have no IPv6
 # for the direct one), percent-encoded. It is passed only through the environment and is
-# never printed.
+# never printed. The connection is verify-full: loader/verified-db-url.ts sets
+# sslmode=verify-full and sslrootcert=supabase/supabase-root-ca.crt on it, replacing any
+# sslmode the secret holds, so the server's certificate and hostname are checked.
 on:
   push:
     branches: [main]
@@ -16,25 +18,33 @@ on:
       DATABASE_URL:
         required: true
 
-permissions:
-  contents: read
+permissions: {}
 
 jobs:
   apply:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     timeout-minutes: 10
     # One migration run at a time against the hosted database, whichever workflow starts it.
     concurrency:
       group: hosted-database-migrations
       cancel-in-progress: false
     steps:
-      - uses: actions/checkout@v4
-      - uses: supabase/setup-cli@v1
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: supabase/setup-cli@1dedf2c611547ede7232d26866dd3c56ab903bbb # v1.7.3
         with:
           version: 2.120.0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 24
       # --include-all: tickets built in parallel can merge a migration dated before one
       # already applied; it is applied too, instead of failing the push.
+      # The verified string is masked before use and never printed.
       - name: Apply migrations
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
-        run: supabase db push --db-url "$DATABASE_URL" --include-all --yes
+        run: |
+          url=$(node loader/verified-db-url.ts)
+          echo "::add-mask::$url"
+          supabase db push --db-url "$url" --include-all --yes
