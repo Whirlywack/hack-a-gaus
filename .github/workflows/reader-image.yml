@@ -3,7 +3,7 @@ name: Reader image
 # Builds the image the reader runs on (LibreOffice, pdftotext, python-docx, openpyxl).
 on:
   push:
-    branches: [main, ticket-3]  # ticket-3 is a TEMP-TRIGGER
+    branches: [main]
     paths: [reader/Dockerfile]
   workflow_dispatch:
 

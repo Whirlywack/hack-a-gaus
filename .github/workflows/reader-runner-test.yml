@@ -10,9 +10,6 @@ on:
         description: Tender number
         required: true
         default: "10383512"
-  # TEMP-TRIGGER (removed before merge)
-  push:
-    branches: [ticket-3]
 
 permissions:
   contents: read
