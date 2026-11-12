@@ -490,5 +490,32 @@ class LiveRun(unittest.TestCase):
         self.assertAlmostEqual(self.ledger_total(), 2 * 1000 * 2 / 1e6, places=6)
 
 
+class Outcome(unittest.TestCase):
+    """The outcome record: per field, whether the reader's model ever gave a wrong or invented value.
+    It decides which fields #16 may show; the operator's judgement can still change it."""
+
+    def summary(self, title, model, bad):
+        from score_keys import FIELDS
+        per_field = {f: {"correct": 15, "wrong": 0, "missed": 0, "invented": 0} for f in FIELDS}
+        return {"title": title, "model": model, "per_field": per_field,
+                "total": {"correct": 110, "wrong": 1, "missed": 9, "invented": 0, "cells": 120},
+                "wrong_or_invented": {f: bad.get(f, []) for f in FIELDS}}
+
+    def test_fields_with_a_wrong_or_invented_value_in_any_reader_run_are_named(self):
+        from score_keys import render_outcome
+        md = render_outcome([
+            self.summary("run 1", "claude-sonnet-5-5", {"certificates_or_licences": ["10324146"]}),
+            self.summary("run 2", "claude-sonnet-5-5", {"exclusion_grounds": ["10393450"]}),
+            self.summary("haiku", "claude-haiku-5-5", {"bid_security": ["10388453"]}),
+        ], reader_model="claude-sonnet-5-5")
+        self.assertIn("pending operator judgement", md)
+        self.assertIn("| certificates_or_licences | yes: 10324146 (run 1) |", md)
+        self.assertIn("| exclusion_grounds | yes: 10393450 (run 2) |", md)
+        self.assertIn("| min_turnover | no |", md)
+        # the comparison model does not decide which fields are shown
+        self.assertIn("| bid_security | no |", md)
+        self.assertIn("haiku", md)
+
+
 if __name__ == "__main__":
     unittest.main()

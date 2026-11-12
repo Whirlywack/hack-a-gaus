@@ -8,6 +8,8 @@ Started by hand, never by CI. Each live run costs a few USD and needs the operat
     python reader/score_keys.py estimate --model claude-sonnet-5-5
     # live: read the 15 tenders, then score them
     python reader/score_keys.py live --model claude-sonnet-5-5 --name sonnet-1
+    # the outcome record over the runs: per field, any wrong or invented value
+    python reader/score_keys.py outcome sonnet-1 haiku-1
 
 The tender texts come from GAUS_TENDER_TEXT_DIR (default handoff-from-claude/readings/text, which is
 gitignored). Raw live Readings go to reader/scoring_raw/ (gitignored); only the reports in
@@ -494,6 +496,35 @@ def summary(result, meta):
     }
 
 
+def render_outcome(summaries, reader_model=reading_mod.MODEL):
+    """The outcome record over several runs. Only runs on the reader's model decide which fields had a
+    wrong or invented value; other models are listed as a comparison."""
+    reader_runs = [s for s in summaries if s["model"] == reader_model]
+    others = [s for s in summaries if s["model"] != reader_model]
+    out = ["# Outcome of the scoring run (#13)", "",
+           "**Status: pending operator judgement.** The counts are mechanical. The operator judges every "
+           "disagreement in the run reports, decides whether the bar is met (no invented finding, at least "
+           "105 of 120 correct), and may clear a wrong or invented value below as a key issue or a soft cell.", "",
+           "## Runs", "", "| Run | Model | Correct | Wrong | Missed | Invented |", "|---|---|---|---|---|---|"]
+    for s in summaries:
+        t = s["total"]
+        out.append("| %s | %s | %d | %d | %d | %d |" % (s["title"], s["model"], t["correct"], t["wrong"],
+                                                       t["missed"], t["invented"]))
+    out += ["", "## Fields with a wrong or invented value on the reader's model (%s)" % reader_model, "",
+            "This decides which fields #16 may show if the bar is missed: a field is shown only if it had "
+            "no wrong and no invented value on the 15 keys.", "",
+            "| Field | Wrong or invented value |", "|---|---|"]
+    for field in FIELDS:
+        bad = ["%s (%s)" % (t, s["title"]) for s in reader_runs for t in s["wrong_or_invented"][field]]
+        out.append("| %s | %s |" % (field, ("yes: " + ", ".join(bad)) if bad else "no"))
+    if others:
+        out += ["", "## Comparison runs (do not decide which fields are shown)", ""]
+        for s in others:
+            bad = ["%s: %s" % (f, ", ".join(s["wrong_or_invented"][f])) for f in FIELDS if s["wrong_or_invented"][f]]
+            out.append("- %s (%s): %s" % (s["title"], s["model"], "; ".join(bad) if bad else "no wrong or invented value"))
+    return "\n".join(out) + "\n"
+
+
 # ---------------------------------------------------------------- command line
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -601,8 +632,19 @@ def main(argv=None):
     live.add_argument("--model", default=reading_mod.MODEL)
     live.add_argument("--name", required=True)
     live.add_argument("--cap", type=float, default=CAP_USD)
+    oc = sub.add_parser("outcome", help="write reader/scores/OUTCOME.md from the named runs' summaries")
+    oc.add_argument("names", nargs="+")
     args = ap.parse_args(argv)
 
+    if args.cmd == "outcome":
+        summaries = []
+        for name in args.names:
+            with open(os.path.join(SCORES_DIR, name + ".json"), encoding="utf-8") as f:
+                summaries.append(dict(json.load(f), title=name))
+        path = os.path.join(SCORES_DIR, "OUTCOME.md")
+        with open(path, "w", encoding="utf-8") as f:
+            f.write(render_outcome(summaries))
+        return print("written to %s" % path)
     keys = load_records(KEYS_DIR)
     if args.cmd == "estimate":
         return _estimate(args, keys)
