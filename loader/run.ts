@@ -5,8 +5,10 @@
 //
 // Writes the run's summary to $GITHUB_STEP_SUMMARY when it is set. Neither the key nor
 // the connection string is ever printed: every error message is masked before it is.
+import { readFileSync } from 'node:fs'
 import { appendFile } from 'node:fs/promises'
 import postgres from 'postgres'
+import { SUPABASE_CA_PATH, sslFor } from './db.ts'
 import {
   feedFetcher,
   openNoticesByKind,
@@ -22,12 +24,12 @@ const url = process.env.DATABASE_URL
 try {
   if (!url) throw new Error('the database connection string is not set (DATABASE_URL)')
   const fetchPage = feedFetcher({ key })
-  const local = /@(localhost|127\.0\.0\.1)[:/]/.test(url)
   const sql = postgres(url, {
     max: 1,
     // Works through Supabase's session and transaction poolers alike.
     prepare: false,
-    ssl: local ? false : 'require',
+    // verify-full: the server's certificate is checked against Supabase's root CAs.
+    ssl: sslFor(url, readFileSync(SUPABASE_CA_PATH, 'utf8')),
     connect_timeout: 30,
     onnotice: () => {},
   })
