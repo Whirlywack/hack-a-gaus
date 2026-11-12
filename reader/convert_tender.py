@@ -19,6 +19,9 @@ KINDS = {".docx": "docx", ".doc": "doc", ".pdf": "pdf", ".xlsx": "xlsx", ".xlsm"
 
 
 def _convert():
+    # python -I leaves the script folder off sys.path; append so this folder's convert.py loads
+    # without shadowing anything in the standard library.
+    sys.path.append(os.path.dirname(os.path.abspath(__file__)))
     import convert  # reader/convert.py, the handoff functions
     return convert
 
