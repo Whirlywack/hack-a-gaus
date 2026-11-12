@@ -140,7 +140,7 @@ def _quoted(props):
     # "" means nothing found; read_tender turns it back into null (the API limits unions in a schema)
     props["quote"] = {"type": "string"}
     props["file"] = {"type": "string"}
-    return {"type": "object", "properties": props, "required": list(props), "additionalProperties": False}
+    return _obj(props)
 
 
 def _obj(props):
@@ -248,6 +248,7 @@ def append_ledger(path, entry):
 def read_tender(folder, client, today=None, ledger_path=LEDGER_PATH, input_budget=INPUT_BUDGET,
                 model=MODEL, label="read"):
     """Read one tender folder. Returns the checked Reading, or raises ReadFailed."""
+    today = today or datetime.date.today().isoformat()  # one date for the ledger and the Reading
     tender_id = os.path.basename(os.path.normpath(folder))
     texts = load_texts(folder)
     if not texts:
