@@ -1,0 +1,43 @@
+{
+ "tender_id": "10387051",
+ "files_read": [
+  "10387139_Pirkimo dokumentai__2026-11-09 Skelbiamos apklausos sąlygos.docx.txt",
+  "10387139_Pirkimo dokumentai__2 priedas. Specialistų sąrašas.docx.txt",
+  "10387139_Pirkimo dokumentai__5 priedas Sutarties projektas.docx.txt (grep only)"
+ ],
+ "chars_read": 12000,
+ "seconds": 60,
+ "qualification_requirements_set": "yes",
+ "min_turnover": {
+  "required": null
+ },
+ "similar_contracts": {
+  "required": null
+ },
+ "certificates_or_licences": [
+  {
+   "name": "Matininko kvalifikacijos pažymėjimas",
+   "quote": "Tiekėjas privalo pasiūlyti bent 1 (vieną) specialistą, turintį galiojantį matininko kvalifikacijos pažymėjimą.",
+   "file": "10387139_Pirkimo dokumentai__2026-11-09 Skelbiamos apklausos sąlygos.docx.txt"
+  }
+ ],
+ "named_specialists": [
+  {
+   "role": "matininkas",
+   "qualification": "galiojantis matininko kvalifikacijos pažymėjimas",
+   "quote": "Tiekėjas privalo pasiūlyti bent 1 (vieną) specialistą, turintį galiojantį matininko kvalifikacijos pažymėjimą.",
+   "file": "10387139_Pirkimo dokumentai__2026-11-09 Skelbiamos apklausos sąlygos.docx.txt"
+  }
+ ],
+ "right_to_practice_required": {
+  "required": null,
+  "quote": "tiekėjas perkančiajai organizacijai įsipareigoja, kad pirkimo sutartį vykdys tik tokią teisę turintys asmenys.",
+  "file": "10387139_Pirkimo dokumentai__2026-11-09 Skelbiamos apklausos sąlygos.docx.txt"
+ },
+ "bid_security": {
+  "required": null
+ },
+ "exclusion_grounds": "declaration",
+ "other_requirements": [],
+ "notes": "Only exclusion ground is VPĮ 46(2¹), confirmed by signing the bid form (1 priedas). No bid security clause found by grep (silent). Land-document PDFs not read."
+}

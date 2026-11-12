@@ -1,0 +1,48 @@
+{
+ "tender_id": "10383512",
+ "files_read": [
+  "10383897_Skelbiamos_apklausos_specialiosios_salygos.docx.txt"
+ ],
+ "chars_read": 14000,
+ "seconds": 70,
+ "qualification_requirements_set": "yes",
+ "min_turnover": {
+  "required": null
+ },
+ "similar_contracts": {
+  "required": null
+ },
+ "certificates_or_licences": [
+  {
+   "name": "Geodezininko kvalifikacijos pažymėjimas (Nacionalinės žemės tarnybos)",
+   "quote": "b) specialistą, turintį  geodezininko kvalifikacijos pažymėjimą.",
+   "file": "10383897_Skelbiamos_apklausos_specialiosios_salygos.docx.txt"
+  }
+ ],
+ "named_specialists": [
+  {
+   "role": "statybos darbų vadovas (statybos inžinierius ar architektas)",
+   "qualification": "statybos inžinerijos / statybos technologijų ar architektūros kvalifikacinis laipsnis",
+   "quote": "a) statybos darbų vadovą (statybos inžinierių ar architektą), turintį statybos inžinerijos arba statybos technologijų studijų krypties (šakos) kvalifikacinį laipsnį arba šių studijų krypčių (šakų) studijų rezultatus atitinkančios kitos krypties (šakos) kvalifikacinį laipsnį",
+   "file": "10383897_Skelbiamos_apklausos_specialiosios_salygos.docx.txt"
+  },
+  {
+   "role": "geodezininkas",
+   "qualification": "geodezininko kvalifikacijos pažymėjimas",
+   "quote": "b) specialistą, turintį  geodezininko kvalifikacijos pažymėjimą.",
+   "file": "10383897_Skelbiamos_apklausos_specialiosios_salygos.docx.txt"
+  }
+ ],
+ "right_to_practice_required": {
+  "required": null
+ },
+ "bid_security": {
+  "required": false,
+  "amount": null,
+  "quote": "Perkančioji organizacija nereikalauja užtikrinti pasiūlymo galiojimą, tačiau pasilieka teisę kreiptis į teismą dėl žalos",
+  "file": "10383897_Skelbiamos_apklausos_specialiosios_salygos.docx.txt"
+ },
+ "exclusion_grounds": "declaration",
+ "other_requirements": [],
+ "notes": "Exclusion/qualification shown by Tiekėjo deklaracija (7 priedas) with bid. Only the docx special conditions read (grep + targeted sections); the large PDF version of special conditions, general conditions and contract draft not read, so performance security not checked. Technical spec PDF has no text."
+}

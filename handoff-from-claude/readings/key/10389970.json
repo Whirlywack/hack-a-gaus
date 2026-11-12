@@ -1,0 +1,79 @@
+{
+  "tender_id": "10389970",
+  "files_read": [
+    "10390104_pirkimo dok..docx.txt",
+    "10390075_TIEKĖJŲ DEKLARACIJOS__deklaracija nuo 2025-02-01.docx.txt",
+    "10390075_TIEKĖJŲ DEKLARACIJOS__Tiekėjo deklaracija.docx.txt",
+    "10390123_Sutartis.docx.txt",
+    "10390107_c4t_10389970_1.xml.txt"
+  ],
+  "qualification_requirements_set": "no",
+  "min_turnover": {
+    "required": false,
+    "amount_eur": null,
+    "period": null,
+    "quote": "Minimalūs tiekėjų kvalifikacijos reikalavimai ir tiekėjų pašalinimo pagrindai netaikomi.",
+    "file": "10390104_pirkimo dok..docx.txt"
+  },
+  "similar_contracts": {
+    "required": false,
+    "count": null,
+    "min_value_eur": null,
+    "within_years": null,
+    "description": null,
+    "quote": "Minimalūs tiekėjų kvalifikacijos reikalavimai ir tiekėjų pašalinimo pagrindai netaikomi.",
+    "file": "10390104_pirkimo dok..docx.txt"
+  },
+  "certificates_or_licences": [],
+  "named_specialists": [],
+  "right_to_practice_required": {
+    "required": false,
+    "quote": "Minimalūs tiekėjų kvalifikacijos reikalavimai ir tiekėjų pašalinimo pagrindai netaikomi.",
+    "file": "10390104_pirkimo dok..docx.txt"
+  },
+  "bid_security": {
+    "required": false,
+    "amount": null,
+    "quote": "Perkančioji organizacija nereikalauja pasiūlymo galiojimo užtikrinimo Civilinio kodekso nustatytais prievolių įvykdymo užtikrinimo būdais.",
+    "file": "10390104_pirkimo dok..docx.txt"
+  },
+  "exclusion_grounds": "declaration",
+  "other_requirements": [
+    {
+      "what": "Supplier declarations to be submitted with the bid (TIEKĖJŲ DEKLARACIJOS)",
+      "quote": "kita reikalaujama informacija ir dokumentai (TIEKĖJŲ DEKLARACIJOS).",
+      "file": "10390104_pirkimo dok..docx.txt"
+    },
+    {
+      "what": "Declaration of no exclusion ground under VPĮ 46 str. 21 d. (ban on participating in public procurement), covering joint-venture partners and relied-on entities",
+      "quote": "neturi Viešųjų pirkimų įstatymo 46 straipsnio 21 dalyje nurodyto pašalinimo pagrindo",
+      "file": "10390075_TIEKĖJŲ DEKLARACIJOS__deklaracija nuo 2025-02-01.docx.txt"
+    },
+    {
+      "what": "Declaration on Council Regulation (EU) 2022/576 (Russia-related sanctions)",
+      "quote": "TIEKĖJO DEKLARACIJA DĖL TARYBOS REGLAMENTE (ES) 2022/576 NUSTATYTŲ SĄLYGŲ NEBUVIMO",
+      "file": "10390075_TIEKĖJŲ DEKLARACIJOS__Tiekėjo deklaracija.docx.txt"
+    },
+    {
+      "what": "Joint bidders must submit a joint activity agreement with joint and several liability",
+      "quote": "Jei pirkimo procedūrose dalyvauja ūkio subjektų grupė, ji pateikia jungtinės veiklos sutartį arba tinkamai patvirtintą jos kopiją.",
+      "file": "10390104_pirkimo dok..docx.txt"
+    },
+    {
+      "what": "Subcontractors must be named; evidence of access to their capacities required",
+      "quote": "Tiekėjas turi nurodyti subtiekėjus, kuriuos jis ketina pasitelkti pirkimo sutarčiai vykdyti.",
+      "file": "10390104_pirkimo dok..docx.txt"
+    },
+    {
+      "what": "Bid validity at least 60 days",
+      "quote": "Pasiūlymas turi galioti ne trumpiau kaip 60 dienų.",
+      "file": "10390104_pirkimo dok..docx.txt"
+    },
+    {
+      "what": "No performance security; contract secured by penalties only",
+      "quote": "Prievolių pagal Sutartį įvykdymas užtikrinamas: Netesybomis (delspinigiais, bauda);",
+      "file": "10390123_Sutartis.docx.txt"
+    }
+  ],
+  "notes": "Section 3.1 states qualification requirements and exclusion grounds are not applied, yet bid must include TIEKĖJŲ DEKLARACIJOS (VPĮ 46 str. 21 d. exclusion declaration and EU 2022/576 sanctions declaration). Boilerplate also refers to EBVPD (10.1.2) and to a non-existent 'pirkimo sąlygų 3.3 punktas' for exclusion grounds — internal inconsistency. Not divided into lots. Contract special conditions: sutarties įvykdymo užtikrinimas 'Netaikoma'."
+}

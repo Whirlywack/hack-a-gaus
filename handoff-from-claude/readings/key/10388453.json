@@ -1,0 +1,58 @@
+{
+  "tender_id": "10388453",
+  "files_read": [
+    "10388560_Salygos.pdf.txt",
+    "10388574_Priedas Nr. 1 Pasiūlymo forma.doc.txt",
+    "_lo/10388574_Priedas Nr. 1 Pasiūlymo forma.txt",
+    "10388841_c4t_10388453_1.xml.txt"
+  ],
+  "qualification_requirements_set": "no",
+  "min_turnover": {
+    "required": false,
+    "amount_eur": null,
+    "period": null,
+    "quote": "Perkantysis subjektas nenustato kvalifikacinių reikalavimų Tiekėjams.",
+    "file": "10388560_Salygos.pdf.txt"
+  },
+  "similar_contracts": {
+    "required": false,
+    "count": null,
+    "min_value_eur": null,
+    "within_years": null,
+    "description": null,
+    "quote": "Perkantysis subjektas nenustato kvalifikacinių reikalavimų Tiekėjams.",
+    "file": "10388560_Salygos.pdf.txt"
+  },
+  "certificates_or_licences": [],
+  "named_specialists": [],
+  "right_to_practice_required": {
+    "required": false,
+    "quote": "Perkantysis subjektas nenustato kvalifikacinių reikalavimų Tiekėjams.",
+    "file": "10388560_Salygos.pdf.txt"
+  },
+  "bid_security": {
+    "required": null,
+    "amount": null,
+    "quote": null,
+    "file": null
+  },
+  "exclusion_grounds": "none",
+  "other_requirements": [
+    {
+      "what": "Bid validity at least 60 days",
+      "quote": "Pasiūlymas galioja jame tiekėjo nurodytą laiką, bet ne trumpiau kaip 60 dienų nuo pasiūlymų pateikimo galutinio termino dienos.",
+      "file": "10388560_Salygos.pdf.txt"
+    },
+    {
+      "what": "Product documents with bid: technical passport of meter with WM-BUS module, module description, manufacturer RoHS/RED declaration, radio-antenna manufacturer compatibility declaration (CRS-40)",
+      "quote": "Kartu su pasiūlymu pateikti radijo antenų gamintojo deklaraciją, kurioje nurodoma, kad siūlomas apskaitos prietaisas ir WM-BUS nuskaitymo modulis yra suderinamas su esamais CRS-40 radijo įrenginiais.",
+      "file": "10388560_Salygos.pdf.txt"
+    },
+    {
+      "what": "Meters supplied with current-year initial metrological verification and proof",
+      "quote": "Skaitikliai su nuotolinio duomenų perdavimo WM-BUS moduliu turi būti tiekiami su einamaisiais metais atlikta pirmine patikra ir tai įrodančiais dokumentais.",
+      "file": "10388560_Salygos.pdf.txt"
+    }
+  ],
+  "notes": "Utilities-sector small-value procurement (PĮ, buyer UAB „Anykščių šiluma“), not divided into lots. Documents are silent on exclusion grounds (no ESPD or declaration requested), on bid security and on performance security; 'none' recorded for exclusion_grounds because nothing is required, but no explicit 'netaikomi' statement exists. Rejection refers to the buyer's own MVPTA 17.3.11, which is not among the documents. The .doc offer form and its _lo duplicate carry the same content."
+}

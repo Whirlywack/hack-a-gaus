@@ -1,0 +1,523 @@
+{
+ "window": [
+  "2024-11-11",
+  "2027-11-11"
+ ],
+ "today": "2026-11-11",
+ "lanes": [
+  {
+   "firm": "UAB „Jurmelsta“",
+   "code": "158257064",
+   "contracts": [
+    {
+     "signed": "2023-04-17",
+     "ends": "2025-04-17",
+     "value_eur": 135423.2,
+     "title": "Jurbarko rajono savivaldybės kelių su žvyro danga priežiūros darbai (2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 24 pirkimo dalys)",
+     "dok_id": "2006188535",
+     "months": 24
+    },
+    {
+     "signed": "2024-02-02",
+     "ends": "2025-01-02",
+     "value_eur": 169927.23,
+     "title": "Dubinių g. (Nr. vm19676), Veliuonos mstl., Veliuonos sen., kapitalinio remonto darbai",
+     "dok_id": "2006819309",
+     "months": 11
+    },
+    {
+     "signed": "2024-02-22",
+     "ends": "2024-12-26",
+     "value_eur": 87082.3,
+     "title": "Motiškių g. (Nr. sr9), Motiškių k., Seredžiaus sen., kapitalinio remonto darbai",
+     "dok_id": "2006850158",
+     "months": 10
+    },
+    {
+     "signed": "2024-06-12",
+     "ends": "2025-02-19",
+     "value_eur": 201472.02,
+     "title": "Bišpilio 1-osios g. (Nr. jrm19694), Jurbarkas, kapitalinio remonto darbai",
+     "dok_id": "2007067824",
+     "months": 8
+    },
+    {
+     "signed": "2024-06-28",
+     "ends": "2024-11-28",
+     "value_eur": 16105.0,
+     "title": "Juodaičių sen. kelio Mišiūnai–Pagausantys (jd10) paprastasis remontas",
+     "dok_id": "2007077283",
+     "months": 5
+    },
+    {
+     "signed": "2024-07-17",
+     "ends": "2024-12-16",
+     "value_eur": 53500.0,
+     "title": "Eržvilko sen. kelio Eržvilkas-Rutkiškiai per Užakmenius (Nr. e50) paprastojo remonto darbai",
+     "dok_id": "2007113378",
+     "months": 5
+    },
+    {
+     "signed": "2024-09-26",
+     "ends": "2024-11-27",
+     "value_eur": 15125.15,
+     "title": "Jurbarko r. sav. Seredžiaus sen., Motiškių k., Motiškių g. (Nr. sr9) kapitalinio remonto papildomi darbai",
+     "dok_id": "2007263968",
+     "months": 2
+    },
+    {
+     "signed": "2024-10-21",
+     "ends": "2024-12-23",
+     "value_eur": 4997.3,
+     "title": "Lietaus nuotekų surinkimo tinklų priežiūros darbai Jurbarkų sen. Rotulių k. Pėsčiųjų tako g. ir Seredžiaus sen. Seredžiaus mstl. Dubysos g.",
+     "dok_id": "2007285203",
+     "months": 2
+    },
+    {
+     "signed": "2024-10-28",
+     "ends": "2024-12-28",
+     "value_eur": 71306.0,
+     "title": "Jurbarkų sen. kelio (Nr. j50) Rotuliai-Kuturiai paprastasis remontas",
+     "dok_id": "2007305797",
+     "months": 2
+    },
+    {
+     "signed": "2024-10-28",
+     "ends": "2027-04-04",
+     "value_eur": 547485.89,
+     "title": "K. Donelaičio gatvės I etapo Jurbarko m., kapitalinis remontas ir lietaus nuotekų tinklų K. Donelaičio g., Jurbarko m., Jurbarko r. sav., atkarpos tarp P. Cvirkos ir Vasario 16-osios įrengimas",
+     "dok_id": "2007342087",
+     "months": 30
+    },
+    {
+     "signed": "2024-12-09",
+     "ends": "2025-02-08",
+     "value_eur": 17577.61,
+     "title": "Sporto paskirties pastato Vydūno g. 15, Jurbarke lietaus nuotekų tinklų paprastasis remontas",
+     "dok_id": "2007438408",
+     "months": 2
+    },
+    {
+     "signed": "2025-03-19",
+     "ends": "2026-11-19",
+     "value_eur": 103654.65,
+     "title": "Jurbarko rajono savivaldybės kelių su žvyro danga priežiūros (greideriavimo) darbai (3, 4, 5, 6, 7, 9, 10)",
+     "dok_id": "2007586625",
+     "months": 20
+    },
+    {
+     "signed": "2025-06-10",
+     "ends": "2025-08-10",
+     "value_eur": 19990.14,
+     "title": "Jurbarko m. Vasario 16-osios ir K. Donelaičio sankryžoje esančių lietaus nuotekų tinklų remonto darbai",
+     "dok_id": "2007693531",
+     "months": 2
+    },
+    {
+     "signed": "2025-07-08",
+     "ends": "2025-09-07",
+     "value_eur": 18045.88,
+     "title": "Jurbarkų sen. Senkelio dalies (Nr. j19) paprastasis remontas",
+     "dok_id": "2007765979",
+     "months": 2
+    },
+    {
+     "signed": "2025-07-08",
+     "ends": "2025-10-06",
+     "value_eur": 16478.48,
+     "title": "Raudonės sen. (Kristapolio g. atšaka) Naujokų k. kelio (Nr. r1) paprastasis remontas",
+     "dok_id": "2007766006",
+     "months": 3
+    },
+    {
+     "signed": "2025-07-31",
+     "ends": "2025-11-30",
+     "value_eur": 9103.0,
+     "title": "Jurbarko miesto seniūnijos kelių su žvyro danga priežiūra (žvyravimas)",
+     "dok_id": "2007756663",
+     "months": 4
+    },
+    {
+     "signed": "2025-10-03",
+     "ends": "2026-02-03",
+     "value_eur": 26701.94,
+     "title": "Kelio Seredžius–Grivančiai (Nr. srm19685-1) paprastasis remontas",
+     "dok_id": "2007817028",
+     "months": 4
+    },
+    {
+     "signed": "2025-10-23",
+     "ends": "2025-12-23",
+     "value_eur": 49502.9,
+     "title": "Veliuonos sen. kelio Griciai–Pramedžiava, Želmenų k. (Nr. v4) paprastasis remontas",
+     "dok_id": "2007840524",
+     "months": 2
+    },
+    {
+     "signed": "2025-11-07",
+     "ends": "2026-02-07",
+     "value_eur": 3896.59,
+     "title": "Šlaito g. (kelias Nr. skm19654) Skirsnemunės sen. Skirsnemunės k. priežiūros darbai (žvyravimas).",
+     "dok_id": "2007867572",
+     "months": 3
+    },
+    {
+     "signed": "2025-11-12",
+     "ends": "2026-02-12",
+     "value_eur": 9074.52,
+     "title": "Įvažiavimo į Jurbarko m. Lauko g. 4 daugiabučio namo kiemą priežiūros darbai.",
+     "dok_id": "2007867749",
+     "months": 3
+    },
+    {
+     "signed": "2025-12-01",
+     "ends": "2026-06-01",
+     "value_eur": 73810.0,
+     "title": "Jurbarko m. Paimsrio pėsčiųjų ir dviračių tako (nuo Pamituvio g. iki Vydūno g.) įrengimas su aprašo parengimu",
+     "dok_id": "2007892092",
+     "months": 6
+    },
+    {
+     "signed": "2026-01-02",
+     "ends": "2026-06-06",
+     "value_eur": 188324.91,
+     "title": "Jurbarko m. Paimsrio pėsčiųjų ir dviračių tako (nuo Tilžės g. iki Vydūno g.) paprastasis remontas su aprašo parengimu",
+     "dok_id": "2007947024",
+     "months": 5
+    },
+    {
+     "signed": "2026-05-15",
+     "ends": "2026-07-15",
+     "value_eur": 17845.54,
+     "title": "Pėsčiųjų tako tarp Vydūno g. 12 ir 12A paprastasis   remontas",
+     "dok_id": "2008102279",
+     "months": 2
+    },
+    {
+     "signed": "2026-05-15",
+     "ends": "2026-07-15",
+     "value_eur": 15642.66,
+     "title": "Pėsčiųjų ir dviračių tako (nuo Paimsrio tako iki Vydūno g. perėjos) paprastasis remontas",
+     "dok_id": "2008102296",
+     "months": 2
+    },
+    {
+     "signed": "2026-06-17",
+     "ends": "2026-06-17",
+     "value_eur": 6050.0,
+     "title": "Pėsčiųjų takų statybos darbai",
+     "dok_id": "1676102410",
+     "months": 0
+    },
+    {
+     "signed": "2026-06-22",
+     "ends": "2029-07-07",
+     "value_eur": 1266169.68,
+     "title": "P. Paulaičio, Pramonės, Statybininkų g. rekonstravimo ir lietaus nuotekų tinklų statybos Jurbarko m., Jurbarko r. sav. darbai",
+     "dok_id": "2008170109",
+     "months": 37
+    },
+    {
+     "signed": "2026-06-30",
+     "ends": "2026-10-30",
+     "value_eur": 100000.45,
+     "title": "Pr. Mikutaičio g., Gedžių k., Jurbarkų sen. paprastasis remontas",
+     "dok_id": "2008163725",
+     "months": 4
+    },
+    {
+     "signed": "2026-08-24",
+     "ends": "2026-11-24",
+     "value_eur": 30250.0,
+     "title": "Darželio g., Smalininkai (Nr. sm4), Smalininkų sen., Jurbarko r. sav. paprastojo remonto darbai",
+     "dok_id": "2008216747",
+     "months": 3
+    },
+    {
+     "signed": "2026-08-26",
+     "ends": "2026-12-26",
+     "value_eur": 112263.8,
+     "title": "Pilies Sodo 1-oji g., Jurbarkas, Jurbarko r. sav. paprastojo remonto darbai",
+     "dok_id": "2008218260",
+     "months": 4
+    }
+   ]
+  },
+  {
+   "firm": "AB „Kelių priežiūra“",
+   "code": "232112130",
+   "contracts": [
+    {
+     "signed": "2023-04-21",
+     "ends": "2025-04-21",
+     "value_eur": 297950.4,
+     "title": "Jurbarko rajono savivaldybės kelių su žvyro danga priežiūros darbai (13, 14, 15, 16, 17, 19, 20, 21, 22, 23 pirkimo dalys)",
+     "dok_id": "2006189601",
+     "months": 24
+    },
+    {
+     "signed": "2023-04-21",
+     "ends": "2025-04-21",
+     "value_eur": 99946.0,
+     "title": "Jurbarko rajono savivaldybės kelių su žvyro danga priežiūros darbai (kelkraščių sutvarkymas)",
+     "dok_id": "2006196448",
+     "months": 24
+    },
+    {
+     "signed": "2024-04-12",
+     "ends": "2024-12-12",
+     "value_eur": 72600.0,
+     "title": "Išdaužų užtaisymo Jurbarko rajono savivaldybės keliuose ir gatvėse su asfaltbetonio danga, priežiūros darbai",
+     "dok_id": "2006933013",
+     "months": 8
+    },
+    {
+     "signed": "2024-05-31",
+     "ends": "2024-11-30",
+     "value_eur": 84700.0,
+     "title": "Jurbarko rajono savivaldybės kelių su asfaltbetonio danga (asfaltbetonio dangos paviršiaus apdorojimas emulsija ir skaldele) paprastojo remonto darbai",
+     "dok_id": "2007053535",
+     "months": 6
+    },
+    {
+     "signed": "2025-04-10",
+     "ends": "2027-04-10",
+     "value_eur": 351066.98,
+     "title": "Jurbarko rajono savivaldybės kelių su žvyro danga priežiūros (žvyravimo) darbai (2-11 pirkimo dalys)",
+     "dok_id": "2007618702",
+     "months": 24
+    },
+    {
+     "signed": "2025-05-08",
+     "ends": "2025-12-08",
+     "value_eur": 90024.0,
+     "title": "Išdaužų užtaisymas Jurbarko rajono savivaldybės keliuose ir gatvėse su asfaltbetonio danga",
+     "dok_id": "2007646649",
+     "months": 7
+    },
+    {
+     "signed": "2025-07-18",
+     "ends": "2025-12-18",
+     "value_eur": 99946.0,
+     "title": "Kelių ir gatvių su asfaltbetonio danga priežiūra užtaisant išdaužas ir atliekant dalinį asfaltbetonio dangos apdorojimą",
+     "dok_id": "2007731717",
+     "months": 5
+    },
+    {
+     "signed": "2026-06-10",
+     "ends": "2026-09-10",
+     "value_eur": 15343.68,
+     "title": "Šaligatvio ir pravažiavimo asfaltbetonio dangos remontas su atitvaro įrengimu Eržvilko mstl., Eržvilko sen.",
+     "dok_id": "2008133806",
+     "months": 3
+    },
+    {
+     "signed": "2026-06-22",
+     "ends": "2026-10-22",
+     "value_eur": 104181.0,
+     "title": "Jurbarko r. savivaldybės kelių ir gatvių su asfaltbetonio danga priežiūra užtaisant išdaužas su daliniu apdaro įrengimu",
+     "dok_id": "2008150883",
+     "months": 4
+    },
+    {
+     "signed": "2026-08-28",
+     "ends": "2026-11-28",
+     "value_eur": 38502.2,
+     "title": "Molynės g., Skirsnemunės k., kelio Nr. skm1-7 ir Skirsnemunės k. kelio Nr. skm1-6 Skirsnemunės sen. Jurbarko r. sav. paprastojo remonto darbai",
+     "dok_id": "2008225583",
+     "months": 3
+    }
+   ]
+  },
+  {
+   "firm": "Tiekėjas dar nepaskelbtas",
+   "code": null,
+   "contracts": [
+    {
+     "signed": "2026-09-04",
+     "ends": "2027-01-04",
+     "value_eur": 388999.27,
+     "title": "Šešuvies g., Varlaukio k., Eržvilko sen. paprastasis remontas",
+     "dok_id": "2008241492",
+     "months": 4
+    },
+    {
+     "signed": "2026-09-28",
+     "ends": "2026-11-28",
+     "value_eur": 9447.35,
+     "title": "Pėsčiųjų tako dangos darbai, adresu Tauragės g.1C, Eržvilko mstl., Jurbarko r.",
+     "dok_id": "2008271473",
+     "months": 2
+    },
+    {
+     "signed": "2026-09-30",
+     "ends": "2026-12-30",
+     "value_eur": 33000.0,
+     "title": "Pėsčiųjų tako dangos darbai",
+     "dok_id": "2008259414",
+     "months": 3
+    },
+    {
+     "signed": "2026-09-30",
+     "ends": "2026-11-30",
+     "value_eur": 33000.0,
+     "title": "Pėsčiųjų tako dangos Eržvilko kapinėse remonto darbai.",
+     "dok_id": "2008262828",
+     "months": 2
+    },
+    {
+     "signed": "2026-10-07",
+     "ends": "2027-02-07",
+     "value_eur": 64009.0,
+     "title": "Šimkaičių sen. kelio Paišlynys-Giegiai (Nr. s6)“ paprastasis remontas",
+     "dok_id": "2008270138",
+     "months": 4
+    },
+    {
+     "signed": "2026-10-07",
+     "ends": "2026-12-16",
+     "value_eur": 17979.97,
+     "title": "Juodaičių sen. kelio Mišiūnai –Pagausantys (Nr. jd10) paprastasis remontas",
+     "dok_id": "2008272124",
+     "months": 2
+    },
+    {
+     "signed": "2026-10-09",
+     "ends": "2027-02-09",
+     "value_eur": 35997.5,
+     "title": "Viešvilės sen. kelio Apšriūtai-Leipgiriai (Nr.vv19) paprastasis remontas",
+     "dok_id": "2008272176",
+     "months": 4
+    }
+   ]
+  },
+  {
+   "firm": "UAB „Keliukas“",
+   "code": "305582970",
+   "contracts": [
+    {
+     "signed": "2025-03-20",
+     "ends": "2027-11-20",
+     "value_eur": 2429.68,
+     "title": "Jurbarko r. savivaldybės kelių su žvyro danga priežiūros darbai (greideriavimas) (1 pirkimo dalis)",
+     "dok_id": "2008035254",
+     "months": 32
+    },
+    {
+     "signed": "2025-10-09",
+     "ends": "2026-04-09",
+     "value_eur": 91919.15,
+     "title": "Jurbarko m. pėsčiųjų ir dviračių tako nuo A. Giedraičio g. iki Barkūnų g. pabaigos įrengimas",
+     "dok_id": "2007825984",
+     "months": 6
+    },
+    {
+     "signed": "2025-10-17",
+     "ends": "2026-02-17",
+     "value_eur": 32612.53,
+     "title": "Seredžiaus sen. kelio Padubysys-Gadvaišai Nr. sr2 paprastasis remontas",
+     "dok_id": "2007836794",
+     "months": 4
+    },
+    {
+     "signed": "2026-06-30",
+     "ends": "2026-06-30",
+     "value_eur": 6025.0,
+     "title": "Pėsčiųjų takų dangos darbai",
+     "dok_id": "1676098744",
+     "months": 0
+    }
+   ]
+  },
+  {
+   "firm": "UAB „Dunokai“",
+   "code": "179340620",
+   "contracts": [
+    {
+     "signed": "2023-04-17",
+     "ends": "2025-04-17",
+     "value_eur": 20400.6,
+     "title": "Jurbarko rajono savivaldybės kelių su žvyro danga priežiūros darbai (1 pirkimo dalis)",
+     "dok_id": "2006188340",
+     "months": 24
+    },
+    {
+     "signed": "2025-03-20",
+     "ends": "2026-11-20",
+     "value_eur": 65926.85,
+     "title": "Jurbarko rajono savivaldybės kelių su žvyro danga priežiūros (greideriavimo) darbai (1, 2, 8, 11 pirkimo dalys)",
+     "dok_id": "2007586576",
+     "months": 20
+    },
+    {
+     "signed": "2026-05-12",
+     "ends": "2026-08-12",
+     "value_eur": 100000.0,
+     "title": "Jurbarko rajono savivaldybės vietinės reikšmės kelių su žvyro danga kelkraščių sutvarkymas",
+     "dok_id": "2008107015",
+     "months": 3
+    }
+   ]
+  },
+  {
+   "firm": "UAB „Ranga 24“",
+   "code": "304897760",
+   "contracts": [
+    {
+     "signed": "2024-12-09",
+     "ends": "2025-02-09",
+     "value_eur": 4300.0,
+     "title": "Pėsčiųjų tako remontas, pritaikant neįgaliesiems Kauno g. 25.",
+     "dok_id": "2007497492",
+     "months": 2
+    },
+    {
+     "signed": "2025-08-07",
+     "ends": "2025-10-08",
+     "value_eur": 6499.94,
+     "title": "Veliuonos civilinių kapinių tako remonto darbai",
+     "dok_id": "2007754786",
+     "months": 2
+    },
+    {
+     "signed": "2025-09-02",
+     "ends": "2025-09-02",
+     "value_eur": 6499.93,
+     "title": "Pėsčiųjų takų dangos darbai",
+     "dok_id": "1675126939",
+     "months": 0
+    }
+   ]
+  },
+  {
+   "firm": "UAB „Velsta“",
+   "code": "304386367",
+   "contracts": [
+    {
+     "signed": "2026-07-30",
+     "ends": "2026-10-30",
+     "value_eur": 5040.0,
+     "title": "Pėsčiųjų tako dangos darbai, adresu Dariaus ir Girėno g. 22, Veliuona",
+     "dok_id": "2008194669",
+     "months": 3
+    },
+    {
+     "signed": "2026-08-04",
+     "ends": "2026-08-04",
+     "value_eur": 5040.0,
+     "title": "Pėsčiųjų takų dangos darbai",
+     "dok_id": "1676181769",
+     "months": 0
+    },
+    {
+     "signed": "2026-08-04",
+     "ends": "2026-11-04",
+     "value_eur": 2698.3,
+     "title": "Šaligatvio prie Dariaus ir Girėno g. Veliuonoje dangos darbai",
+     "dok_id": "2008197602",
+     "months": 3
+    }
+   ]
+  }
+ ]
+}

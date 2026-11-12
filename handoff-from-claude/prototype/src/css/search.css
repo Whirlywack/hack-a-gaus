@@ -1,0 +1,142 @@
+/* ---- Paieška ---- */
+
+.s-find {
+  display: grid;
+  gap: 10px;
+  padding: 18px var(--pad) 22px;
+}
+
+/* The field: the hero of the screen */
+.s-box {
+  display: flex;
+  align-items: center;
+  height: 56px;
+  margin-top: 2px;
+  padding-left: 16px;
+  border: 1px solid var(--ink);
+  background: var(--raise);
+  cursor: text;
+  transition: border-color 160ms var(--ease), box-shadow 160ms var(--ease);
+}
+
+.s-box:focus-within {
+  border-color: var(--accent);
+  box-shadow: inset 0 0 0 1px var(--accent);
+}
+
+.s-box__icon {
+  display: grid;
+  margin-right: 12px;
+  color: var(--ink);
+}
+
+.v .s-box__input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  outline: 0;
+  background: none;
+  color: var(--ink);
+  font: inherit;
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: -0.012em;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.s-box:not([data-filled]) {
+  padding-right: 16px;
+}
+
+.v .s-box__clear {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 54px;
+  height: 100%;
+  border-left: 1px solid var(--line);
+  color: var(--ink-2);
+  transition: color 160ms var(--ease);
+}
+
+.v .s-box__clear:hover {
+  color: var(--ink);
+}
+
+.s-hint {
+  margin-top: 0;
+}
+
+/* The match: ink 600 with an accent rule under it */
+.v .s-hit {
+  font-weight: 600;
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  text-decoration-skip-ink: none;
+}
+
+.s-groups .p-entity__name,
+.s-cols .p-entity__name {
+  font-weight: 500;
+}
+
+.s-none {
+  padding: 14px var(--pad) 18px;
+  border-top: 1px solid var(--line);
+  font-size: 15px;
+  line-height: 21px;
+  color: var(--ink-2);
+}
+
+/* ---- Desktop: the groups as three ruled columns ---- */
+.v-desk .s-find {
+  padding: 28px var(--pad) 34px;
+}
+
+.v-desk .s-box {
+  max-width: 720px;
+}
+
+.s-cols {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) minmax(0, 1fr);
+  border-top: 1px solid var(--line);
+}
+
+.s-cols > * {
+  min-width: 0;
+}
+
+.s-cols > * + * {
+  border-left: 1px solid var(--line);
+}
+
+.s-cols > * > .v-sec {
+  border-top: 0;
+}
+
+.v-desk .s-cols .v-trow {
+  grid-template-columns: 64px minmax(0, 1fr);
+}
+
+/* The field block is closed by a rule; what follows starts under it */
+.s-find {
+  border-bottom: 1px solid var(--line);
+}
+
+.s-find + .s-none,
+.s-groups > .v-sec:first-child,
+.v .s-find + .s-cols {
+  border-top: 0;
+}
+
+.s-cols {
+  border-bottom: 1px solid var(--line);
+}

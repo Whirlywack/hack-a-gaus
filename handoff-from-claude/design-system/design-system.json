@@ -1,0 +1,24 @@
+{
+ "v": 3,
+ "layout": "files",
+ "createdOnFiles": {
+  "v": 1,
+  "at": "2026-11-12T10:32:32Z"
+ },
+ "title": "gaus",
+ "namespace": "Gaus",
+ "libraries": [],
+ "sections": {},
+ "groups": [],
+ "assetGroups": {},
+ "blobs": {},
+ "docs": {
+  "sections": []
+ },
+ "lastChange": {
+  "by": "Dmitry",
+  "at": "2026-11-12T11:34:48Z",
+  "via": "Claude",
+  "note": "Added CodeCells (the e-mail confirmation code) and the rule for how an error is drawn."
+ }
+}

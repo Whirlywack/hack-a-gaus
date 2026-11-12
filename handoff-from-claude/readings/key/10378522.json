@@ -1,0 +1,88 @@
+{
+ "tender_id": "10378522",
+ "files_read": [
+  "10379234_c4t_10378522_1.xml.txt",
+  "10378879_Pirkimo dokumentai___Specialiosios prikimo sąlygos002.docx.txt",
+  "10378879_Pirkimo dokumentai___Bendrosios pirkimo sąlygos.docx.txt",
+  "10378879_Pirkimo dokumentai___Sutarties projektas.docx.txt"
+ ],
+ "qualification_requirements_set": "no",
+ "min_turnover": {
+  "required": false,
+  "amount_eur": null,
+  "period": null,
+  "quote": "Tiekėjams nenustatomi reikalavimai dėl kvalifikacijos ir kokybės vadybos sistemos standartų laikymosi.",
+  "file": "10378879_Pirkimo dokumentai___Specialiosios prikimo sąlygos002.docx.txt"
+ },
+ "similar_contracts": {
+  "required": false,
+  "count": null,
+  "min_value_eur": null,
+  "within_years": null,
+  "description": null,
+  "quote": "Tiekėjams nenustatomi reikalavimai dėl kvalifikacijos ir kokybės vadybos sistemos standartų laikymosi.",
+  "file": "10378879_Pirkimo dokumentai___Specialiosios prikimo sąlygos002.docx.txt"
+ },
+ "certificates_or_licences": [],
+ "named_specialists": [],
+ "right_to_practice_required": {
+  "required": false,
+  "quote": "Tiekėjams nenustatomi reikalavimai dėl kvalifikacijos ir kokybės vadybos sistemos standartų laikymosi.",
+  "file": "10378879_Pirkimo dokumentai___Specialiosios prikimo sąlygos002.docx.txt"
+ },
+ "bid_security": {
+  "required": false,
+  "amount": null,
+  "quote": "6.1. Perkančioji organizacija nereikalauja užtikrinti pasiūlymo galiojimą",
+  "file": "10378879_Pirkimo dokumentai___Specialiosios prikimo sąlygos002.docx.txt"
+ },
+ "exclusion_grounds": "declaration",
+ "other_requirements": [
+  {
+   "what": "Only exclusion ground: VPĮ 46(2¹); absence confirmed by signing the offer form",
+   "quote": "Šio pašalinio pagrindo nebuvimą Tiekėjas patvirtina pateikdamas užpildytą ir pasirašytą Pasiūlymo formą (specialiųjų pirkimo sąlygų  priedas Nr. 3).",
+   "file": "10378879_Pirkimo dokumentai___Specialiosios prikimo sąlygos002.docx.txt"
+  },
+  {
+   "what": "No environmental management system standards required",
+   "quote": "Tiekėjams nenustatomi reikalavimai dėl aplinkos apsaugos vadybos sistemos standartų laikymosi.",
+   "file": "10378879_Pirkimo dokumentai___Specialiosios prikimo sąlygos002.docx.txt"
+  },
+  {
+   "what": "Commitment that only persons with the right to practise will perform the contract",
+   "quote": "Tiekėjas, teikdamas pasiūlymą, įsipareigoja, kad sutartį vykdys tik teisę verstis atitinkama veikla turintys asmenys.",
+   "file": "10378879_Pirkimo dokumentai___Specialiosios prikimo sąlygos002.docx.txt"
+  },
+  {
+   "what": "Maximum bid price 49 973,00 EUR incl. VAT",
+   "quote": "Bendra pasiūlymo kaina negali viršyti 49973,00 Eur su PVM.",
+   "file": "10378879_Pirkimo dokumentai___Specialiosios prikimo sąlygos002.docx.txt"
+  },
+  {
+   "what": "Bid validity at least 90 days",
+   "quote": "90 (devyniasdešimt) dienų nuo pasiūlymų pateikimo galutinio termino pabaigos.",
+   "file": "10378879_Pirkimo dokumentai___Specialiosios prikimo sąlygos002.docx.txt"
+  },
+  {
+   "what": "Joint bidders submit joint-activity agreement copy; subcontractor declaration/consent if subcontractors used",
+   "quote": "5.1.5. jei tiekėjas pasitelkia subtiekėjus, subtiekėjo deklaracija ar kitas dokumentas, patvirtinantis jo sutikimą būti subtiekėju pirkime.",
+   "file": "10378879_Pirkimo dokumentai___Specialiosios prikimo sąlygos002.docx.txt"
+  },
+  {
+   "what": "No performance security; contract secured by penalties",
+   "quote": "Sutarties įvykdymas užtikrinamas netesybomis (delspinigiais ir bauda).",
+   "file": "10378879_Pirkimo dokumentai___Sutarties projektas.docx.txt"
+  },
+  {
+   "what": "Contract: works performed by workers with state-issued documents/certificates of training on manufacturer equipment",
+   "quote": "Darbus atliks darbuotojai, turintys tinkamą Darbams atlikti kvalifikaciją, t. y. turintys valstybės institucijų išduotus dokumentus, suteikiančius teisę atlikti Darbus",
+   "file": "10378879_Pirkimo dokumentai___Sutarties projektas.docx.txt"
+  },
+  {
+   "what": "Guarantee at least 5 years for works, 10 years hidden elements",
+   "quote": "Garantija atliktiems statinio, kuris yra Pirkimo objektas (toliau – statinys), darbams (atliktiems Darbams) – ne mažiau kaip 5 (penkeri) metai;",
+   "file": "10378879_Pirkimo dokumentai___Sutarties projektas.docx.txt"
+  }
+ ],
+ "notes": "No lots (\"Pirkimo objektas į dalis neskaidomas\"). No EBVPD (terms table: EBVPD evaluation \"NETAIKOMA\"). Contract draft refers to qualification requirements for personnel \"apibrėžti Pirkimo sąlygose\", but the special conditions set none. Original docs came in a zip already extracted; no nested archives."
+}

@@ -1,0 +1,97 @@
+{
+ "tender_id": "10384200",
+ "files_read": [
+  "10388492_c4t_10384200_1.xml.txt",
+  "10388080_Specialiosios sąlygos 11-09.docx.txt",
+  "10388072_Bendrosios pirkimo sąlygos_11-09.docx.txt",
+  "10388111_8 priedas Sutarties projektas.docx.txt",
+  "10388084_espd-request (3)__espd-request.pdf.txt",
+  "10388084_espd-request (3)__README.txt.txt",
+  "key_work/10384200/contract_raw.txt (re-extracted from 10388111_8 priedas Sutarties projektas.docx)"
+ ],
+ "qualification_requirements_set": "no",
+ "min_turnover": {
+  "required": false,
+  "amount_eur": null,
+  "period": null,
+  "quote": "4.2. Tiekėjams nenustatomi kvalifikacijos reikalavimai.",
+  "file": "10388080_Specialiosios sąlygos 11-09.docx.txt"
+ },
+ "similar_contracts": {
+  "required": false,
+  "count": null,
+  "min_value_eur": null,
+  "within_years": null,
+  "description": null,
+  "quote": "4.2. Tiekėjams nenustatomi kvalifikacijos reikalavimai.",
+  "file": "10388080_Specialiosios sąlygos 11-09.docx.txt"
+ },
+ "certificates_or_licences": [
+  {
+   "name": "Environmental management system LST EN ISO 14001 or EMAS or equivalent (certificate from an independent body or equivalent evidence); requested only from the provisional winner",
+   "quote": "Rangovas atliekamiems statybos darbams taiko aplinkos apsaugos vadybos sistemos reikalavimus pagal standartą LST EN ISO 14001 arba EMAS ar kitus aplinkos apsaugos vadybos standartus",
+   "file": "10388080_Specialiosios sąlygos 11-09.docx.txt"
+  }
+ ],
+ "named_specialists": [],
+ "right_to_practice_required": {
+  "required": false,
+  "quote": "4.2. Tiekėjams nenustatomi kvalifikacijos reikalavimai.",
+  "file": "10388080_Specialiosios sąlygos 11-09.docx.txt"
+ },
+ "bid_security": {
+  "required": false,
+  "amount": null,
+  "quote": "7.1. Perkančioji organizacija nereikalauja užtikrinti pasiūlymo galiojimą",
+  "file": "10388080_Specialiosios sąlygos 11-09.docx.txt"
+ },
+ "exclusion_grounds": "espd",
+ "other_requirements": [
+  {
+   "what": "EBVPD submitted with the bid (only EBVPD; proof documents only on reasonable doubt); exclusion grounds apply to supplier, all group members and entities relied upon",
+   "quote": "1. Su pasiūlymu teikiamas tik EBVPD.",
+   "file": "10388080_Specialiosios sąlygos 11-09.docx.txt"
+  },
+  {
+   "what": "Environmental management system documents requested only from the most economically advantageous bidder",
+   "quote": "Perkančioji organizacija su pasiūlymu nereikalauja pateikti 1 lentelėje nurodytų dokumentų. Šių dokumentų bus prašoma tik iš ekonomiškai naudingiausią pasiūlymą pateikusio tiekėjo prieš nustatant laimėjusį pasiūlymą.",
+   "file": "10388080_Specialiosios sąlygos 11-09.docx.txt"
+  },
+  {
+   "what": "Group members / subcontractors must apply the environmental management standard according to their obligations",
+   "quote": "Jeigu pasiūlymą teikia tiekėjų grupė – reikalavimą taikyti aplinkos apsaugos vadybos sistemos standartus turi atitikti tiekėjų grupės narys (-iai), atsižvelgiant į jų prisiimamus įsipareigojimus pirkimo sutarčiai vykdyti.",
+   "file": "10388080_Specialiosios sąlygos 11-09.docx.txt"
+  },
+  {
+   "what": "Subcontractor/relied-upon entity form (Annex 9) and priced activity list (Annex 10) with the bid",
+   "quote": "Veiklų sąrašas pagal šių specialiųjų pirkimo sąlygų 10 priede pateiktą formą;",
+   "file": "10388080_Specialiosios sąlygos 11-09.docx.txt"
+  },
+  {
+   "what": "Qualification requirements in the technical design are declared invalid",
+   "quote": "Techniniame darbo projekte Nr. EA-2025-10 numatyti kvalifikacijos reikalavimai, pasiūlymo pateikimo reikalavimai ir subrangos ribojimai - negalioja.",
+   "file": "10388080_Specialiosios sąlygos 11-09.docx.txt"
+  },
+  {
+   "what": "Maximum funds 424 000,00 EUR excl. VAT (513 040,00 EUR incl. VAT)",
+   "quote": "2.5. Maksimalios pirkimui skirtos lėšos – 424.000,00 Eur be PVM (513.040,00 Eur su PVM).",
+   "file": "10388080_Specialiosios sąlygos 11-09.docx.txt"
+  },
+  {
+   "what": "Bid validity at least 90 days",
+   "quote": "90 (devyniasdešimt) dienų nuo pasiūlymų pateikimo galutinio termino pabaigos",
+   "file": "10388080_Specialiosios sąlygos 11-09.docx.txt"
+  },
+  {
+   "what": "Contract: certified construction works manager appointed before works start (if required by law)",
+   "quote": "Iki Darbų pradžios Rangovas privalo paskirti Lietuvos Respublikos teisės aktų nustatyta tvarka atestuotą Statybos darbų vadovą (jeigu tai privaloma pagal teisės aktus)",
+   "file": "10388111_8 priedas Sutarties projektas.docx.txt"
+  },
+  {
+   "what": "Contract: 200 EUR fine per breach of environmental management requirements; guarantee 5/10/20 years, equipment at least 2 years",
+   "quote": "200 (dviejų šimtų eurų) Eur dydžio bauda už kiekvieną nustatytą atvejį",
+   "file": "key_work/10384200/contract_raw.txt"
+  }
+ ],
+ "notes": "No lots (\"Pirkimo objektas į dalis neskaidomas\"). Procedure: simplified open competition (\"supaprastintas pirkimas atviro konkurso būdu\"). No performance security found in the contract draft (special-terms table lists advance payment and retention as \"netaikoma\"; no performance-security row). The contract's special-terms table was missing from the provided text conversion, so the original docx was re-extracted into key_work/10384200/contract_raw.txt. ESPD request Part IV contains only the general α statement on selection criteria, consistent with no qualification requirements. Contract mentions \"Kokybinių kriterijų reikšmes\" although evaluation is lowest price (template wording). qualification_requirements_set is 'no' per the explicit statement \"Reikalavimai tiekėjo kvalifikacijai nenustatomi\"; an environmental management system standard (ISO 14001/EMAS or equivalent) is nevertheless required and recorded under certificates_or_licences."
+}

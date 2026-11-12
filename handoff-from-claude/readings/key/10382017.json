@@ -1,0 +1,89 @@
+{
+  "tender_id": "10382017",
+  "files_read": [
+    "10382107_Pirkimo sąlygos__SPECIALIOSIOS SALYGOS.docx.txt",
+    "10382107_Pirkimo sąlygos__BENDROSIOS KONKURSO SĄLYGOS.docx.txt",
+    "10382107_Pirkimo sąlygos__Pirkimo sąlygų 7 priedas. Sutarties projektas (šokolado plytelės).docx.txt",
+    "10391484_c4t_10382017_1.xml.txt"
+  ],
+  "qualification_requirements_set": "yes",
+  "min_turnover": {
+    "required": null,
+    "amount_eur": null,
+    "period": null,
+    "quote": null,
+    "file": null
+  },
+  "similar_contracts": {
+    "required": true,
+    "count": 1,
+    "min_value_eur": 38200,
+    "within_years": 3,
+    "description": "At least one completed contract for production and/or supply of chocolate or similar confectionery in the last 3 years (or since registration); Lot I min 38 200,00 EUR excl. VAT, Lot II min 23 800,00 EUR excl. VAT; proven by a signed free-form document listing contract name, description, customer, signing date",
+    "quote": "turi būti įvykdęs bent vieną šokolado ar kitų panašių konditerijos gaminių gamybos ir (ar) tiekimo sutartį, kurios vertė būtų ne mažesnė kaip 38 200,00 Eur be PVM.",
+    "file": "10382107_Pirkimo sąlygos__SPECIALIOSIOS SALYGOS.docx.txt"
+  },
+  "certificates_or_licences": [
+    {
+      "name": "Maisto tvarkymo subjekto patvirtinimo pažymėjimas (VMVT) with activity 10.82 or 46.36, or equivalent",
+      "quote": "Tiekėjas turi pateikti teritorinių valstybinių maisto ir veterinarijos tarnybų išduotą Maisto tvarkymo subjekto patvirtinimo pažymėjimą, kuriame įtrauktos veiklos „10.82 Kakavos, šokolado ir cukraus saldumynų gamyba“ / „46.36 Cukraus, šokolado ir cukraus saldumynų didmeninė prekyba“",
+      "file": "10382107_Pirkimo sąlygos__SPECIALIOSIOS SALYGOS.docx.txt"
+    },
+    {
+      "name": "Ekologinės gamybos sertifikatas (Reg. (EU) 2018/848) for the offered product — Lot II only (product/environmental criterion, not supplier qualification)",
+      "quote": "produktai turi turėti ekologinės gamybos (ekologiškam ir perėjimo prie ekologinės gamybos laikotarpio) produktui išduotą sertifikatą pagal 2018 m. gegužės 30 d. Europos Parlamento ir Tarybos reglamento (ES) 2018/848",
+      "file": "10382107_Pirkimo sąlygos__SPECIALIOSIOS SALYGOS.docx.txt"
+    }
+  ],
+  "named_specialists": [],
+  "right_to_practice_required": {
+    "required": true,
+    "quote": "Tiekėjas turi turėti teisę verstis veikla, reikalinga pirkimo sutarčiai įvykdyti.",
+    "file": "10382107_Pirkimo sąlygos__SPECIALIOSIOS SALYGOS.docx.txt"
+  },
+  "bid_security": {
+    "required": false,
+    "amount": null,
+    "quote": "Perkančioji organizacija nereikalauja užtikrinti pasiūlymo galiojimą dokumentu",
+    "file": "10382107_Pirkimo sąlygos__SPECIALIOSIOS SALYGOS.docx.txt"
+  },
+  "exclusion_grounds": "espd",
+  "other_requirements": [
+    {
+      "what": "EBVPD with bid; relied-on entities/subcontractors' EBVPD also required",
+      "quote": "tiekėjas su pasiūlymu privalo pateikti šių subjektų EBVPD, patvirtinančius, kad jie atitinka kvalifikacijos reikalavimus (pagal prisiimamus įsipareigojimus vykdant pirkimo sutartį).",
+      "file": "10382107_Pirkimo sąlygos__SPECIALIOSIOS SALYGOS.docx.txt"
+    },
+    {
+      "what": "Joint bidders: at least one group member must meet qualification requirements",
+      "quote": "kvalifikacijos reikalavimus turi atitikti bent vienas ūkio subjektų grupės narys.",
+      "file": "10382107_Pirkimo sąlygos__SPECIALIOSIOS SALYGOS.docx.txt"
+    },
+    {
+      "what": "No QMS/EMS standards required",
+      "quote": "Tiekėjams nenustatomi reikalavimai dėl kokybės vadybos sistemos ir aplinkos apsaugos vadybos sistemos standartų laikymosi.",
+      "file": "10382107_Pirkimo sąlygos__SPECIALIOSIOS SALYGOS.docx.txt"
+    },
+    {
+      "what": "Declaration on Regulation (EU) 2022/576 / 833/2014 art. 5k with the bid",
+      "quote": "Kartu su pasiūlymu tiekėjas turi pateikti užpildytą deklaraciją dėl (ne)atitikties Reglamento nuostatoms",
+      "file": "10382107_Pirkimo sąlygos__SPECIALIOSIOS SALYGOS.docx.txt"
+    },
+    {
+      "what": "Subcontractor consent declaration; proof relied-on resources available",
+      "quote": "jei tiekėjas pasitelkia subtiekėjus, subtiekėjo deklaracija ar kitas dokumentas, patvirtinantis jo sutikimą būti subtiekėju pirkime;",
+      "file": "10382107_Pirkimo sąlygos__SPECIALIOSIOS SALYGOS.docx.txt"
+    },
+    {
+      "what": "Bid validity at least 90 days",
+      "quote": "Pasiūlymo galiojimo ir pasiūlymo galiojimo užtikrinimo (jei taikoma) terminas ne trumpesnis kaip | 90 (devyniasdešimt) dienų nuo pasiūlymų pateikimo galutinio termino pabaigos",
+      "file": "10382107_Pirkimo sąlygos__SPECIALIOSIOS SALYGOS.docx.txt"
+    },
+    {
+      "what": "No performance security; penalties only",
+      "quote": "Prievolių pagal Sutartį įvykdymas užtikrinamas netesybomis (delspinigiais, bauda).",
+      "file": "10382107_Pirkimo sąlygos__Pirkimo sąlygų 7 priedas. Sutarties projektas (šokolado plytelės).docx.txt"
+    }
+  ],
+  "notes": "2 lots: I – šokoladas plytelėmis (161 000 vnt., budget 154 000,00 EUR incl. VAT); II – eco chocolate (69 000 vnt., budget 96 000,00 EUR incl. VAT). Similar-contract threshold per lot: Lot I 38 200,00 EUR excl. VAT, Lot II 23 800,00 EUR excl. VAT (strictest recorded). Right-to-practice (VMVT approval certificate) applies to both lots. Organic certificate is a Lot II product requirement. Special conditions list the contract as annex 8 but the file is named '7 priedas' (annex 7 in the list is the Regulation declaration). Nested espd-request.zip inside the original zip was not opened (annex 5 only says EBVPD is provided in XML)."
+}

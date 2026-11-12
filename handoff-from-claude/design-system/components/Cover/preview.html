@@ -1,0 +1,49 @@
+<!-- @dsCard height=288 -->
+<!doctype html>
+<html lang="lt">
+<head>
+<meta charset="utf-8">
+<title>gaus</title>
+<style>
+  html, body { margin:0; height:100%; }
+  body { background:var(--ground); color:var(--ink); font-family:var(--font-sans); overflow:hidden; }
+  .cover { position:relative; height:288px; overflow:hidden; }
+  .art { position:absolute; top:0; left:480px; width:480px; height:288px; overflow:hidden; }
+  .art svg { display:block; width:480px; height:288px; }
+  .accent { fill:var(--accent); }
+  .deep { fill:var(--ink); }
+  .tint { fill:var(--band); }
+  .due { fill:var(--urgent); }
+  .blk { rx:var(--radius-0); }
+  .pg, .pi, .pb { fill:none; stroke-width:1; }
+  .pg, .pi { stroke:var(--ground); }
+  .pb { stroke:var(--ink-2); }
+  .words { position:absolute; left:var(--space-7); bottom:var(--space-7); max-width:440px; }
+  .name { margin:0; font-size:120px; line-height:.9; font-weight:600; letter-spacing:-.045em; color:var(--ink); }
+  .tag { margin:var(--space-4) 0 0 6px; font-size:14px; line-height:20px; color:var(--ink-2); }
+</style>
+</head>
+<body>
+<div class="cover">
+<div class="art" aria-hidden="true">
+<svg viewBox="0 0 480 288" width="480" height="288">
+<!--
+  blocks      accent 240x288 bled off the top, right and bottom (the one accent, largest) · ink 144x120 bled off the top · band 144x168 under it (the tint) · urgent 48x48 once (it only ever means a deadline) : about 41% of 960x288
+  arrangement flush ruled cells that share their edges, as every gaus screen is built: no gutters
+  pattern     a plus grid, from "the structure is visible; a plus where rules meet": plus marks at a 48px pitch (two space-6 steps) over the cells, ground-coloured on accent and ink, ink-2 on band
+  scales      block sides in multiples of space-6 (24px); pitch 48px; plus arms 9px; corners radius-0
+-->
+<rect class="deep blk" x="96" y="0" width="144" height="120"/>
+<rect class="tint blk" x="96" y="120" width="144" height="168"/>
+<rect class="accent blk" x="240" y="0" width="240" height="288"/>
+<rect class="due blk" x="48" y="240" width="48" height="48"/>
+<path class="pi" d="M92 24.5h9M96.5 20v9"/><path class="pi" d="M92 72.5h9M96.5 68v9"/><path class="pb" d="M92 120.5h9M96.5 116v9"/><path class="pb" d="M92 168.5h9M96.5 164v9"/><path class="pb" d="M92 216.5h9M96.5 212v9"/><path class="pb" d="M92 264.5h9M96.5 260v9"/><path class="pi" d="M140 24.5h9M144.5 20v9"/><path class="pi" d="M140 72.5h9M144.5 68v9"/><path class="pb" d="M140 120.5h9M144.5 116v9"/><path class="pb" d="M140 168.5h9M144.5 164v9"/><path class="pb" d="M140 216.5h9M144.5 212v9"/><path class="pb" d="M140 264.5h9M144.5 260v9"/><path class="pi" d="M188 24.5h9M192.5 20v9"/><path class="pi" d="M188 72.5h9M192.5 68v9"/><path class="pb" d="M188 120.5h9M192.5 116v9"/><path class="pb" d="M188 168.5h9M192.5 164v9"/><path class="pb" d="M188 216.5h9M192.5 212v9"/><path class="pb" d="M188 264.5h9M192.5 260v9"/><path class="pg" d="M236 24.5h9M240.5 20v9"/><path class="pg" d="M236 72.5h9M240.5 68v9"/><path class="pg" d="M236 120.5h9M240.5 116v9"/><path class="pg" d="M236 168.5h9M240.5 164v9"/><path class="pg" d="M236 216.5h9M240.5 212v9"/><path class="pg" d="M236 264.5h9M240.5 260v9"/><path class="pg" d="M284 24.5h9M288.5 20v9"/><path class="pg" d="M284 72.5h9M288.5 68v9"/><path class="pg" d="M284 120.5h9M288.5 116v9"/><path class="pg" d="M284 168.5h9M288.5 164v9"/><path class="pg" d="M284 216.5h9M288.5 212v9"/><path class="pg" d="M284 264.5h9M288.5 260v9"/><path class="pg" d="M332 24.5h9M336.5 20v9"/><path class="pg" d="M332 72.5h9M336.5 68v9"/><path class="pg" d="M332 120.5h9M336.5 116v9"/><path class="pg" d="M332 168.5h9M336.5 164v9"/><path class="pg" d="M332 216.5h9M336.5 212v9"/><path class="pg" d="M332 264.5h9M336.5 260v9"/><path class="pg" d="M380 24.5h9M384.5 20v9"/><path class="pg" d="M380 72.5h9M384.5 68v9"/><path class="pg" d="M380 120.5h9M384.5 116v9"/><path class="pg" d="M380 168.5h9M384.5 164v9"/><path class="pg" d="M380 216.5h9M384.5 212v9"/><path class="pg" d="M380 264.5h9M384.5 260v9"/><path class="pg" d="M428 24.5h9M432.5 20v9"/><path class="pg" d="M428 72.5h9M432.5 68v9"/><path class="pg" d="M428 120.5h9M432.5 116v9"/><path class="pg" d="M428 168.5h9M432.5 164v9"/><path class="pg" d="M428 216.5h9M432.5 212v9"/><path class="pg" d="M428 264.5h9M432.5 260v9"/><path class="pg" d="M476 24.5h9M480.5 20v9"/><path class="pg" d="M476 72.5h9M480.5 68v9"/><path class="pg" d="M476 120.5h9M480.5 116v9"/><path class="pg" d="M476 168.5h9M480.5 164v9"/><path class="pg" d="M476 216.5h9M480.5 212v9"/><path class="pg" d="M476 264.5h9M480.5 260v9"/>
+</svg>
+</div>
+<div class="words">
+<h1 class="name">gaus</h1>
+<p class="tag">Viešųjų pirkimų įrankis tiekėjams</p>
+</div>
+</div>
+</body>
+</html>

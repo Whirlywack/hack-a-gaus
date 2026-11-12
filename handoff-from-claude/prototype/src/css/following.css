@@ -1,0 +1,70 @@
+/* ---- Stebimi ---- */
+
+/* An open tender and its stage share one ruled row */
+.fo-item > .v-trow {
+  padding-bottom: 0;
+}
+
+.fo-open .v-sec__head + .fo-item > .v-trow {
+  border-top-color: var(--line);
+}
+
+.fo-stage {
+  padding: 14px var(--pad) 16px calc(var(--pad) + 58px);
+}
+
+.fo-stage .v-rtabs {
+  padding: 0;
+}
+
+.fo-stage .v-rtab {
+  min-height: 0;
+  padding-bottom: 0;
+}
+
+/* Buyers, firms and contracts */
+.fo-w {
+  display: grid;
+  gap: 6px;
+  padding: 14px var(--pad) 16px;
+}
+
+.fo-w__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 21px;
+}
+
+.fo-w__news {
+  display: grid;
+  gap: 4px;
+  margin-top: 2px;
+  font-size: 13.5px;
+  line-height: 19px;
+  color: var(--ink-2);
+}
+
+.v .fo-b {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+/* ---- Desktop ---- */
+.v-desk .fo-stage {
+  padding-left: calc(var(--pad) + 100px);
+}
+
+.v-desk .fo-stage .v-rtabs {
+  grid-auto-columns: minmax(0, 1fr);
+  max-width: 520px;
+}
+
+.v-desk .fo-w {
+  padding: 16px var(--pad) 18px;
+}
+
+.v-desk .fo-cols {
+  border-bottom: 1px solid var(--line);
+}

@@ -1,0 +1,102 @@
+{
+  "tender_id": "10324146",
+  "files_read": [
+    "10370150_1 priedas_Terminai.docx.txt",
+    "10370151_2 priedas_Technine specifikacija.docx.txt",
+    "10370152_3 priedas_Tieke_ju_ pas_alinimo pagrindai.docx.txt",
+    "10370153_4 priedas_Kvalifikacijos reikalavimai.docx.txt",
+    "10370155_5 priedas_EBVPD.docx.txt",
+    "10370159_6 priedas_Pasiulymo forma.docx.txt",
+    "10370162_7 priedas_Pasiūlymų vertinimo kriterijai.docx.txt",
+    "10370197_11 priedas_Sutarties projektas.docx.txt",
+    "10370166_12 priedas_Tiekėjo subtiekejo deklaracijos forma.docx.txt",
+    "10370169_13 priedas_Suteiktų paslaugų sąrašas.docx.txt"
+  ],
+  "qualification_requirements_set": "yes",
+  "min_turnover": {
+    "required": null,
+    "amount_eur": null,
+    "period": null,
+    "quote": null,
+    "file": null
+  },
+  "similar_contracts": {
+    "required": true,
+    "count": null,
+    "min_value_eur": 120000,
+    "within_years": 3,
+    "description": "Travel and/or business-trip and/or tourism organisation services provided (or being provided) with own resources under one or more contracts in the last 3 years (or since registration), total value at least 120 000,00 EUR excl. VAT; joint bidders' experience may be summed; not required of subcontractors; proven by list (Annex 13) and customer certificates",
+    "quote": "pagal vieną ar daugiau sutarčių yra savo jėgomis tinkamai suteikęs arba teikia kelionių ir (ar) komandiruočių ir (ar) turizmo organizavimo paslaugų, kurių vertė yra ne mažesnė kaip 120 000,00 EUR be PVM.",
+    "file": "10370153_4 priedas_Kvalifikacijos reikalavimai.docx.txt"
+  },
+  "certificates_or_licences": [
+    {
+      "name": "IATA membership certificate or equivalent (or proof of technical capabilities meeting IATA member requirements and means for prompt ticket reservation)",
+      "quote": "Tiekėjas turi būti Tarptautinės oro transporto asociacijos (IATA) nariu arba turėti technines galimybes, atitinkančias reikalavimus IATA nariams bei technines priemones operatyviai bilietų rezervacijai.",
+      "file": "10370153_4 priedas_Kvalifikacijos reikalavimai.docx.txt"
+    },
+    {
+      "name": "Valid IATA certificate (or equivalent) of the specialist(s) who will provide the services",
+      "quote": "Tiekėjas turi turėti arba pasitelkti specialistą (-us), turintį (-čius) galiojantį IATA sertifikatą arba lygiavertį dokumentą",
+      "file": "10370153_4 priedas_Kvalifikacijos reikalavimai.docx.txt"
+    }
+  ],
+  "named_specialists": [
+    {
+      "role": "kelionių organizavimo specialistas (1, named in bid; experience scored in evaluation)",
+      "qualification": "Valid IATA certificate or equivalent (Annex 4 p. 2.2); CV with professional experience in travel organisation required with bid",
+      "quote": "Tiekėjas nurodo 1 (vieną) kelionių organizavimo specialistą, kuris tiesiogiai teiks paslaugas Perkančiajai organizacijai (priims, apdoros ir vykdys kelionių užsakymus)",
+      "file": "10370159_6 priedas_Pasiulymo forma.docx.txt"
+    }
+  ],
+  "right_to_practice_required": {
+    "required": true,
+    "quote": "Tiekėjas turi teisę verstis veikla, kuri reikalinga pirkimo sutarčiai įvykdyti: kelionių organizavimu/ kelionių agentūrų veikla  atvykstamojo, išvykstamojo kelionių ir vietinio turizmo srityse.",
+    "file": "10370153_4 priedas_Kvalifikacijos reikalavimai.docx.txt"
+  },
+  "bid_security": {
+    "required": false,
+    "amount": null,
+    "quote": "Pasiūlymo galiojimo užtikrinimas pirkimo dalyviui grąžinamas (arba atsisakoma teisių į jį) per | NETAIKOMA",
+    "file": "10370150_1 priedas_Terminai.docx.txt"
+  },
+  "exclusion_grounds": "espd",
+  "other_requirements": [
+    {
+      "what": "EBVPD (ESPD) submitted with bid as preliminary proof; documents requested only from best-ranked bidder",
+      "quote": "Su pasiūlymu teikiamas tik EBVPD.",
+      "file": "10370152_3 priedas_Tieke_ju_ pas_alinimo pagrindai.docx.txt"
+    },
+    {
+      "what": "Optional exclusion grounds of VPĮ 46 str. 6 d. applied only partly (C1-C9 unticked in EBVPD); 46 str. 6 d. 3 p. applied",
+      "quote": "VPĮ 46 str. 6 dalyje nurodyti papildomi pašalinimo pagrindai   keliami ne visa apimtini, todėl kuriant EBVPD III dalyje C punkte nuimamos varnelės nuo C1-C9.",
+      "file": "10370155_5 priedas_EBVPD.docx.txt"
+    },
+    {
+      "what": "No quality / environmental management system standards required",
+      "quote": "Perkančioji organizacija nereikalauja, kad tiekėjai laikytųsi kokybės vadybos sistemos ir (arba) aplinkos apsaugos vadybos sistemos standartų.",
+      "file": "10370153_4 priedas_Kvalifikacijos reikalavimai.docx.txt"
+    },
+    {
+      "what": "Supplier/subcontractor declaration on Russian participation (Reg. (EU) 833/2014) and international sanctions",
+      "quote": "Patvirtinu, kad mano atstovaujamo tiekėjo/subtiekėjo sudėtyje nėra Rusijos dalyvavimo, viršijančio 2014 m. liepos 31 d. Tarybos reglamento (ES) Nr. 833/2014",
+      "file": "10370166_12 priedas_Tiekėjo subtiekejo deklaracijos forma.docx.txt"
+    },
+    {
+      "what": "Relied-on entities must submit their own EBVPD; subcontractors to be listed with share of contract",
+      "quote": "Kartu su pasiūlymu turi būti pateikti ūkio subjektų, kurių pajėgumais remiamasi, užpildyti ir pasirašyti EBVPD.",
+      "file": "10370159_6 priedas_Pasiulymo forma.docx.txt"
+    },
+    {
+      "what": "Bid validity at least 90 days",
+      "quote": "Pasiūlymas galioja ne trumpiau nei 90 kalendorinių dienų nuo paskutinės pasiūlymo pateikimo dienos",
+      "file": "10370159_6 priedas_Pasiulymo forma.docx.txt"
+    },
+    {
+      "what": "No performance security; obligations secured by penalties",
+      "quote": "Prievolių pagal Sutartį įvykdymas užtikrinamas:\nNetesybomis (delspinigiais, bauda).",
+      "file": "10370197_11 priedas_Sutarties projektas.docx.txt"
+    }
+  ],
+  "notes": "The main tender conditions (konkurso bendrosios ir specialiosios sąlygos) and the notice are not among the documents; only annexes 1-7, 11-13 are present, so a turnover requirement or bid-security clause stated there cannot be checked. Bid security recorded as not required based on Annex 1 'NETAIKOMA' entries for bid-security handling. Similar-experience value 120 000,00 EUR excl. VAT is cumulative over one or more contracts (count not fixed). Maximum contract value 200 000,00 EUR excl. VAT. Not divided into lots. Tech spec also requires all licences/permits for the services during the contract."
+}

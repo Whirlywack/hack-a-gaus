@@ -1,0 +1,58 @@
+{
+ "tender_id": "10396017",
+ "files_read": [
+  "10396201_MVP sąlygos_Diskinis skutikas.docx.txt (grep + 3 skyrius)",
+  "10396206_Sutartis_Diskinis skutikas.doc.txt (grep)"
+ ],
+ "chars_read": 8000,
+ "seconds": 60,
+ "qualification_requirements_set": "no",
+ "min_turnover": {
+  "required": null,
+  "amount_eur": null,
+  "period": null,
+  "quote": null,
+  "file": null
+ },
+ "similar_contracts": {
+  "required": null,
+  "count": null,
+  "min_value_eur": null,
+  "within_years": null,
+  "description": null,
+  "quote": null,
+  "file": null
+ },
+ "certificates_or_licences": [],
+ "named_specialists": [],
+ "right_to_practice_required": {
+  "required": false,
+  "quote": "Tiekėjo kvalifikacija dėl teisės verstis atitinkama veikla nėra tikrinama, todėl tiekėjas perkančiajai organizacijai įsipareigoja, kad Sutartį vykdys tik tokią teisę turintys asmenys.",
+  "file": "10396201_MVP sąlygos_Diskinis skutikas.docx.txt"
+ },
+ "bid_security": {
+  "required": null,
+  "amount": null,
+  "quote": null,
+  "file": null
+ },
+ "exclusion_grounds": "declaration",
+ "other_requirements": [
+  {
+   "what": "Laisvos formos deklaracija dėl pašalinimo pagrindų nebuvimo su pasiūlymu",
+   "quote": "Tiekėjas teikdamas pasiūlymą turi pateikti laisvos formos deklaracija dėl pašalinimo pagrindų nebuvimo.",
+   "file": "10396201_MVP sąlygos_Diskinis skutikas.docx.txt"
+  },
+  {
+   "what": "Galimas laimėtojas pateikia steigimo dokumentus / kilmės dokumentą",
+   "quote": "prekių kilmės sertifikatą, gamintojo deklaraciją ar kitą dokumentą, patvirtinantį ketinamų įsigyti prekių kilmę.",
+   "file": "10396201_MVP sąlygos_Diskinis skutikas.docx.txt"
+  },
+  {
+   "what": "Sutarties įvykdymo užtikrinimas (banko garantija/laidavimo raštas): sutarties bendroji dalis numato, o specialioji dalis sako nereikalaujama",
+   "quote": "Sutarties įvykdymui užtikrinti banko garantijos ar draudimo bendrovės laidavimo rašto  nereikalaujama.",
+   "file": "10396206_Sutartis_Diskinis skutikas.doc.txt"
+  }
+ ],
+ "notes": "Atskirų kvalifikacijos reikalavimų (finansinių, techninių) nenustatyta; pasiūlymo galiojimo užtikrinimas paminėtas tik sąlyginai ('jeigu jo reikalaujama'), aiškaus reikalavimo ar atsisakymo nerasta. Sutarties 12.1 punktas dar mini įvykdymo užtikrinimą – prieštaravimas su 8.1."
+}

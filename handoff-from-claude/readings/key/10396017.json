@@ -1,0 +1,82 @@
+{
+  "tender_id": "10396017",
+  "files_read": [
+    "10396201_MVP sąlygos_Diskinis skutikas.docx.txt",
+    "10396206_Sutartis_Diskinis skutikas.doc.txt",
+    "10398733_c4t_10396017_1.xml.txt"
+  ],
+  "qualification_requirements_set": "no",
+  "min_turnover": {
+    "required": null,
+    "amount_eur": null,
+    "period": null,
+    "quote": null,
+    "file": null
+  },
+  "similar_contracts": {
+    "required": null,
+    "count": null,
+    "min_value_eur": null,
+    "within_years": null,
+    "description": null,
+    "quote": null,
+    "file": null
+  },
+  "certificates_or_licences": [],
+  "named_specialists": [],
+  "right_to_practice_required": {
+    "required": false,
+    "quote": "Tiekėjo kvalifikacija dėl teisės verstis atitinkama veikla nėra tikrinama, todėl tiekėjas perkančiajai organizacijai įsipareigoja, kad Sutartį vykdys tik tokią teisę turintys asmenys.",
+    "file": "10396201_MVP sąlygos_Diskinis skutikas.docx.txt"
+  },
+  "bid_security": {
+    "required": null,
+    "amount": null,
+    "quote": null,
+    "file": null
+  },
+  "exclusion_grounds": "declaration",
+  "other_requirements": [
+    {
+      "what": "Free-form declaration of absence of exclusion grounds (VPĮ 46 str. / 45 str. 2¹ d.) with the bid",
+      "quote": "Tiekėjas teikdamas pasiūlymą turi pateikti laisvos formos deklaracija dėl pašalinimo pagrindų nebuvimo.",
+      "file": "10396201_MVP sąlygos_Diskinis skutikas.docx.txt"
+    },
+    {
+      "what": "Likely winner must submit ownership/control documents (incorporation docs, JAR extended extract, JADIS extract) for supplier, subcontractors, relied-on entities and manufacturers, plus proof of goods origin",
+      "quote": "c) prekių kilmės sertifikatą, gamintojo deklaraciją ar kitą dokumentą, patvirtinantį ketinamų įsigyti prekių kilmę.",
+      "file": "10396201_MVP sąlygos_Diskinis skutikas.docx.txt"
+    },
+    {
+      "what": "Military-territory access restrictions apply to supplier, subcontractors, manufacturers etc.; no citizens of hostile states may be engaged where access to military territory is needed",
+      "quote": "Pardavėjas įsipareigoja nepasitelkti priešiškų valstybių piliečių (darbuotojų, subtiekėjų ir kt.), kai vykdant Sutartyje numatytus įsipareigojimus reikia patekti į karinę teritoriją.",
+      "file": "10396206_Sutartis_Diskinis skutikas.doc.txt"
+    },
+    {
+      "what": "Joint bidders must submit joint activity agreement",
+      "quote": "Jei pasiūlymą teikia ūkio subjektų grupė, ji taip pat pateikia ir jungtinės veiklos sutarties kopiją.",
+      "file": "10396201_MVP sąlygos_Diskinis skutikas.docx.txt"
+    },
+    {
+      "what": "Subcontractors to be named in bid",
+      "quote": "Savo pasiūlyme tiekėjas turi nurodyti, kokius subtiekėjus / subteikėjus / subrangovus jis ketina pasitelkti, jei pasitelks.",
+      "file": "10396201_MVP sąlygos_Diskinis skutikas.docx.txt"
+    },
+    {
+      "what": "Manufacturer technical declarations / descriptions proving compliance; CE marking / EU declaration of conformity where applicable",
+      "quote": "Kai taikoma, turi būti pateiktas CE ženklinimas ir (arba) ES atitikties deklaracija.",
+      "file": "10396201_MVP sąlygos_Diskinis skutikas.docx.txt"
+    },
+    {
+      "what": "Bid validity 90 days",
+      "quote": "Pasiūlymas turi galioti 90 dienų nuo pasiūlymų pateikimo termino pabaigos.",
+      "file": "10396201_MVP sąlygos_Diskinis skutikas.docx.txt"
+    },
+    {
+      "what": "No performance security",
+      "quote": "Sutarties įvykdymui užtikrinti banko garantijos ar draudimo bendrovės laidavimo rašto  nereikalaujama.",
+      "file": "10396206_Sutartis_Diskinis skutikas.doc.txt"
+    }
+  ],
+  "notes": "Small-value procurement (skelbiama apklausa), buyer Lietuvos kariuomenės Generolo Adolfo Ramanausko kovinio rengimo centras. Not divided into lots. Bid security not addressed (5.10 only says 'jeigu jo reikalaujama') → null. The contract .doc text and its _lo duplicate are identical. Warranty min. 12 months."
+}

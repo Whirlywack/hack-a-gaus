@@ -1,0 +1,109 @@
+{
+ "tender_id": "10389181",
+ "files_read": [
+  "10389416_c4t_10389181_1.xml.txt",
+  "10389336_21737-1105.2__Pirkimo_salygos.docx.txt",
+  "10389336_21737-1105.2__Priedas_8_Kvalifikacijos ir kiti reikalavimai tiek_jui Violeta.docx.txt",
+  "10389336_21737-1105.2__Priedas_9_DEKLARACIJA.docx.txt",
+  "10389336_21737-1105.2__Pasiulymo_forma.xlsx.txt",
+  "10389336_21737-1105.2__Darb_ pirkimo sutarties projektas_.docx.txt",
+  "10389336_21737-1105.2__Priedas_5_Technine_specifikacija_(darbu_paaiskinimai).docx.txt"
+ ],
+ "qualification_requirements_set": "yes",
+ "min_turnover": {
+  "required": null,
+  "amount_eur": null,
+  "period": null,
+  "quote": null,
+  "file": null
+ },
+ "similar_contracts": {
+  "required": null,
+  "count": null,
+  "min_value_eur": null,
+  "within_years": null,
+  "description": null,
+  "quote": null,
+  "file": null
+ },
+ "certificates_or_licences": [
+  {
+   "name": "Specialist's kvalifikacijos atestatas (special construction works manager, cultural-heritage endorsement) issued by SSVA",
+   "quote": "Kvalifikacijos atestate, išduotame po 2017 m. sausio 1 d. turi būti įrašyta „taip pat minėti statiniai, esantys kultūros paveldo objekto teritorijoje, jo apsaugos zonoje, kultūros paveldo vietovėje“.",
+   "file": "10389336_21737-1105.2__Priedas_8_Kvalifikacijos ir kiti reikalavimai tiek_jui Violeta.docx.txt"
+  }
+ ],
+ "named_specialists": [
+  {
+   "role": "ypatingojo statinio specialiųjų statybos darbų vadovas (statinio elektros inžinerinių sistemų įrengimas)",
+   "qualification": "At least 1 specialist entitled to act as special construction works manager of an exceptional structure in a cultural-heritage object territory; group: negyvenamieji pastatai, sub-group: kultūros paskirties pastatai; work area: statinio elektros inžinerinių sistemų įrengimas. If not an employee, signed consent to be submitted with the bid; if employee, proof of employment.",
+   "quote": "Tiekėjas privalo turėti bent 1 (vieną) specialistą turinčio teisę eiti ypatingojo \nstatinio, esančio kultūros paveldo objekto teritorijoje, jo apsaugos zonoje, kultūros paveldo vietovėje statinio specialiųjų statybos darbų vadovo pareigas",
+   "file": "10389336_21737-1105.2__Priedas_8_Kvalifikacijos ir kiti reikalavimai tiek_jui Violeta.docx.txt"
+  }
+ ],
+ "right_to_practice_required": {
+  "required": null,
+  "quote": null,
+  "file": null
+ },
+ "bid_security": {
+  "required": false,
+  "amount": null,
+  "quote": "7.1. Pasiūlymo galiojimo užtikrinimas nereikalaujamas.",
+  "file": "10389336_21737-1105.2__Pirkimo_salygos.docx.txt"
+ },
+ "exclusion_grounds": "espd",
+ "other_requirements": [
+  {
+   "what": "EBVPD (ESPD) to be submitted with the bid by supplier, each group member and each entity relied upon",
+   "quote": "5.10.3. Užpildytas Europos bendrasis viešųjų pirkimų dokumentas (EBVPD) parengtas pagal pirkimo sąlygų priedą.",
+   "file": "10389336_21737-1105.2__Pirkimo_salygos.docx.txt"
+  },
+  {
+   "what": "Qualification documents submitted by the provisional winner within 3 working days of notice",
+   "quote": "ne vėliau kaip per 3 darbo dienas nuo pranešimo gavimo dienos privalo pateikti pirkimo sąlygų priede „Kvalifikacijos ir kiti reikalavimai tiekėjui“ nurodytus kvalifikaciją pagrindžiančius dokumentus",
+   "file": "10389336_21737-1105.2__Pirkimo_salygos.docx.txt"
+  },
+  {
+   "what": "Signed declaration on compliance with environmental (green procurement) requirements submitted with bid",
+   "quote": "5.10.5. Pasirašyta deklaracija dėl aplinkos apsaugos reikalavimų laikymosi.",
+   "file": "10389336_21737-1105.2__Pirkimo_salygos.docx.txt"
+  },
+  {
+   "what": "Joint bidders: joint-activity agreement with solidary liability; group members' specialists must meet the requirement per their obligations; subcontractors performing the relevant part must meet it too",
+   "quote": "subtiekėjų specialistai privalo atitikti nustatytus reikalavimus, jeigu subtiekėjai (jų darbuotojai) patys vykdys tą pirkimo sutarties dalį, kuriai reikia nustatytos kvalifikacijos.",
+   "file": "10389336_21737-1105.2__Priedas_8_Kvalifikacijos ir kiti reikalavimai tiek_jui Violeta.docx.txt"
+  },
+  {
+   "what": "Bid validity at least 90 days",
+   "quote": "5.7. Pasiūlymas turi galioti ne trumpiau nei 90 dienų nuo konkurso pasiūlymų pateikimo termino pabaigos.",
+   "file": "10389336_21737-1105.2__Pirkimo_salygos.docx.txt"
+  },
+  {
+   "what": "Performance security: at least 5% of initial contract value excl. VAT, within 10 working days of signing (bank guarantee, insurance surety or transfer)",
+   "quote": "Rangovas per 10 (dešimt) darbo dienų nuo Pirkimo sutarties pasirašymo dienos privalo pateikti Pirkimo sutarties įvykdymo užtikrinimą, kurio vertė ne mažesnė kaip 5 % nuo pradinės Pirkimo sutarties vertės be PVM.",
+   "file": "10389336_21737-1105.2__Darb_ pirkimo sutarties projektas_.docx.txt"
+  },
+  {
+   "what": "Defects-remedy guarantee-period security 5% of initial contract value (or withholding)",
+   "quote": "Rangovas per  10 (dešimt) darbo dienų nuo visų Darbų atlikimo pabaigos privalo pateikti Defektų ištaisymo garantiniu laikotarpiu užtikrinimą",
+   "file": "10389336_21737-1105.2__Darb_ pirkimo sutarties projektas_.docx.txt"
+  },
+  {
+   "what": "Civil liability insurance (Statybos įstatymo 42 str.) within 10 days of signing; construction-works insurance at full reinstatement value within 10 working days",
+   "quote": "civilinės atsakomybės draudimas turi būti pateiktas per 10 d. nuo sutarties pasirašymo dienos",
+   "file": "10389336_21737-1105.2__Darb_ pirkimo sutarties projektas_.docx.txt"
+  },
+  {
+   "what": "5-year works guarantee",
+   "quote": "7.5. Rangovas įsipareigoja kokybiškai atlikti darbus ir suteikti 5 (penkių) metų garantiją, skaičiuojant nuo darbų atlikimo pabaigos.",
+   "file": "10389336_21737-1105.2__Darb_ pirkimo sutarties projektas_.docx.txt"
+  },
+  {
+   "what": "Commitment that only persons with the right to practise will perform the contract if not checked",
+   "quote": "Jeigu tiekėjo kvalifikacija dėl teisės verstis atitinkama veikla nebuvo tikrinama arba tikrinama ne visa apimtimi, tiekėjas perkančiajai organizacijai  įsipareigoja, kad pirkimo sutartį  vykdys tik tokią  teisę  turintys asmenys.",
+   "file": "10389336_21737-1105.2__Pirkimo_salygos.docx.txt"
+  }
+ ],
+ "notes": "No lots (\"Pirkimas nėra skaidomas į pirkimo dalis\"). Only qualification requirement: one specialist (special construction works manager, electrical systems, cultural heritage). Annex 8 file is headed both \"PAŠALINIMO PAGRINDAI\" and \"KVALIFIKACIJOS REIKALAVIMAI TIEKĖJUI\"; conditions 13.1.3 call it \"Kvalifikacinių reikalavimų lentelė\". Company right to practise not separately required (only the specialist's right; fallback commitment in 3.3), so right_to_practice_required left null. Offer form shows budget \"Dalies biudžetas su PVM: 20000 Eur\" (incl. VAT). Performance security 5% is excl. VAT basis. EBVPD annex (Priedas_7_EBVPD.zip, nested) was not opened."
+}

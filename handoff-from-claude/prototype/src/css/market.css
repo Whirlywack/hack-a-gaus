@@ -1,0 +1,39 @@
+/* Rinka (prefix m-) */
+
+.m-scope {
+  padding-top: 18px;
+}
+
+.m-scope + .v-answer {
+  border-top: 1px solid var(--line);
+}
+
+.m-cols {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid var(--line);
+}
+
+.m-cols > .v-sec {
+  border-top: 0;
+  min-width: 0;
+}
+
+.m-cols > .v-sec + .v-sec {
+  border-left: 1px solid var(--line);
+}
+
+.v-desk .m-scope {
+  display: grid;
+  gap: 14px;
+  justify-items: start;
+  padding-top: 0;
+}
+
+.v-desk .m-scope .p-trade {
+  width: 100%;
+}
+
+.v-desk .m-cols .e-pic__strip {
+  padding-top: 14px;
+}

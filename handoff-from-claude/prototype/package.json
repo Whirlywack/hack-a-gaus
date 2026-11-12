@@ -1,0 +1,6 @@
+{
+  "name": "gaus-proto2",
+  "private": true,
+  "type": "module",
+  "scripts": { "build": "vite build", "typecheck": "tsc --noEmit" }
+}

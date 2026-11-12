@@ -1,0 +1,48 @@
+{
+ "tender_id": "10388453",
+ "files_read": [
+  "10388560_Salygos.pdf.txt (grep + 3 sk.)",
+  "10388574_Priedas Nr. 1 Pasiūlymo forma.doc.txt (neskaityta, tik išvardinta)"
+ ],
+ "chars_read": 4000,
+ "seconds": 40,
+ "qualification_requirements_set": "no",
+ "min_turnover": {
+  "required": false,
+  "amount_eur": null,
+  "period": null,
+  "quote": "Perkantysis subjektas nenustato kvalifikacinių reikalavimų Tiekėjams.",
+  "file": "10388560_Salygos.pdf.txt"
+ },
+ "similar_contracts": {
+  "required": false,
+  "count": null,
+  "min_value_eur": null,
+  "within_years": null,
+  "description": null,
+  "quote": "Perkantysis subjektas nenustato kvalifikacinių reikalavimų Tiekėjams.",
+  "file": "10388560_Salygos.pdf.txt"
+ },
+ "certificates_or_licences": [],
+ "named_specialists": [],
+ "right_to_practice_required": {
+  "required": false,
+  "quote": "Perkantysis subjektas nenustato kvalifikacinių reikalavimų Tiekėjams.",
+  "file": "10388560_Salygos.pdf.txt"
+ },
+ "bid_security": {
+  "required": null,
+  "amount": null,
+  "quote": null,
+  "file": null
+ },
+ "exclusion_grounds": "unclear",
+ "other_requirements": [
+  {
+   "what": "Su pasiūlymu pateikti gamintojo deklaracijas dėl WM-BUS modulio (RoHS/RED) ir suderinamumo su esamais CRS-40 radijo įrenginiais (techniniai reikalavimai prekei)",
+   "quote": "Kartu su pasiūlymu pateikti radijo antenų gamintojo deklaraciją, kurioje nurodoma, kad siūlomas apskaitos prietaisas ir WM-BUS nuskaitymo modulis yra suderinamas su esamais CRS-40 radijo įrenginiais.",
+   "file": "10388560_Salygos.pdf.txt"
+  }
+ ],
+ "notes": "Perkantysis subjektas (šilumos tiekėjas, sektorinis pirkimas); pašalinimo pagrindų ir užtikrinimų klausimai grep'u nerasti."
+}

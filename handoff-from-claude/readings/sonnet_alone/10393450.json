@@ -1,0 +1,41 @@
+{
+ "tender_id": "10393450",
+ "files_read": [
+  "10393866_Skelbiamos apklausos pirkimo sąlygos.docx.txt"
+ ],
+ "chars_read": 28000,
+ "seconds": 40,
+ "qualification_requirements_set": "no",
+ "min_turnover": {
+  "required": false,
+  "quote": "Perkančioji organizacija netaiko kvalifikacijos reikalavimų.",
+  "file": "10393866_Skelbiamos apklausos pirkimo sąlygos.docx.txt"
+ },
+ "similar_contracts": {
+  "required": false,
+  "quote": "Perkančioji organizacija netaiko kvalifikacijos reikalavimų.",
+  "file": "10393866_Skelbiamos apklausos pirkimo sąlygos.docx.txt"
+ },
+ "certificates_or_licences": [],
+ "named_specialists": [],
+ "right_to_practice_required": {
+  "required": null,
+  "quote": "tiekėjas perkančiajai organizacijai įsipareigoja, kad pirkimo sutartį vykdys tik tokią teisę turintys asmenys.",
+  "file": "10393866_Skelbiamos apklausos pirkimo sąlygos.docx.txt"
+ },
+ "bid_security": {
+  "required": false,
+  "amount": null,
+  "quote": "Perkančioji organizacija nereikalauja Pasiūlymo galiojimo užtikrinimo.",
+  "file": "10393866_Skelbiamos apklausos pirkimo sąlygos.docx.txt"
+ },
+ "exclusion_grounds": "unclear",
+ "other_requirements": [
+  {
+   "what": "No quality/environmental management standards required",
+   "quote": "Perkančioji organizacija nereikalauja kokybės vadybos sistemos ir (arba) aplinkos apsaugos vadybos sistemos standartų taikymo.",
+   "file": "10393866_Skelbiamos apklausos pirkimo sąlygos.docx.txt"
+  }
+ ],
+ "notes": "Small-value survey; no qualification requirements. Exclusion grounds: conditions only say EBVPD check 'jeigu taikytina'; EBVPD not in required submission list 5.12, so unclear. Only the conditions file read; contract draft not checked for performance security."
+}

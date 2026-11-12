@@ -1,0 +1,94 @@
+{
+ "tender_id": "10387051",
+ "files_read": [
+  "10388228_c4t_10387051_1.xml.txt",
+  "10387139_Pirkimo dokumentai__2026-11-09 Skelbiamos apklausos sąlygos.docx.txt",
+  "10387139_Pirkimo dokumentai__1 priedas_Pasiūlymo forma.docx.txt",
+  "10387139_Pirkimo dokumentai__2 priedas. Specialistų sąrašas.docx.txt",
+  "10387139_Pirkimo dokumentai__5 priedas Sutarties projektas.docx.txt",
+  "10387139_Pirkimo dokumentai__3 priedas Žemės sklypų dokumentai Ylakiu sen..pdf.txt (searched only)",
+  "10387139_Pirkimo dokumentai__4 priedas Žemės sklypų dokumentai Šačių sen..pdf.txt (searched only)"
+ ],
+ "qualification_requirements_set": "yes",
+ "min_turnover": {
+  "required": null,
+  "amount_eur": null,
+  "period": null,
+  "quote": null,
+  "file": null
+ },
+ "similar_contracts": {
+  "required": null,
+  "count": null,
+  "min_value_eur": null,
+  "within_years": null,
+  "description": null,
+  "quote": null,
+  "file": null
+ },
+ "certificates_or_licences": [
+  {
+   "name": "Matininko kvalifikacijos pažymėjimas (specialist's surveyor qualification certificate, valid)",
+   "quote": "Tiekėjas privalo pasiūlyti bent 1 (vieną) specialistą, turintį galiojantį matininko kvalifikacijos pažymėjimą.",
+   "file": "10387139_Pirkimo dokumentai__2026-11-09 Skelbiamos apklausos sąlygos.docx.txt"
+  }
+ ],
+ "named_specialists": [
+  {
+   "role": "matininkas",
+   "qualification": "At least 1 specialist holding a valid surveyor (matininko) qualification certificate; named in the specialists list (Annex 2) with qualification document number/register",
+   "quote": "Tiekėjas privalo pasiūlyti bent 1 (vieną) specialistą, turintį galiojantį matininko kvalifikacijos pažymėjimą.",
+   "file": "10387139_Pirkimo dokumentai__2026-11-09 Skelbiamos apklausos sąlygos.docx.txt"
+  }
+ ],
+ "right_to_practice_required": {
+  "required": null,
+  "quote": null,
+  "file": null
+ },
+ "bid_security": {
+  "required": null,
+  "amount": null,
+  "quote": null,
+  "file": null
+ },
+ "exclusion_grounds": "declaration",
+ "other_requirements": [
+  {
+   "what": "Only exclusion ground VPĮ 46(2¹), confirmed by signing the offer form",
+   "quote": "Šio pašalinimo pagrindo nebuvimą patvirtinančių dokumentų nereikalaujama, tiekėjas tai patvirtina pasirašydamas Pasiūlymo formą (sąlygų 1 priedą).",
+   "file": "10387139_Pirkimo dokumentai__2026-11-09 Skelbiamos apklausos sąlygos.docx.txt"
+  },
+  {
+   "what": "Specialists list (Annex 2) and specialist qualification documents submitted with the bid",
+   "quote": "5.8.2. siūlomų specialistų sąrašas (parengtas pagal 2 priedą);",
+   "file": "10387139_Pirkimo dokumentai__2026-11-09 Skelbiamos apklausos sąlygos.docx.txt"
+  },
+  {
+   "what": "Agreements with entities relied upon, quasi-subcontractor specialists and known subcontractors signed before bid submission",
+   "quote": "5.8.6. sutartys ar preliminarūs susitarimai (pasirašyti iki pasiūlymų pateikimo) su specialistais (kvazisubtiekėjais) (jeigu ketinama įdarbinti );",
+   "file": "10387139_Pirkimo dokumentai__2026-11-09 Skelbiamos apklausos sąlygos.docx.txt"
+  },
+  {
+   "what": "Joint bidders submit joint-activity agreement copy with obligations and value shares",
+   "quote": "Jei pasiūlymą teikia ūkio subjektų grupė, ji taip pat pateikia ir jungtinės veiklos sutarties kopiją.",
+   "file": "10387139_Pirkimo dokumentai__2026-11-09 Skelbiamos apklausos sąlygos.docx.txt"
+  },
+  {
+   "what": "Commitment that only persons with the right to practise will perform the contract",
+   "quote": "Jeigu tiekėjo kvalifikacija dėl teisės verstis atitinkama veikla nebuvo tikrinama arba tikrinama ne visa apimtimi, tiekėjas perkančiajai organizacijai įsipareigoja, kad pirkimo sutartį vykdys tik tokią teisę turintys asmenys.",
+   "file": "10387139_Pirkimo dokumentai__2026-11-09 Skelbiamos apklausos sąlygos.docx.txt"
+  },
+  {
+   "what": "Maximum planned value 2000,00 EUR incl. VAT (1652,89 EUR excl. VAT)",
+   "quote": "Maksimali planuojama pirkimo vertė –  2000,00 Eur su PVM (1652,89 Eur be PVM).",
+   "file": "10387139_Pirkimo dokumentai__2026-11-09 Skelbiamos apklausos sąlygos.docx.txt"
+  },
+  {
+   "what": "Bid validity 60 days",
+   "quote": "5.9. Pasiūlymas turi galioti 60 dienų nuo pasiūlymų pateikimo termino pabaigos.",
+   "file": "10387139_Pirkimo dokumentai__2026-11-09 Skelbiamos apklausos sąlygos.docx.txt"
+  }
+ ],
+ "notes": "No lots (\"Šis pirkimas neskaidomas į dalis\"). Services (cadastral surveys). The qualification table (3.2.1) appears at the end of the conditions text, detached from heading 3.2. Bid security is not mentioned anywhere (null). No performance security found in the contract draft. Annexes 3–4 are land-plot documents (searched only; mentions of matininkas qualification there are general information about who may perform surveys, not a tender requirement)."
+}

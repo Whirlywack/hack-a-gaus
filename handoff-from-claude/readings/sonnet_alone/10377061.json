@@ -1,0 +1,70 @@
+{
+ "tender_id": "10377061",
+ "files_read": [
+  "10377247_Pirkimas Nr. 3__4 priedas. Kvalifikacijos reikalavimai.docx.txt",
+  "10377247_Pirkimas Nr. 3__AK specialiosios sąlygos Autobusų stotelės.docx.txt",
+  "10377247_Pirkimas Nr. 3__7 priedas. Sutarties projektas.docx.txt",
+  "10377247_Pirkimas Nr. 3__3 priedas. Tiekėjų pašalinimo pagrindai.docx.txt"
+ ],
+ "chars_read": 22000,
+ "seconds": 100,
+ "qualification_requirements_set": "yes",
+ "min_turnover": {
+  "required": null
+ },
+ "similar_contracts": {
+  "required": true,
+  "count": null,
+  "min_value_eur": 200000,
+  "within_years": 5,
+  "description": "gatvių, kelių statybos, rekonstravimo ir/ar remonto darbai, atlikti savo jėgomis pagal vieną ar daugiau sutarčių; suma be PVM",
+  "quote": "Tiekėjas per paskutinius 5 metus iki pasiūlymo pateikimo termino pabaigos arba per laiką nuo tiekėjo įregistravimo dienos (jeigu tiekėjas vykdė veiklą mažiau nei 5 metus) pagal vieną ar daugiau sutarčių savo jėgomis yra tinkamai atlikęs gatvių, kelių statybos, rekonstravimo ir /ar remonto darbus, kurių vertė yra ne mažesnė kaip 200 000 Eur be PVM.",
+  "file": "10377247_Pirkimas Nr. 3__4 priedas. Kvalifikacijos reikalavimai.docx.txt"
+ },
+ "certificates_or_licences": [
+  {
+   "name": "Kvalifikacijos atestatai (SSVA/Architektų rūmai) – ypatingojo statinio statybos vadovas ir projekto vadovas, susisiekimo komunikacijų statiniai, kelių ir gatvių",
+   "quote": "Lietuvos Respublikos ir trečiųjų šalių piliečiams ir kitiems fiziniams asmenims - statinių statybos techninės veiklos pagrindinių sričių vadovams - (išskyrus užsienio šalies specialistus*) SSVA (iki 2022-04-30 SPSC) ir/ar Architektų rūmų išduoti kvalifikacijos atestatai",
+   "file": "10377247_Pirkimas Nr. 3__4 priedas. Kvalifikacijos reikalavimai.docx.txt"
+  },
+  {
+   "name": "Aplinkos apsaugos vadybos sistema LST EN ISO 14001 / EMAS ar lygiavertis (sertifikatas)",
+   "quote": "Tiekėjas teikiamoms projektavimo paslaugoms bei atliekamiems statybos darbams taiko aplinkos apsaugos vadybos sistemos reikalavimus pagal standartą LST EN ISO 14001 arba EMAS",
+   "file": "10377247_Pirkimas Nr. 3__4 priedas. Kvalifikacijos reikalavimai.docx.txt"
+  }
+ ],
+ "named_specialists": [
+  {
+   "role": "ypatingojo statinio statybos vadovas",
+   "qualification": "Inžineriniai statiniai, susisiekimo komunikacijų statiniai, kelių ir gatvių paskirtis",
+   "quote": "ne mažiau kaip vieną ypatingojo statinio statybos vadovą, Inžineriniai statiniai, Inžinerinių statinių grupė - Susisiekimo komunikacijų statiniai, paskirtis – kelių ir gatvių",
+   "file": "10377247_Pirkimas Nr. 3__4 priedas. Kvalifikacijos reikalavimai.docx.txt"
+  },
+  {
+   "role": "ypatingojo statinio projekto vadovas",
+   "qualification": "Inžineriniai statiniai, susisiekimo komunikacijų statiniai, kelių ir gatvių paskirtis",
+   "quote": "ne mažiau kaip vieną ypatingojo statinio projekto vadovą, Inžineriniai statiniai, Inžinerinių statinių grupė - Susisiekimo komunikacijų statiniai, paskirtis – kelių ir gatvių",
+   "file": "10377247_Pirkimas Nr. 3__4 priedas. Kvalifikacijos reikalavimai.docx.txt"
+  }
+ ],
+ "right_to_practice_required": {
+  "required": null,
+  "quote": "tiekėjas perkančiajai organizacijai įsipareigoja, kad pirkimo sutartį vykdys tik tokią teisę turintys asmenys.",
+  "file": "10377247_Pirkimas Nr. 3__4 priedas. Kvalifikacijos reikalavimai.docx.txt"
+ },
+ "bid_security": {
+  "required": false,
+  "amount": null,
+  "quote": "Perkančioji organizacija nereikalauja užtikrinti pasiūlymo galiojimą, tačiau pasilieka teisę kreiptis į teismą dėl žalos",
+  "file": "10377247_Pirkimas Nr. 3__AK specialiosios sąlygos Autobusų stotelės.docx.txt"
+ },
+ "exclusion_grounds": "espd",
+ "other_requirements": [
+  {
+   "what": "Performance security: 10 000 EUR first-demand bank/credit union guarantee or insurer surety within 10 working days of signing; valid at least 12 months",
+   "quote": "Rangovas ne vėliau kaip per 10 (dešimt) darbo dienų nuo Sutarties pasirašymo dienos turi pateikti Užsakovui deramai įformintą, atitinkančią Lietuvos Respublikos teisės aktų reikalavimus, neatšaukiamą ir besąlygišką 10 000,00 (dešimt tūkstančių) eurų dydžio pirmo pareikalavimo banko garantiją",
+   "file": "10377247_Pirkimas Nr. 3__7 priedas. Sutarties projektas.docx.txt"
+  }
+ ],
+ "notes": "Value excl. VAT. Project-manager specialist implies design component. Exclusion: 'Su pasiūlymu teikiamas tik EBVPD' (annex 3). Specialist list annex 8 and works list annex 9 not read."
+}

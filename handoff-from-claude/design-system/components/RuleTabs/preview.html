@@ -1,0 +1,22 @@
+<!-- @dsCard group="Controls" height=200 -->
+<!doctype html>
+<html lang="lt">
+<head>
+<meta charset="utf-8">
+<title>RuleTabs</title>
+<style>
+  html, body { margin:0; background:var(--ground); }
+  body { padding:16px; }
+  .v { height:auto; }
+  .ds-sheet { width:390px; max-width:100%; border:1px solid var(--line); background:var(--ground); }
+  .ds-pad { padding:16px 20px; }
+  .ds-col { display:grid; gap:14px; }
+  .ds-row { display:flex; align-items:center; gap:12px; }
+  .ds-wrap { flex-wrap:wrap; }
+  .v-tab::before, .v-rtab, .v-screen { transition:none; animation:none; }
+</style>
+</head>
+<body>
+<div class="v" lang="lt"><div class="ds-sheet"><div class="ds-col" style="padding-top:18px"><div role="radiogroup" class="v-rtabs"><button type="button" role="radio" aria-checked="true" class="v-rtab" data-on="true"><span>Visos sritys</span></button><button type="button" role="radio" aria-checked="false" class="v-rtab"><span>Keliai ir gatvės</span></button><button type="button" role="radio" aria-checked="false" class="v-rtab"><span>Pastatų remontas</span></button></div><div class="v-stage"><div role="radiogroup" class="v-rtabs"><button type="button" role="radio" aria-checked="false" class="v-rtab" data-done="true"><span class="v-idx">01</span><span>Stebiu</span></button><button type="button" role="radio" aria-checked="true" class="v-rtab" data-on="true"><span class="v-idx">02</span><span>Rengiu</span></button><button type="button" role="radio" aria-checked="false" class="v-rtab"><span class="v-idx">03</span><span>Pateikiau</span></button></div></div></div></div></div>
+</body>
+</html>

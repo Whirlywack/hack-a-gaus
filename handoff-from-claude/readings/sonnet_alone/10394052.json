@@ -1,0 +1,47 @@
+{
+ "tender_id": "10394052",
+ "files_read": [
+  "10394859_Draudimo paslaugu_ pirkimo dokumentai.docx.txt"
+ ],
+ "chars_read": 12000,
+ "seconds": 60,
+ "qualification_requirements_set": "yes",
+ "min_turnover": {
+  "required": null,
+  "amount_eur": null,
+  "period": null,
+  "quote": null,
+  "file": null
+ },
+ "similar_contracts": {
+  "required": null,
+  "count": null,
+  "min_value_eur": null,
+  "within_years": null,
+  "description": null,
+  "quote": null,
+  "file": null
+ },
+ "certificates_or_licences": [
+  {
+   "name": "Lietuvos banko išduota draudimo veiklos licencija (civilinės atsakomybės draudimas)",
+   "quote": "Lietuvos Respublikoje draudimo veiklą vykdantis tiekėjas pateikia  Lietuvos banko išduota draudimo veiklos licencija, suteikianti teisę vykdyti civilinės atsakomybės draudimo veiklą",
+   "file": "10394859_Draudimo paslaugu_ pirkimo dokumentai.docx.txt"
+  }
+ ],
+ "named_specialists": [],
+ "right_to_practice_required": {
+  "required": true,
+  "quote": "Tiekėjas turi teisę verstis bendrosios civilinės atsakomybės draudimo veikla. Reikalaujamos veiklos teisinis pagrindas – Lietuvos Respublikos draudimo įstatymo 3 str. 1 d.",
+  "file": "10394859_Draudimo paslaugu_ pirkimo dokumentai.docx.txt"
+ },
+ "bid_security": {
+  "required": false,
+  "amount": null,
+  "quote": "Perkančioji organizacija nereikalauja pasiūlymo galiojimo užtikrinimo.",
+  "file": "10394859_Draudimo paslaugu_ pirkimo dokumentai.docx.txt"
+ },
+ "exclusion_grounds": "none",
+ "other_requirements": [],
+ "notes": "Vienintelis kvalifikacijos reikalavimas (priedas Nr. 3) – teisė verstis veikla. Pašalinimo pagrindai: 'Tiekėjų pašalinimo pagrindai netaikomi' (15 p.), todėl exclusion_grounds=none; finansinių/techninių reikalavimų nerasta. Techninė specifikacija neskaityta."
+}

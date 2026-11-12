@@ -1,0 +1,101 @@
+/* Pirkėjas and the blocks it shares with Įmonė and Rinka (prefix e-) */
+
+.e-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 18px var(--pad) 20px;
+}
+
+.e-head__text {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+}
+
+.e-ans {
+  border-top: 1px solid var(--line);
+}
+
+.e-answer__tag {
+  display: inline-block;
+  vertical-align: 5px;
+  letter-spacing: 0;
+}
+
+.e-stats .v-cell {
+  display: grid;
+  gap: 6px;
+  align-content: start;
+}
+
+.e-typical {
+  padding: 12px var(--pad) 16px;
+  border-top: 1px solid var(--line);
+}
+
+.e-pic {
+  padding: 4px var(--pad) 18px;
+}
+
+.e-pic__strip {
+  padding: 36px 16px 14px;
+}
+
+.e-lead {
+  padding: 2px var(--pad) 16px;
+  max-width: 44ch;
+}
+
+.e-group__label {
+  padding: 12px var(--pad) 10px;
+  border-top: 1px solid var(--line);
+}
+
+.e-group .v-trow:first-of-type {
+  border-top-color: var(--line);
+}
+
+/* Desktop */
+.e-top {
+  padding: 8px 0 0;
+}
+
+.e-back {
+  padding: 0 var(--pad);
+}
+
+.v-desk .e-head {
+  align-items: center;
+  padding: 6px var(--pad) 26px;
+}
+
+.e-scope {
+  padding-top: 20px;
+}
+
+.v-desk .e-scope .v-rtabs {
+  grid-auto-columns: 1fr;
+}
+
+.v-desk .e-pic {
+  padding-bottom: 22px;
+}
+
+.v-desk .e-scope {
+  padding: 20px 0;
+}
+
+.v-desk .e-scope .v-rtabs {
+  padding-bottom: 0;
+}
+
+.v-desk .e-scope .p-trade__note {
+  margin-top: 8px;
+  padding-bottom: 0;
+}
+
+.v-desk aside > .e-scope + .v-answer {
+  border-top: 1px solid var(--line);
+}

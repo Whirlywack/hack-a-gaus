@@ -1,0 +1,46 @@
+{
+ "tender_id": "10384200",
+ "files_read": [
+  "10388080_Specialiosios sąlygos 11-09.docx.txt",
+  "10388111_8 priedas Sutarties projektas.docx.txt (grep only)"
+ ],
+ "chars_read": 12000,
+ "seconds": 70,
+ "qualification_requirements_set": "no",
+ "min_turnover": {
+  "required": false,
+  "quote": "4.2. Tiekėjams nenustatomi kvalifikacijos reikalavimai.",
+  "file": "10388080_Specialiosios sąlygos 11-09.docx.txt"
+ },
+ "similar_contracts": {
+  "required": false,
+  "quote": "4.2. Tiekėjams nenustatomi kvalifikacijos reikalavimai.",
+  "file": "10388080_Specialiosios sąlygos 11-09.docx.txt"
+ },
+ "certificates_or_licences": [
+  {
+   "name": "Aplinkos apsaugos vadybos sistema LST EN ISO 14001 / EMAS ar lygiavertis (nepriklausomos įstaigos sertifikatas)",
+   "quote": "Rangovas atliekamiems statybos darbams taiko aplinkos apsaugos vadybos sistemos reikalavimus pagal standartą LST EN ISO 14001 arba EMAS ar kitus aplinkos apsaugos vadybos standartus",
+   "file": "10388080_Specialiosios sąlygos 11-09.docx.txt"
+  }
+ ],
+ "named_specialists": [],
+ "right_to_practice_required": {
+  "required": null
+ },
+ "bid_security": {
+  "required": false,
+  "amount": null,
+  "quote": "Perkančioji organizacija nereikalauja užtikrinti pasiūlymo galiojimą, tačiau pasilieka teisę kreiptis į teismą dėl žalos",
+  "file": "10388080_Specialiosios sąlygos 11-09.docx.txt"
+ },
+ "exclusion_grounds": "espd",
+ "other_requirements": [
+  {
+   "what": "Project's own qualification/submission requirements declared void",
+   "quote": "Techniniame darbo projekte Nr. EA-2025-10 numatyti kvalifikacijos reikalavimai, pasiūlymo pateikimo reikalavimai ir subrangos ribojimai - negalioja.",
+   "file": "10388080_Specialiosios sąlygos 11-09.docx.txt"
+  }
+ ],
+ "notes": "No qualification requirements but an environmental management standard (ISO 14001/EMAS or equivalent evidence) is required. Contract draft (185k chars) only grepped; no performance security found. ESPD request xml/pdf not read."
+}

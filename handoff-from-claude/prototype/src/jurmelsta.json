@@ -1,0 +1,110 @@
+[
+ {
+  "id": "2008218260",
+  "title": "Pilies Sodo 1-oji g., Jurbarkas, Jurbarko r. sav. paprastojo remonto darbai",
+  "buyer": "Jurbarko rajono savivaldybės administracija",
+  "buyerCode": "188713933",
+  "value": 112263.8,
+  "signed": "2026-08-26",
+  "ends": "2026-12-26"
+ },
+ {
+  "id": "2008216747",
+  "title": "Darželio g., Smalininkai (Nr. sm4), Smalininkų sen., Jurbarko r. sav. paprastojo remonto darbai",
+  "buyer": "Jurbarko rajono savivaldybės administracija",
+  "buyerCode": "188713933",
+  "value": 30250.0,
+  "signed": "2026-08-24",
+  "ends": "2026-11-24"
+ },
+ {
+  "id": "2008163725",
+  "title": "Pr. Mikutaičio g., Gedžių k., Jurbarkų sen. paprastasis remontas",
+  "buyer": "Jurbarko rajono savivaldybės administracija",
+  "buyerCode": "188713933",
+  "value": 100000.45,
+  "signed": "2026-06-30",
+  "ends": "2026-10-30"
+ },
+ {
+  "id": "2008170109",
+  "title": "P. Paulaičio, Pramonės, Statybininkų g. rekonstravimo ir lietaus nuotekų tinklų statybos Jurbarko m., Jurbarko r. sav. darbai",
+  "buyer": "Jurbarko rajono savivaldybės administracija",
+  "buyerCode": "188713933",
+  "value": 1266169.68,
+  "signed": "2026-06-22",
+  "ends": "2029-07-07"
+ },
+ {
+  "id": "2008108260",
+  "title": "Nemuno gatvės Nr. PG7402 atkarpos Panemunės mieste kapitalinio remonto darbai",
+  "buyer": "Pagėgių savivaldybės administracija",
+  "buyerCode": "188746659",
+  "value": 139892.59,
+  "signed": "2026-05-18",
+  "ends": "2026-10-18"
+ },
+ {
+  "id": "2008102296",
+  "title": "Pėsčiųjų ir dviračių tako (nuo Paimsrio tako iki Vydūno g. perėjos) paprastasis remontas",
+  "buyer": "Jurbarko rajono savivaldybės administracija",
+  "buyerCode": "188713933",
+  "value": 15642.66,
+  "signed": "2026-05-15",
+  "ends": "2026-07-15"
+ },
+ {
+  "id": "2008102279",
+  "title": "Pėsčiųjų tako tarp Vydūno g. 12 ir 12A paprastasis   remontas",
+  "buyer": "Jurbarko rajono savivaldybės administracija",
+  "buyerCode": "188713933",
+  "value": 17845.54,
+  "signed": "2026-05-15",
+  "ends": "2026-07-15"
+ },
+ {
+  "id": "2008100410",
+  "title": "Pirkimo sutartis Nr. CPO386479 (Kelmės m. Kooperacijos g. kapitalinis remontas (I etapas)",
+  "buyer": "Kelmės rajono savivaldybės administracija",
+  "buyerCode": "188768730",
+  "value": 287978.37,
+  "signed": "2026-05-12",
+  "ends": "2026-12-11"
+ },
+ {
+  "id": "2007961729",
+  "title": "Pėsčiųjų-dviračių tako ir stovyklavietės prie Dubysos upės Ariogalos mieste, Raseinių r. sav. statybos darbai",
+  "buyer": "Raseinių rajono savivaldybės administracija",
+  "buyerCode": "288740810",
+  "value": 539924.17,
+  "signed": "2026-01-19",
+  "ends": "2026-11-16"
+ },
+ {
+  "id": "2007947024",
+  "title": "Jurbarko m. Paimsrio pėsčiųjų ir dviračių tako (nuo Tilžės g. iki Vydūno g.) paprastasis remontas su aprašo parengimu",
+  "buyer": "Jurbarko rajono savivaldybės administracija",
+  "buyerCode": "188713933",
+  "value": 188324.91,
+  "signed": "2026-01-02",
+  "ends": "2026-06-06"
+ },
+ {
+  "id": "2007892092",
+  "title": "Jurbarko m. Paimsrio pėsčiųjų ir dviračių tako (nuo Pamituvio g. iki Vydūno g.) įrengimas su aprašo parengimu",
+  "buyer": "Jurbarko rajono savivaldybės administracija",
+  "buyerCode": "188713933",
+  "value": 73810.0,
+  "signed": "2025-12-01",
+  "ends": "2026-06-01"
+ },
+ {
+  "id": "2007867749",
+  "title": "Įvažiavimo į Jurbarko m. Lauko g. 4 daugiabučio namo kiemą priežiūros darbai.",
+  "buyer": "Jurbarko rajono savivaldybės administracija",
+  "buyerCode": "188713933",
+  "value": 9074.52,
+  "signed": "2025-11-12",
+  "ends": "2026-02-12"
+ }
+]

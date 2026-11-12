@@ -1,0 +1,40 @@
+{
+ "tender_id": "10392051",
+ "files_read": [
+  "10392183_ISP-38 pirkimo salygos.doc.pdf.txt",
+  "_lo/10392180_3. Priedas. Viešojo pirkimo sutarties projektas.txt (grep, same text as .doc)"
+ ],
+ "chars_read": 10000,
+ "seconds": 50,
+ "qualification_requirements_set": "no",
+ "min_turnover": {
+  "required": false,
+  "quote": "3.1. Perkančioji organizacija nenustato tiekėjo pašalinimo pagrindų, reikalavimų kvalifikacijai bei nereikalauja, kad tiekėjas laikytųsi kokybės vadybos sistemos ir (arba) aplinkos apsaugos vadybos sistemos standartų",
+  "file": "10392183_ISP-38 pirkimo salygos.doc.pdf.txt"
+ },
+ "similar_contracts": {
+  "required": false,
+  "quote": "3.1. Perkančioji organizacija nenustato tiekėjo pašalinimo pagrindų, reikalavimų kvalifikacijai bei nereikalauja, kad tiekėjas laikytųsi kokybės vadybos sistemos ir (arba) aplinkos apsaugos vadybos sistemos standartų",
+  "file": "10392183_ISP-38 pirkimo salygos.doc.pdf.txt"
+ },
+ "certificates_or_licences": [],
+ "named_specialists": [],
+ "right_to_practice_required": {
+  "required": null
+ },
+ "bid_security": {
+  "required": false,
+  "amount": null,
+  "quote": "7.1. Pasiūlymo galiojimo užtikrinimas nereikalaujamas.",
+  "file": "10392183_ISP-38 pirkimo salygos.doc.pdf.txt"
+ },
+ "exclusion_grounds": "none",
+ "other_requirements": [
+  {
+   "what": "No additional performance security required under contract section 8, though clause 12.1/12.3 refer to a bank guarantee/surety conditional on the special part",
+   "quote": "8.1. Sutarties įvykdymui užtikrinti draudimo bendrovės laidavimo rašto arba banko garantijos nebus reikalaujama.",
+   "file": "10392180_3. Priedas. Viešojo pirkimo sutarties projektas.doc.txt"
+  }
+ ],
+ "notes": "No exclusion grounds, qualification or standards. Contract general part 12.1 mentions performance guarantee only if the special part says so; 8.1 says not required. Large xlsx price files skipped."
+}

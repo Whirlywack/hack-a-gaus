@@ -1,0 +1,83 @@
+{
+  "tender_id": "10397525",
+  "files_read": [
+    "10397674_Pirkimo dokumentai.docx.txt",
+    "10397675_Specialiųjų pirkimo sąlygų 6 priedas _EBVPD___espd-request.pdf.txt",
+    "10397675_Specialiųjų pirkimo sąlygų 6 priedas _EBVPD___README.txt.txt",
+    "10398391_c4t_10397525_1.xml.txt"
+  ],
+  "qualification_requirements_set": "no",
+  "min_turnover": {
+    "required": null,
+    "amount_eur": null,
+    "period": null,
+    "quote": null,
+    "file": null
+  },
+  "similar_contracts": {
+    "required": false,
+    "count": null,
+    "min_value_eur": null,
+    "within_years": null,
+    "description": null,
+    "quote": "Techninio ir profesinio pajėgumo reikalavimai | Techninio ir profesinio pajėgumo reikalavimai | Techninio ir profesinio pajėgumo reikalavimai\n1. | Netaikoma | Netaikoma",
+    "file": "10397674_Pirkimo dokumentai.docx.txt"
+  },
+  "certificates_or_licences": [],
+  "named_specialists": [],
+  "right_to_practice_required": {
+    "required": null,
+    "quote": null,
+    "file": null
+  },
+  "bid_security": {
+    "required": false,
+    "amount": null,
+    "quote": "RRSA CPO nereikalauja užtikrinti pasiūlymo galiojimą",
+    "file": "10397674_Pirkimo dokumentai.docx.txt"
+  },
+  "exclusion_grounds": "espd",
+  "other_requirements": [
+    {
+      "what": "No quality / environmental management system standards (Annex 5 table: Netaikoma)",
+      "quote": "Reikalavimas dėl kokybės vadybos sistemos ir (arba) aplinkos apsaugos vadybos sistemos standartų laikymosi | Atitiktį reikalavimui įrodantys dokumentai\n2. | Netaikoma | Netaikoma",
+      "file": "10397674_Pirkimo dokumentai.docx.txt"
+    },
+    {
+      "what": "EBVPD (ESPD) submitted with bid; separate EBVPD by each group member and relied-on entity; exclusion grounds per Annex 4 incl. VPĮ 46 str. 6 d. 1-3 p.",
+      "quote": "užpildytas EBVPD (specialiųjų pirkimo sąlygų 6 priedas). Pasirašydamas pasiūlymą, tiekėjas patvirtina ir EBVPD tikrumą;",
+      "file": "10397674_Pirkimo dokumentai.docx.txt"
+    },
+    {
+      "what": "Declaration on Regulation (EU) 2022/576 / 833/2014 art. 5k (Annexes 8-9) to be submitted with the bid",
+      "quote": "Kartu su pasiūlymu tiekėjas turi pateikti užpildytą deklaraciją dėl (ne)atitikties Reglamento nuostatoms, kuri pateikta specialiųjų pirkimo sąlygų 8-9 prieduose.",
+      "file": "10397674_Pirkimo dokumentai.docx.txt"
+    },
+    {
+      "what": "Joint bidders: joint activity agreement with joint and several liability",
+      "quote": "Pirkime pasiūlymą teikianti tiekėjų grupė su pasiūlymu turi pateikti jungtinės veiklos sutarties kopiją.",
+      "file": "10397674_Pirkimo dokumentai.docx.txt"
+    },
+    {
+      "what": "Subcontractors: name known subcontractors and the contract part; subcontractor declaration/consent",
+      "quote": "jei tiekėjas pasitelkia subtiekėjus, subtiekėjo deklaracija ar kitas dokumentas, patvirtinantis jo sutikimą būti subtiekėju pirkime;",
+      "file": "10397674_Pirkimo dokumentai.docx.txt"
+    },
+    {
+      "what": "Bid validity at least 90 days",
+      "quote": "Pasiūlymo galiojimo ir pasiūlymo galiojimo užtikrinimo (jei taikoma) terminas ne trumpesnis kaip | 90 (devyniasdešimt) dienų nuo pasiūlymų pateikimo galutinio termino pabaigos",
+      "file": "10397674_Pirkimo dokumentai.docx.txt"
+    },
+    {
+      "what": "Product evidence documents (catalogues, technical passport, inspection card etc.) with bid; vehicle must have valid technical inspection (>=6 months)",
+      "quote": "Automobilis turi turėti galiojančią (ne trumpesnė kaip 6 mėnesiai) techninės apžiūros rezultatų kortelę;",
+      "file": "10397674_Pirkimo dokumentai.docx.txt"
+    },
+    {
+      "what": "No performance security; penalties only",
+      "quote": "Prievolių pagal Sutartį įvykdymas užtikrinamas:\nNetesybomis (delspinigiais, bauda);",
+      "file": "10397674_Pirkimo dokumentai.docx.txt"
+    }
+  ],
+  "notes": "2 lots (I and II, used N1 vehicles), max acceptable price 16 528,93 EUR (lot I) / 16 528,92 EUR (lot II) excl. VAT; requirements identical for both lots. Annex 5 qualification table lists only 'Techninio ir profesinio pajėgumo reikalavimai: Netaikoma' and QMS/EMS 'Netaikoma'; no right-to-practice or financial rows (silent → null). Annex 5 preamble text nevertheless says supplier qualification must meet requirements set in the annex (boilerplate). ESPD request contains only the general 'α' selection statement. The single document bundles general conditions, special conditions and annexes 1-10; tables are appended at the end of the text file. Notice c4t says procedure 'open', special conditions title says 'Supaprastinto atviro'."
+}

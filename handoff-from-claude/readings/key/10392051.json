@@ -1,0 +1,96 @@
+{
+ "tender_id": "10392051",
+ "files_read": [
+  "10393333_c4t_10392051_1.xml.txt",
+  "10392183_ISP-38 pirkimo salygos.doc.pdf.txt",
+  "10392135_1. priedas Technine specifikacija.doc.txt",
+  "10392142_2. Priedas Pasiulymo forma.docx.txt",
+  "10392180_3. Priedas. Viešojo pirkimo sutarties projektas.doc.txt",
+  "_lo/ duplicates of tech spec and contract (identical, checked with cmp)"
+ ],
+ "qualification_requirements_set": "no",
+ "min_turnover": {
+  "required": false,
+  "amount_eur": null,
+  "period": null,
+  "quote": "3.1. Perkančioji organizacija nenustato tiekėjo pašalinimo pagrindų, reikalavimų kvalifikacijai\nbei nereikalauja, kad tiekėjas laikytųsi kokybės vadybos sistemos ir (arba) aplinkos apsaugos\nvadybos sistemos standartų (toliau – Reikalavimai tiekėjui).",
+  "file": "10392183_ISP-38 pirkimo salygos.doc.pdf.txt"
+ },
+ "similar_contracts": {
+  "required": false,
+  "count": null,
+  "min_value_eur": null,
+  "within_years": null,
+  "description": null,
+  "quote": "3.1. Perkančioji organizacija nenustato tiekėjo pašalinimo pagrindų, reikalavimų kvalifikacijai\nbei nereikalauja, kad tiekėjas laikytųsi kokybės vadybos sistemos ir (arba) aplinkos apsaugos\nvadybos sistemos standartų (toliau – Reikalavimai tiekėjui).",
+  "file": "10392183_ISP-38 pirkimo salygos.doc.pdf.txt"
+ },
+ "certificates_or_licences": [
+  {
+   "name": "Proof of renewable electricity use OR environmental management system LST EN ISO 14001 / equivalent (technical specification requirement)",
+   "quote": "TEIKĖJAS turi patvirtinti dokumentu, kad veikloje naudoja elektros energiją iš atsinaujinančiųjų energijos išteklių arba turi taikyti aplinkos apsaugos vadybos sistemos reikalavimus pagal standartą LST EN ISO 14001",
+   "file": "10392135_1. priedas Technine specifikacija.doc.txt"
+  }
+ ],
+ "named_specialists": [],
+ "right_to_practice_required": {
+  "required": false,
+  "quote": "3.1. Perkančioji organizacija nenustato tiekėjo pašalinimo pagrindų, reikalavimų kvalifikacijai\nbei nereikalauja, kad tiekėjas laikytųsi kokybės vadybos sistemos ir (arba) aplinkos apsaugos\nvadybos sistemos standartų (toliau – Reikalavimai tiekėjui).",
+  "file": "10392183_ISP-38 pirkimo salygos.doc.pdf.txt"
+ },
+ "bid_security": {
+  "required": false,
+  "amount": null,
+  "quote": "7.1. Pasiūlymo galiojimo užtikrinimas nereikalaujamas.",
+  "file": "10392183_ISP-38 pirkimo salygos.doc.pdf.txt"
+ },
+ "exclusion_grounds": "none",
+ "other_requirements": [
+  {
+   "what": "Works requiring an energy-equipment operation attestation (or other right) by law must be done by entities/specialists holding it; documents on buyer's request (contract-performance obligation)",
+   "quote": "būtina turėti energetikos įrenginių eksploatavimo veiklos atestatą ar kitą privalomą teisę vykdyti atitinkamą veiklą, būtų atliekami tokią teisę turinčių ūkio subjektų ir specialistų",
+   "file": "10392135_1. priedas Technine specifikacija.doc.txt"
+  },
+  {
+   "what": "Supplier's workers performing repairs may not be third-country nationals",
+   "quote": "TEIKĖJO darbuotojai, atliekantys remonto darbus, negali būti trečiųjų šalių piliečiai.",
+   "file": "10392135_1. priedas Technine specifikacija.doc.txt"
+  },
+  {
+   "what": "Subcontractors to be named in the bid with their share",
+   "quote": "3.2. Savo pasiūlyme tiekėjas turi nurodyti, kokius subtiekėjus / subteikėjus / subrangovus jis\nketina pasitelkti, jei pasitelks.",
+   "file": "10392183_ISP-38 pirkimo salygos.doc.pdf.txt"
+  },
+  {
+   "what": "Joint bidders: joint-activity agreement with solidary liability",
+   "quote": "Jungtinės veiklos\nsutartis turi numatyti solidarią visų šios sutarties šalių atsakomybę už prievolių perkančiajai\norganizacijai nevykdymą.",
+   "file": "10392183_ISP-38 pirkimo salygos.doc.pdf.txt"
+  },
+  {
+   "what": "No performance security",
+   "quote": "8.1. Sutarties įvykdymui užtikrinti draudimo bendrovės laidavimo rašto arba banko garantijos nebus reikalaujama.",
+   "file": "10392180_3. Priedas. Viešojo pirkimo sutarties projektas.doc.txt"
+  },
+  {
+   "what": "Contract: supplier must ensure no VPĮ 45(21) national-security circumstances arise",
+   "quote": "3.6. Teikėjas privalo užtikrinti, kad Sutarties sudarymo ir vykdymo metu neatsirastų aplinkybių nurodytų Viešųjų pirkimų įstatymo 45 straipsnio 21 dalyje.",
+   "file": "10392180_3. Priedas. Viešojo pirkimo sutarties projektas.doc.txt"
+  },
+  {
+   "what": "Maximum contract value 64 000,00 EUR incl. VAT; 36-month contract; maximum unit rates in Annex 4",
+   "quote": "2.1.1. Maksimali sutarties vertė 64 000 ,00 eurų su PVM",
+   "file": "10392183_ISP-38 pirkimo salygos.doc.pdf.txt"
+  },
+  {
+   "what": "Bid validity at least 90 days",
+   "quote": "Pasiūlymas turi galioti ne trumpiau\nnei 90 dienų nuo konkurso pasiūlymų pateikimo termino pabaigos.",
+   "file": "10392183_ISP-38 pirkimo salygos.doc.pdf.txt"
+  },
+  {
+   "what": "Repair guarantee at least 6 months or 500 engine hours",
+   "quote": "TEIKĖJAS generatorių remonto darbams turi suteikti ne trumpesnę kaip 6 (šešių) mėnesių arba ne mažesnę kaip 500 moto/val. (penkių šimtų) motovalandų garantiją",
+   "file": "10392135_1. priedas Technine specifikacija.doc.txt"
+  }
+ ],
+ "notes": "No lots (\"Pirkimas nėra skaidomas į pirkimo dalis\"). Contradiction: conditions 3.1 state no exclusion grounds, no qualification and no environmental management standards, while technical specification p. 22 requires documentary proof of renewable electricity use or ISO 14001 (equivalent). Recorded under certificates_or_licences with the tech-spec quote. Quotes from the PDF text keep its line breaks. Price-list spreadsheets (2.1, 3.2, 4 priedas xlsx) not read."
+}

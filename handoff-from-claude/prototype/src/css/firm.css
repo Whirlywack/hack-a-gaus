@@ -1,0 +1,114 @@
+/* Įmonė (prefix fi-) */
+
+.fi-years {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 6px;
+  align-items: end;
+  height: 44px;
+  border-bottom: 1px solid var(--ink-2);
+}
+
+.fi-years[data-labels] {
+  height: 120px;
+  margin-bottom: 22px;
+}
+
+.fi-years__col {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  height: 100%;
+}
+
+.fi-years__bar {
+  width: 100%;
+  background: var(--mark);
+}
+
+.fi-years__col[data-last] .fi-years__bar {
+  background: var(--accent);
+}
+
+.fi-years__y {
+  display: none;
+}
+
+.fi-years[data-labels] .fi-years__y {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  display: block;
+  font-size: 11px;
+  line-height: 14px;
+  font-weight: 600;
+  color: var(--ink-2);
+}
+
+.fi-n {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--ink-2);
+  white-space: nowrap;
+}
+
+.fi-n__go {
+  width: 16px;
+}
+
+.fi-fin {
+  border-top: 1px solid var(--line);
+}
+
+.fi-fin__scroll {
+  overflow-x: auto;
+}
+
+.fi-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  line-height: 19px;
+}
+
+.fi-table th {
+  padding: 12px 10px 10px;
+  font-size: 11px;
+  line-height: 14px;
+  font-weight: 600;
+  letter-spacing: 0.085em;
+  text-transform: uppercase;
+  text-align: right;
+  color: var(--ink-2);
+  vertical-align: bottom;
+}
+
+.fi-table td {
+  padding: 11px 10px;
+  border-top: 1px solid var(--line-2);
+  text-align: right;
+  white-space: nowrap;
+}
+
+.fi-table th:first-child,
+.fi-table td:first-child {
+  padding-left: var(--pad);
+  text-align: left;
+  font-weight: 600;
+}
+
+.fi-table th:last-child,
+.fi-table td:last-child {
+  padding-right: var(--pad);
+}
+
+.fi-table td[data-neg] {
+  color: var(--urgent);
+}
+
+.fi-foot {
+  border-top-color: var(--line);
+}

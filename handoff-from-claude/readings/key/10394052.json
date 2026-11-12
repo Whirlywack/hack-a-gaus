@@ -1,0 +1,73 @@
+{
+  "tender_id": "10394052",
+  "files_read": [
+    "10394859_Draudimo paslaugu_ pirkimo dokumentai.docx.txt",
+    "10394863_1.priedas_Technine_ specifikacija 2026.11.05 redakcija.docx.txt",
+    "10396051_c4t_10394052_1.xml.txt"
+  ],
+  "qualification_requirements_set": "yes",
+  "min_turnover": {
+    "required": null,
+    "amount_eur": null,
+    "period": null,
+    "quote": null,
+    "file": null
+  },
+  "similar_contracts": {
+    "required": null,
+    "count": null,
+    "min_value_eur": null,
+    "within_years": null,
+    "description": null,
+    "quote": null,
+    "file": null
+  },
+  "certificates_or_licences": [
+    {
+      "name": "Lietuvos banko išduota draudimo veiklos licencija (civilinės atsakomybės draudimas); foreign suppliers equivalent documents",
+      "quote": "Lietuvos Respublikoje draudimo veiklą vykdantis tiekėjas pateikia  Lietuvos banko išduota draudimo veiklos licencija, suteikianti teisę vykdyti civilinės atsakomybės draudimo veiklą",
+      "file": "10394859_Draudimo paslaugu_ pirkimo dokumentai.docx.txt"
+    }
+  ],
+  "named_specialists": [],
+  "right_to_practice_required": {
+    "required": true,
+    "quote": "Tiekėjas turi teisę verstis bendrosios civilinės atsakomybės draudimo veikla. Reikalaujamos veiklos teisinis pagrindas – Lietuvos Respublikos draudimo įstatymo 3 str. 1 d.",
+    "file": "10394859_Draudimo paslaugu_ pirkimo dokumentai.docx.txt"
+  },
+  "bid_security": {
+    "required": false,
+    "amount": null,
+    "quote": "Perkančioji organizacija nereikalauja pasiūlymo galiojimo užtikrinimo.",
+    "file": "10394859_Draudimo paslaugu_ pirkimo dokumentai.docx.txt"
+  },
+  "exclusion_grounds": "none",
+  "other_requirements": [
+    {
+      "what": "Right-to-practice requirement applies to each joint-bidder member and relied-on entity per their obligations; non-relied subcontractors must also have the right to practise (not checked during procedure)",
+      "quote": "Subtiekėjai, kuriuos tiekėjas pasitelks pirkimo sutarties vykdymui (kurių pajėgumais tiekėjas nesiremia, kad atitiktų pirkimo dokumentuose nustatytus kvalifikacijos reikalavimus), privalo turėti teisę verstis ta veikla",
+      "file": "10394859_Draudimo paslaugu_ pirkimo dokumentai.docx.txt"
+    },
+    {
+      "what": "Joint bidders must submit a joint activity agreement",
+      "quote": "Jei pirkimo procedūrose dalyvauja tiekėjų grupė, ji privalo pateikti jungtinės veiklos sutartį",
+      "file": "10394859_Draudimo paslaugu_ pirkimo dokumentai.docx.txt"
+    },
+    {
+      "what": "Known subcontractors must be named in the bid",
+      "quote": "Tiekėjas savo pasiūlyme privalo nurodyti, kokius subtiekėjus (subteikėjus), jeigu tai yra žinoma, jis ketina pasitelkti.",
+      "file": "10394859_Draudimo paslaugu_ pirkimo dokumentai.docx.txt"
+    },
+    {
+      "what": "Insurance rules / extract and draft individual conditions listing main exclusions must be submitted with the bid",
+      "quote": "Tiekėjas kartu su pasiūlymu privalo pateikti galiojančias civilinės atsakomybės draudimo taisykles arba jų išrašą (-us) ir individualių sąlygų projektą, kuriuose išvardytos esminės nedraudžiamos rizikos.",
+      "file": "10394863_1.priedas_Technine_ specifikacija 2026.11.05 redakcija.docx.txt"
+    },
+    {
+      "what": "Bid validity at least 3 months",
+      "quote": "Pasiūlymas turi galioti ne trumpiau nei 3 (tris) mėnesius nuo pasiūlymo pateikimo galutinio termino pabaigos.",
+      "file": "10394859_Draudimo paslaugu_ pirkimo dokumentai.docx.txt"
+    }
+  ],
+  "notes": "Point 13 says exclusion-ground requirements are in Annex 3, but point 15 states 'Tiekėjų pašalinimo pagrindai netaikomi' and Annex 3 contains only the right-to-practice requirement (its form mentions board members 'taikoma, kai pirkimo dokumentuose nustatyti pašalinimo pagrindai'). Not divided into lots. No contract draft among documents; no performance security found. Prices without VAT (insurance VAT-exempt)."
+}

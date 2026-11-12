@@ -1,0 +1,109 @@
+{
+ "tender_id": "10383512",
+ "files_read": [
+  "10389162_c4t_10383512_1.xml.txt",
+  "10383897_Skelbiamos_apklausos_specialiosios_salygos.docx.txt",
+  "10383862_Skelbiamos_apklausos_specialiosios_salygos (9).pdf.txt",
+  "10383860_Skelbiamos_apklausos_bendrosios_salygos (2).docx.txt",
+  "10384009_Sutarties projektas (1).docx.txt",
+  "10383914_Techninė specifikacija.pdf.txt"
+ ],
+ "qualification_requirements_set": "yes",
+ "min_turnover": {
+  "required": null,
+  "amount_eur": null,
+  "period": null,
+  "quote": null,
+  "file": null
+ },
+ "similar_contracts": {
+  "required": null,
+  "count": null,
+  "min_value_eur": null,
+  "within_years": null,
+  "description": null,
+  "quote": null,
+  "file": null
+ },
+ "certificates_or_licences": [
+  {
+   "name": "Geodezininko kvalifikacijos pažymėjimas (specialist's, issued by Nacionalinė žemės tarnyba)",
+   "quote": "dėl b) punkte nurodyto  specialisto pateikiamas Nacionalinės žemės tarnybos prie Aplinkos ministerijos išduoto  kvalifikacijos pažymėjimo (arba lygiaverčio dokumento) kopijos.",
+   "file": "10383897_Skelbiamos_apklausos_specialiosios_salygos.docx.txt"
+  }
+ ],
+ "named_specialists": [
+  {
+   "role": "statybos darbų vadovas (statybos inžinierius ar architektas)",
+   "qualification": "Qualification degree in construction engineering or construction technology (or equivalent results), or architecture degree / equivalent higher-education qualification",
+   "quote": "a) statybos darbų vadovą (statybos inžinierių ar architektą), turintį statybos inžinerijos arba statybos technologijų studijų krypties (šakos) kvalifikacinį laipsnį",
+   "file": "10383897_Skelbiamos_apklausos_specialiosios_salygos.docx.txt"
+  },
+  {
+   "role": "geodezininkas",
+   "qualification": "Holds a geodesist qualification certificate",
+   "quote": "b) specialistą, turintį  geodezininko kvalifikacijos pažymėjimą.",
+   "file": "10383897_Skelbiamos_apklausos_specialiosios_salygos.docx.txt"
+  }
+ ],
+ "right_to_practice_required": {
+  "required": null,
+  "quote": null,
+  "file": null
+ },
+ "bid_security": {
+  "required": false,
+  "amount": null,
+  "quote": "6.1.  Perkančioji organizacija nereikalauja užtikrinti pasiūlymo galiojimą",
+  "file": "10383897_Skelbiamos_apklausos_specialiosios_salygos.docx.txt"
+ },
+ "exclusion_grounds": "declaration",
+ "other_requirements": [
+  {
+   "what": "Supplier declaration (Annex 7) on compliance and absence of exclusion grounds submitted with bid; each group member and entity relied upon submits one",
+   "quote": "Su pasiūlymu teikiama Tiekėjo deklaracija (Pirkimo sąlygų 7 priedas). Kiekvienas ūkio subjektų grupės narys ir ūkio subjektas, kurio pajėgumais tiekėjas remiasi, turi užpildyti ir kartu su pasiūlymu pateikti Tiekėjo deklaracija",
+   "file": "10383897_Skelbiamos_apklausos_specialiosios_salygos.docx.txt"
+  },
+  {
+   "what": "Proof documents (list of managing specialists with names, position, qualification, workplace; diploma copies; geodesist certificate) requested only from the provisional winner",
+   "quote": "Perkančiajai organizacijai  išrinkus galimą laimėtoją, tik jo yra prašomi dokumentai, patvirtinantys atitikimą reikalavimams.",
+   "file": "10383897_Skelbiamos_apklausos_specialiosios_salygos.docx.txt"
+  },
+  {
+   "what": "Commitment that only persons with the right to practise will perform the contract",
+   "quote": "Tiekėjas, teikdamas pasiūlymą, įsipareigoja, kad sutartį vykdys tik teisę verstis atitinkama veikla turintys asmenys.",
+   "file": "10383897_Skelbiamos_apklausos_specialiosios_salygos.docx.txt"
+  },
+  {
+   "what": "Joint bidders / entities relied upon / subcontractors: specialists of the member/entity performing the relevant part must meet the requirement; joint-activity agreement with solidary liability",
+   "quote": "jeigu pasiūlymą teikia ūkio subjektų grupė – reikalavimą turi atitikti ūkio subjektų grupės nario (-ių) specialistai, atsižvelgiant į jų prisiimamus įsipareigojimus pirkimo sutarčiai vykdyti",
+   "file": "10383897_Skelbiamos_apklausos_specialiosios_salygos.docx.txt"
+  },
+  {
+   "what": "Subcontractor declaration or consent document if subcontractors used",
+   "quote": "jei tiekėjas pasitelkia subtiekėjus, subtiekėjo deklaracija ar kitas dokumentas, patvirtinantis jo sutikimą būti subtiekėju pirkime.",
+   "file": "10383897_Skelbiamos_apklausos_specialiosios_salygos.docx.txt"
+  },
+  {
+   "what": "No performance security; contract secured by penalties only",
+   "quote": "8.3. Sutarties įvykdymas užtikrinamas netesybomis (delspinigiais ir baudomis).",
+   "file": "10383897_Skelbiamos_apklausos_specialiosios_salygos.docx.txt"
+  },
+  {
+   "what": "Bid validity at least 3 months",
+   "quote": "Pasiūlymo galiojimo ir pasiūlymo galiojimo užtikrinimo (jei taikoma) terminas ne trumpesnis kaip | 3 mėn. nuo pasiūlymų pateikimo galutinio termino pabaigos.",
+   "file": "10383897_Skelbiamos_apklausos_specialiosios_salygos.docx.txt"
+  },
+  {
+   "what": "5-year works guarantee",
+   "quote": "22.1.1. 5 (penkeri) metai atliktiems remonto darbams ir įrengtoms ar pakeistoms konstrukcijoms;",
+   "file": "10384009_Sutarties projektas (1).docx.txt"
+  },
+  {
+   "what": "No national-security requirements",
+   "quote": "Perkančioji organizacija nekelia reikalavimų susijusių su nacionaliniu saugumu.",
+   "file": "10383897_Skelbiamos_apklausos_specialiosios_salygos.docx.txt"
+  }
+ ],
+ "notes": "No lots (\"Pirkimo objektas į dalis neskaidomas\"). The PDF special conditions (Versija Nr. 1) contain the same special conditions text plus the general conditions and the contract draft; no differences in requirements noticed. Contract clause 14 on mandatory construction/civil-liability insurance is marked \"(netaikoma)\". Technical specification PDF (10383914) is scanned and has no extractable text — not read. One specialist may cover several positions. Company right to practise not separately required (only fallback commitment), so right_to_practice_required left null."
+}

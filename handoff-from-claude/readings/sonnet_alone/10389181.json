@@ -1,0 +1,62 @@
+{
+ "tender_id": "10389181",
+ "files_read": [
+  "10389336_21737-1105.2__Priedas_8_Kvalifikacijos ir kiti reikalavimai tiek_jui Violeta.docx.txt",
+  "10389336_21737-1105.2__Pirkimo_salygos.docx.txt",
+  "10389336_21737-1105.2__Darb_ pirkimo sutarties projektas_.docx.txt"
+ ],
+ "chars_read": 42000,
+ "seconds": 90,
+ "qualification_requirements_set": "yes",
+ "min_turnover": {
+  "required": null
+ },
+ "similar_contracts": {
+  "required": null
+ },
+ "certificates_or_licences": [
+  {
+   "name": "Kvalifikacijos atestatas (SSVA) – specialiųjų statybos darbų vadovas, elektros inžinerinės sistemos, kultūros paskirties pastatai, kultūros paveldo teritorijoje",
+   "quote": "Kvalifikacijos atestate, išduotame po 2017 m. sausio 1 d. turi būti įrašyta „taip pat minėti statiniai, esantys kultūros paveldo objekto teritorijoje, jo apsaugos zonoje, kultūros paveldo vietovėje“.",
+   "file": "10389336_21737-1105.2__Priedas_8_Kvalifikacijos ir kiti reikalavimai tiek_jui Violeta.docx.txt"
+  }
+ ],
+ "named_specialists": [
+  {
+   "role": "ypatingojo statinio (kultūros paveldo teritorijoje) specialiųjų statybos darbų vadovas – statinio elektros inžinerinių sistemų įrengimas",
+   "qualification": "statinių grupė: negyvenamieji pastatai; pogrupis: kultūros paskirties pastatai; atestatas su įrašu apie kultūros paveldo teritorijoje esančius statinius",
+   "quote": "Tiekėjas privalo turėti bent 1 (vieną) specialistą turinčio teisę eiti ypatingojo statinio, esančio kultūros paveldo objekto teritorijoje, jo apsaugos zonoje, kultūros paveldo vietovėje statinio specialiųjų statybos darbų vadovo pareigas:",
+   "file": "10389336_21737-1105.2__Priedas_8_Kvalifikacijos ir kiti reikalavimai tiek_jui Violeta.docx.txt"
+  }
+ ],
+ "right_to_practice_required": {
+  "required": null,
+  "quote": "tiekėjas perkančiajai organizacijai  įsipareigoja, kad pirkimo sutartį  vykdys tik tokią  teisę  turintys asmenys.",
+  "file": "10389336_21737-1105.2__Pirkimo_salygos.docx.txt"
+ },
+ "bid_security": {
+  "required": false,
+  "amount": null,
+  "quote": "7.1. Pasiūlymo galiojimo užtikrinimas nereikalaujamas.",
+  "file": "10389336_21737-1105.2__Pirkimo_salygos.docx.txt"
+ },
+ "exclusion_grounds": "espd",
+ "other_requirements": [
+  {
+   "what": "Performance security (sutarties įvykdymo užtikrinimas) 5% of initial contract value excl. VAT within 10 working days of signing (bank guarantee or insurer surety)",
+   "quote": "Rangovas per 10 (dešimt) darbo dienų nuo Pirkimo sutarties pasirašymo dienos privalo pateikti Pirkimo sutarties įvykdymo užtikrinimą, kurio vertė ne mažesnė kaip 5 % nuo pradinės Pirkimo sutarties vertės be PVM.",
+   "file": "10389336_21737-1105.2__Darb_ pirkimo sutarties projektas_.docx.txt"
+  },
+  {
+   "what": "Defects-period security 5% after completion",
+   "quote": "Rangovas per  10 (dešimt) darbo dienų nuo visų Darbų atlikimo pabaigos privalo pateikti Defektų ištaisymo garantiniu laikotarpiu užtikrinimą",
+   "file": "10389336_21737-1105.2__Darb_ pirkimo sutarties projektas_.docx.txt"
+  },
+  {
+   "what": "Environmental declaration to be signed with the bid",
+   "quote": "5.10.5. Pasirašyta deklaracija dėl aplinkos apsaugos reikalavimų laikymosi.",
+   "file": "10389336_21737-1105.2__Pirkimo_salygos.docx.txt"
+  }
+ ],
+ "notes": "Annex 8 contains only one qualification row (the specialist); no turnover or similar-experience requirement found. Exclusion proven by EBVPD (5.10.3). Defects-security percent quoted partially from grep output."
+}

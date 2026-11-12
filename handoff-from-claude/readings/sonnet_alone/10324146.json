@@ -1,0 +1,70 @@
+{
+ "tender_id": "10324146",
+ "files_read": [
+  "10370153_4 priedas_Kvalifikacijos reikalavimai.docx.txt",
+  "10370155_5 priedas_EBVPD.docx.txt",
+  "10370169_13 priedas_Suteiktų paslaugų sąrašas.docx.txt",
+  "10370150_1 priedas_Terminai.docx.txt (grep)",
+  "10370152_3 priedas_Tieke_ju_ pas_alinimo pagrindai.docx.txt (grep)",
+  "10370197_11 priedas_Sutarties projektas.docx.txt (grep)"
+ ],
+ "chars_read": 17000,
+ "seconds": 90,
+ "qualification_requirements_set": "yes",
+ "min_turnover": {
+  "required": null,
+  "amount_eur": null,
+  "period": null,
+  "quote": null,
+  "file": null
+ },
+ "similar_contracts": {
+  "required": true,
+  "count": null,
+  "min_value_eur": 120000,
+  "within_years": 3,
+  "description": "vienos ar daugiau sutarčių pagal kelionių ir (ar) komandiruočių ir (ar) turizmo organizavimo paslaugas, bendra vertė be PVM",
+  "quote": "Tiekėjas per pastaruosius 3 (iki pasiūlymų pateikimo termino pabaigos) metus arba nuo įregistravimo dienos (jeigu veiklą pradėjo vykdyti vėliau) pagal vieną ar daugiau sutarčių yra savo jėgomis tinkamai suteikęs arba teikia kelionių ir (ar) komandiruočių ir (ar) turizmo organizavimo paslaugų, kurių vertė yra ne mažesnė kaip 120 000,00 EUR be PVM.",
+  "file": "10370153_4 priedas_Kvalifikacijos reikalavimai.docx.txt"
+ },
+ "certificates_or_licences": [
+  {
+   "name": "IATA nario sertifikatas arba lygiavertis dokumentas (arba techninės galimybės atitinkančios IATA nariams)",
+   "quote": "Tiekėjas turi būti Tarptautinės oro transporto asociacijos (IATA) nariu arba turėti technines galimybes, atitinkančias reikalavimus IATA nariams bei technines priemones operatyviai bilietų rezervacijai.",
+   "file": "10370153_4 priedas_Kvalifikacijos reikalavimai.docx.txt"
+  }
+ ],
+ "named_specialists": [
+  {
+   "role": "specialistas (-ai), tiesiogiai teiksiantis kelionių organizavimo paslaugas",
+   "qualification": "galiojantis IATA sertifikatas arba lygiavertis dokumentas",
+   "quote": "Tiekėjas turi turėti arba pasitelkti specialistą (-us), turintį (-čius) galiojantį IATA sertifikatą arba lygiavertį dokumentą, kuris (-ie) tiesiogiai teiks kelionių organizavimo paslaugas",
+   "file": "10370153_4 priedas_Kvalifikacijos reikalavimai.docx.txt"
+  }
+ ],
+ "right_to_practice_required": {
+  "required": true,
+  "quote": "Tiekėjas turi teisę verstis veikla, kuri reikalinga pirkimo sutarčiai įvykdyti: kelionių organizavimu/ kelionių agentūrų veikla  atvykstamojo, išvykstamojo kelionių ir vietinio turizmo srityse.",
+  "file": "10370153_4 priedas_Kvalifikacijos reikalavimai.docx.txt"
+ },
+ "bid_security": {
+  "required": false,
+  "amount": null,
+  "quote": "Pasiūlymo galiojimo užtikrinimas pirkimo dalyviui grąžinamas (arba atsisakoma teisių į jį) per | NETAIKOMA",
+  "file": "10370150_1 priedas_Terminai.docx.txt"
+ },
+ "exclusion_grounds": "espd",
+ "other_requirements": [
+  {
+   "what": "Kokybės/aplinkos vadybos standartai nereikalaujami",
+   "quote": "Perkančioji organizacija nereikalauja, kad tiekėjai laikytųsi kokybės vadybos sistemos ir (arba) aplinkos apsaugos vadybos sistemos standartų.",
+   "file": "10370153_4 priedas_Kvalifikacijos reikalavimai.docx.txt"
+  },
+  {
+   "what": "Su pasiūlymu pateikiamas specialisto IATA sertifikatas ir profesinę patirtį pagrindžiantys dokumentai (vertinimo kriterijus)",
+   "quote": "Tiekėjas kartu su pasiūlymu privalo pateikti šio specialisto galiojantį IATA sertifikatą arba lygiavertį dokumentą",
+   "file": "10370153_4 priedas_Kvalifikacijos reikalavimai.docx.txt"
+  }
+ ],
+ "notes": "Pagrindinio pirkimo sąlygų dokumento nėra tekstų aplanke; sutarties įvykdymo užtikrinimas sutarties projekte tik 'jei taikoma', konkretus dydis neįvardytas. Pasiūlymo užtikrinimo 'NETAIKOMA' išvesta iš terminų lentelės. Finansinių (apyvartos) reikalavimų nerasta."
+}

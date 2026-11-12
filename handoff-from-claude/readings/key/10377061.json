@@ -1,0 +1,123 @@
+{
+ "tender_id": "10377061",
+ "files_read": [
+  "10377868_c4t_10377061_1.xml.txt",
+  "10377247_Pirkimas Nr. 3__AK specialiosios sąlygos Autobusų stotelės.docx.txt",
+  "10377247_Pirkimas Nr. 3__4 priedas. Kvalifikacijos reikalavimai.docx.txt",
+  "10377247_Pirkimas Nr. 3__3 priedas. Tiekėjų pašalinimo pagrindai.docx.txt",
+  "10377247_Pirkimas Nr. 3__6 priedas. Pasiūlymo forma.docx.txt",
+  "10377247_Pirkimas Nr. 3__8 priedas. Tiekėjo vadovaujančių specialistų sąrašas.docx.txt",
+  "10377247_Pirkimas Nr. 3__9 priedas. Atliktų darbų sąrašas.docx.txt",
+  "10377247_Pirkimas Nr. 3__7 priedas. Sutarties projektas.docx.txt",
+  "10377247_Pirkimas Nr. 3__AK bendrosios salygos.docx.txt",
+  "10377247_Pirkimas Nr. 3__2 priedas. Techninė specifikacija.docx.txt"
+ ],
+ "qualification_requirements_set": "yes",
+ "min_turnover": {
+  "required": null,
+  "amount_eur": null,
+  "period": null,
+  "quote": null,
+  "file": null
+ },
+ "similar_contracts": {
+  "required": true,
+  "count": null,
+  "min_value_eur": 200000,
+  "within_years": 5,
+  "description": "Street/road construction, reconstruction and/or repair works performed with own resources under one or more contracts, total value not less than 200 000 EUR excl. VAT, in the last 5 years (or since registration); list of works and client certificates; group members' experience summed; not required of subcontractors",
+  "quote": "pagal vieną ar daugiau sutarčių savo jėgomis yra tinkamai atlikęs gatvių, kelių statybos, rekonstravimo ir /ar remonto darbus, kurių vertė yra ne mažesnė kaip 200 000 Eur be PVM.",
+  "file": "10377247_Pirkimas Nr. 3__4 priedas. Kvalifikacijos reikalavimai.docx.txt"
+ },
+ "certificates_or_licences": [
+  {
+   "name": "Environmental management system LST EN ISO 14001 or EMAS or equivalent (certificate from an independent body)",
+   "quote": "Tiekėjas teikiamoms projektavimo paslaugoms bei atliekamiems statybos darbams taiko aplinkos apsaugos vadybos sistemos reikalavimus pagal standartą LST EN ISO 14001 arba EMAS ar kitus aplinkos apsaugos vadybos standartus",
+   "file": "10377247_Pirkimas Nr. 3__4 priedas. Kvalifikacijos reikalavimai.docx.txt"
+  },
+  {
+   "name": "Specialists' kvalifikacijos atestatai (SSVA / Architektų rūmai) for exceptional-structure construction manager and design manager, roads and streets",
+   "quote": "SSVA (iki 2022-04-30 SPSC) ir/ar Architektų rūmų išduoti kvalifikacijos atestatai",
+   "file": "10377247_Pirkimas Nr. 3__4 priedas. Kvalifikacijos reikalavimai.docx.txt"
+  }
+ ],
+ "named_specialists": [
+  {
+   "role": "ypatingojo statinio statybos vadovas",
+   "qualification": "Inžineriniai statiniai, Susisiekimo komunikacijų statiniai, paskirtis – kelių ir gatvių (at least one; one or several specialists may jointly cover)",
+   "quote": "ne mažiau kaip vieną ypatingojo statinio statybos vadovą, Inžineriniai statiniai, Inžinerinių statinių grupė - Susisiekimo komunikacijų statiniai, paskirtis – kelių ir gatvių",
+   "file": "10377247_Pirkimas Nr. 3__4 priedas. Kvalifikacijos reikalavimai.docx.txt"
+  },
+  {
+   "role": "ypatingojo statinio projekto vadovas",
+   "qualification": "Inžineriniai statiniai, Susisiekimo komunikacijų statiniai, paskirtis – kelių ir gatvių (at least one)",
+   "quote": "ne mažiau kaip vieną ypatingojo statinio projekto vadovą, Inžineriniai statiniai, Inžinerinių statinių grupė - Susisiekimo komunikacijų statiniai, paskirtis – kelių ir gatvių",
+   "file": "10377247_Pirkimas Nr. 3__4 priedas. Kvalifikacijos reikalavimai.docx.txt"
+  }
+ ],
+ "right_to_practice_required": {
+  "required": null,
+  "quote": null,
+  "file": null
+ },
+ "bid_security": {
+  "required": false,
+  "amount": null,
+  "quote": "Perkančioji organizacija nereikalauja užtikrinti pasiūlymo galiojimą",
+  "file": "10377247_Pirkimas Nr. 3__AK specialiosios sąlygos Autobusų stotelės.docx.txt"
+ },
+ "exclusion_grounds": "espd",
+ "other_requirements": [
+  {
+   "what": "EBVPD (Annex 5) submitted with the bid; exclusion grounds apply to supplier, all group members and entities relied upon",
+   "quote": "Su pasiūlymu teikiamas tik EBVPD.",
+   "file": "10377247_Pirkimas Nr. 3__3 priedas. Tiekėjų pašalinimo pagrindai.docx.txt"
+  },
+  {
+   "what": "Qualification proof documents submitted with the bid (EBVPD, list of works and client certificates, specialists list, specialist declaration if not employee, attestations, ISO 14001 certificate)",
+   "quote": "specialiųjų pirkimo sąlygų 4 priede nurodyti dokumentai.",
+   "file": "10377247_Pirkimas Nr. 3__AK specialiosios sąlygos Autobusų stotelės.docx.txt"
+  },
+  {
+   "what": "Specialists list with name, workplace and position; signed specialist declaration if not the supplier's employee",
+   "quote": "Siūlomo specialisto pasirašyta deklaracija, kurioje jis įsipareigoja vykdyti pirkimo sutartį (tais atvejais, kai specialistas pasiūlymo pateikimo metu nėra tiekėjo darbuotojas).",
+   "file": "10377247_Pirkimas Nr. 3__4 priedas. Kvalifikacijos reikalavimai.docx.txt"
+  },
+  {
+   "what": "Performance security: 10 000,00 EUR first-demand bank/credit-union guarantee or insurance surety, within 10 working days of signing, valid at least 12 months and renewed",
+   "quote": "neatšaukiamą ir besąlygišką 10 000,00 (dešimt tūkstančių) eurų dydžio pirmo pareikalavimo banko garantiją, kredito unijos garantiją arba draudimo bendrovės laidavimo draudimo raštą",
+   "file": "10377247_Pirkimas Nr. 3__7 priedas. Sutarties projektas.docx.txt"
+  },
+  {
+   "what": "Budget 843 696,70 EUR incl. VAT",
+   "quote": "Pirkimui skirtos lėšos (biudžetas) – 843 696,70 Eur su PVM.",
+   "file": "10377247_Pirkimas Nr. 3__AK specialiosios sąlygos Autobusų stotelės.docx.txt"
+  },
+  {
+   "what": "Bid validity at least 90 days",
+   "quote": "90 (devyniasdešimt) dienų nuo pasiūlymų pateikimo galutinio termino pabaigos",
+   "file": "10377247_Pirkimas Nr. 3__AK specialiosios sąlygos Autobusų stotelės.docx.txt"
+  },
+  {
+   "what": "Joint bidders / subcontractors: ISO 14001 requirement applies to each group member per obligations; subcontractors not relied upon must apply the environmental management measures",
+   "quote": "Jeigu pasiūlymą teikia ūkio subjektų grupė – reikalavimą turi atitikti kiekvienas ūkio subjektų grupės narys (-iai), pagal jų prisiimamus įsipareigojimus pirkimo sutarčiai vykdyti.",
+   "file": "10377247_Pirkimas Nr. 3__4 priedas. Kvalifikacijos reikalavimai.docx.txt"
+  },
+  {
+   "what": "Quasi-subcontractor specialists: agreement/letter of intent concluded before bid submission",
+   "quote": "tiekėjas iki pateikiant pasiūlymą turi sudaryti su tokiu specialistu susitarimą arba ketinimų protokolą arba kitą lygiavertį dokumentą",
+   "file": "10377247_Pirkimas Nr. 3__4 priedas. Kvalifikacijos reikalavimai.docx.txt"
+  },
+  {
+   "what": "Commitment that only persons with the right to practise will perform the contract",
+   "quote": "Tiekėjas įsipareigoja, kad pirkimo sutartį vykdys tik tokią teisę turintys fiziniai ar juridiniai asmenys.",
+   "file": "10377247_Pirkimas Nr. 3__4 priedas. Kvalifikacijos reikalavimai.docx.txt"
+  },
+  {
+   "what": "Works guarantee at least 5 years",
+   "quote": "Atliktiems Darbams Rangovas suteikia ne trumpesnę nei penkerių metų garantiją nuo Darbų priėmimo-perdavimo akto pasirašymo dienos.",
+   "file": "10377247_Pirkimas Nr. 3__7 priedas. Sutarties projektas.docx.txt"
+  }
+ ],
+ "notes": "No lots (\"Pirkimo objektas į dalis neskaidomas\"). Similar-contracts value is excl. VAT; no minimum count stated (one or more contracts summed), so count null. Experience of group members is summed; subcontractors exempt from experience requirement. Contract draft mentions an insurance contract (draudimo sutartis) without a separate clause stating which insurance is required. EBVPD annex (5 priedas. EBVPD.zip, nested) was not opened. Company right to practise not separately required."
+}

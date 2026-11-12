@@ -1,0 +1,53 @@
+{
+ "tender_id": "10397525",
+ "files_read": [
+  "10397674_Pirkimo dokumentai.docx.txt (grep + dalys: bendr. sąlygos 72-130, 270-274, 531-545, 1120-1125, 1488-1494)",
+  "10397675_Specialiųjų pirkimo sąlygų 6 priedas _EBVPD___espd-request.pdf.txt (grep)"
+ ],
+ "chars_read": 22000,
+ "seconds": 120,
+ "qualification_requirements_set": "unclear",
+ "min_turnover": {
+  "required": null,
+  "amount_eur": null,
+  "period": null,
+  "quote": null,
+  "file": null
+ },
+ "similar_contracts": {
+  "required": null,
+  "count": null,
+  "min_value_eur": null,
+  "within_years": null,
+  "description": null,
+  "quote": null,
+  "file": null
+ },
+ "certificates_or_licences": [],
+ "named_specialists": [],
+ "right_to_practice_required": {
+  "required": null,
+  "quote": null,
+  "file": null
+ },
+ "bid_security": {
+  "required": false,
+  "amount": null,
+  "quote": "Pasiūlymo galiojimo užtikrinimas pirkimo dalyviui grąžinamas (arba atsisakoma teisių į jį) per | NETAIKOMA",
+  "file": "10397674_Pirkimo dokumentai.docx.txt"
+ },
+ "exclusion_grounds": "espd",
+ "other_requirements": [
+  {
+   "what": "Sutarties įvykdymo užtikrinimas netaikomas (įvykdymas užtikrinamas tik netesybomis)",
+   "quote": "8.2 Sutarties įvykdymo užtikrinimo galiojimo terminas | 8.2 Sutarties įvykdymo užtikrinimo galiojimo terminas | Netaikoma | Netaikoma",
+   "file": "10397674_Pirkimo dokumentai.docx.txt"
+  },
+  {
+   "what": "Tiekėjo deklaracija dėl atitikties Reglamento (sankcijų) nuostatoms su pasiūlymu",
+   "quote": "Kartu su pasiūlymu tiekėjas turi pateikti užpildytą deklaraciją dėl (ne)atitikties Reglamento nuostatoms",
+   "file": "10397674_Pirkimo dokumentai.docx.txt"
+  }
+ ],
+ "notes": "Specialiųjų sąlygų 5 priede 'Tiekėjų kvalifikacijos reikalavimai' pateiktos tik bendros taisyklės, konkrečių reikalavimų (apyvartos, patirties ir pan.) nėra; dviejų pirkimo dalių (I ir II) automobilių pirkimas. Pašalinimo pagrindai tikrinami pagal EBVPD (4 priedas). 250 tūkst. simbolių dokumentas skaitytas tik dalimis."
+}

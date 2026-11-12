@@ -1,0 +1,49 @@
+{
+ "tender_id": "10389970",
+ "files_read": [
+  "10390104_pirkimo dok..docx.txt",
+  "10390075_TIEKĖJŲ DEKLARACIJOS__Tiekėjo deklaracija.docx.txt",
+  "10390123_Sutartis.docx.txt (grep only)"
+ ],
+ "chars_read": 9000,
+ "seconds": 60,
+ "qualification_requirements_set": "no",
+ "min_turnover": {
+  "required": false,
+  "amount_eur": null,
+  "period": null,
+  "quote": "Minimalūs tiekėjų kvalifikacijos reikalavimai ir tiekėjų pašalinimo pagrindai netaikomi.",
+  "file": "10390104_pirkimo dok..docx.txt"
+ },
+ "similar_contracts": {
+  "required": false,
+  "count": null,
+  "min_value_eur": null,
+  "within_years": null,
+  "description": null,
+  "quote": "Minimalūs tiekėjų kvalifikacijos reikalavimai ir tiekėjų pašalinimo pagrindai netaikomi.",
+  "file": "10390104_pirkimo dok..docx.txt"
+ },
+ "certificates_or_licences": [],
+ "named_specialists": [],
+ "right_to_practice_required": {
+  "required": false,
+  "quote": "Minimalūs tiekėjų kvalifikacijos reikalavimai ir tiekėjų pašalinimo pagrindai netaikomi.",
+  "file": "10390104_pirkimo dok..docx.txt"
+ },
+ "bid_security": {
+  "required": false,
+  "amount": null,
+  "quote": "Perkančioji organizacija nereikalauja pasiūlymo galiojimo užtikrinimo Civilinio kodekso nustatytais prievolių įvykdymo užtikrinimo būdais.",
+  "file": "10390104_pirkimo dok..docx.txt"
+ },
+ "exclusion_grounds": "declaration",
+ "other_requirements": [
+  {
+   "what": "Tiekėjo deklaracija dėl Reglamento (ES) 2022/576 sąlygų nebuvimo (sankcijų) pateikiama su pasiūlymu",
+   "quote": "TIEKĖJO DEKLARACIJA DĖL TARYBOS REGLAMENTE (ES) 2022/576 NUSTATYTŲ SĄLYGŲ NEBUVIMO",
+   "file": "10390075_TIEKĖJŲ DEKLARACIJOS__Tiekėjo deklaracija.docx.txt"
+  }
+ ],
+ "notes": "Pašalinimo pagrindai taip pat netaikomi pagal 3.1 punktą, bet pateikiamos tiekėjų deklaracijos (sankcijų). Sutarties įvykdymo užtikrinimas sutarties bendrosiose sąlygose 'jei taikoma'; specialiosios sąlygos neperskaitytos/nepateiktos."
+}

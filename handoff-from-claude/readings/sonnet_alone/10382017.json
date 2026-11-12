@@ -1,0 +1,60 @@
+{
+ "tender_id": "10382017",
+ "files_read": [
+  "10382107_Pirkimo sąlygos__SPECIALIOSIOS SALYGOS.docx.txt (grep + 4, 7 sk., 4 priedas)",
+  "10382107_Pirkimo sąlygos__BENDROSIOS KONKURSO SĄLYGOS.docx.txt (grep)",
+  "10382107_Pirkimo sąlygos__Pirkimo sąlygų 7 priedas. Sutarties projektas (šokolado plytelės).docx.txt (grep)"
+ ],
+ "chars_read": 14000,
+ "seconds": 90,
+ "qualification_requirements_set": "unclear",
+ "min_turnover": {
+  "required": null,
+  "amount_eur": null,
+  "period": null,
+  "quote": null,
+  "file": null
+ },
+ "similar_contracts": {
+  "required": null,
+  "count": null,
+  "min_value_eur": null,
+  "within_years": null,
+  "description": null,
+  "quote": null,
+  "file": null
+ },
+ "certificates_or_licences": [
+  {
+   "name": "Ekologinės gamybos sertifikatas siūlomam produktui (produkto, ne tiekėjo reikalavimas)",
+   "quote": "galiojantys ekologinės gamybos sertifikatas išduotas siūlomam produktui, arba kiti lygiaverčiai įrodymai, patvirtinantys produkto atitiktį nustatytam aplinkos apsaugos kriterijui.",
+   "file": "10382107_Pirkimo sąlygos__SPECIALIOSIOS SALYGOS.docx.txt"
+  }
+ ],
+ "named_specialists": [],
+ "right_to_practice_required": {
+  "required": null,
+  "quote": null,
+  "file": null
+ },
+ "bid_security": {
+  "required": false,
+  "amount": null,
+  "quote": "Perkančioji organizacija nereikalauja užtikrinti pasiūlymo galiojimą dokumentu",
+  "file": "10382107_Pirkimo sąlygos__SPECIALIOSIOS SALYGOS.docx.txt"
+ },
+ "exclusion_grounds": "espd",
+ "other_requirements": [
+  {
+   "what": "Tiekėjo deklaracija dėl Reglamento (sankcijų) atitikties",
+   "quote": "Kartu su pasiūlymu tiekėjas turi pateikti užpildytą deklaraciją dėl (ne)atitikties Reglamento nuostatoms",
+   "file": "10382107_Pirkimo sąlygos__SPECIALIOSIOS SALYGOS.docx.txt"
+  },
+  {
+   "what": "Kokybės/aplinkos vadybos standartai nereikalaujami",
+   "quote": "Perkančioji organizacija nereikalauja, kad tiekėjai laikytųsi kokybės vadybos sistemos ir (arba) aplinkos apsaugos vadybos sistemos standartų.",
+   "file": "10382107_Pirkimo sąlygos__SPECIALIOSIOS SALYGOS.docx.txt"
+  }
+ ],
+ "notes": "4 priedas 'Tiekėjų kvalifikacijos reikalavimai' turi tik bendras taisykles (grupės narys, rėmimasis kitais), konkrečių reikalavimų lentelės nėra. Sutarties įvykdymo užtikrinimo dydis specialiosiose sąlygose neradau (bendrosios sutarties sąlygos 'jei nurodyta')."
+}

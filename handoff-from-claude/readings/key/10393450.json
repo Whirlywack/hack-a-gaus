@@ -1,0 +1,75 @@
+{
+ "tender_id": "10393450",
+ "files_read": [
+  "10394358_c4t_10393450_1.xml.txt",
+  "10393866_Skelbiamos apklausos pirkimo sąlygos.docx.txt",
+  "10393870_1 priedas Pasiūlymo forma.docx.txt",
+  "10393890_2 priedas Darbų specifikacija.docx.txt",
+  "10393923_3 priedas Patalpų planas.pdf.txt",
+  "10393930_4 priedas Sutarties projektas.docx.txt"
+ ],
+ "qualification_requirements_set": "no",
+ "min_turnover": {
+  "required": false,
+  "amount_eur": null,
+  "period": null,
+  "quote": "3.1. Perkančioji organizacija netaiko kvalifikacijos reikalavimų.",
+  "file": "10393866_Skelbiamos apklausos pirkimo sąlygos.docx.txt"
+ },
+ "similar_contracts": {
+  "required": false,
+  "count": null,
+  "min_value_eur": null,
+  "within_years": null,
+  "description": null,
+  "quote": "3.1. Perkančioji organizacija netaiko kvalifikacijos reikalavimų.",
+  "file": "10393866_Skelbiamos apklausos pirkimo sąlygos.docx.txt"
+ },
+ "certificates_or_licences": [],
+ "named_specialists": [],
+ "right_to_practice_required": {
+  "required": false,
+  "quote": "3.1. Perkančioji organizacija netaiko kvalifikacijos reikalavimų.",
+  "file": "10393866_Skelbiamos apklausos pirkimo sąlygos.docx.txt"
+ },
+ "bid_security": {
+  "required": false,
+  "amount": null,
+  "quote": "7.1. Perkančioji organizacija nereikalauja Pasiūlymo galiojimo užtikrinimo.",
+  "file": "10393866_Skelbiamos apklausos pirkimo sąlygos.docx.txt"
+ },
+ "exclusion_grounds": "declaration",
+ "other_requirements": [
+  {
+   "what": "Quality/environmental management standards not required",
+   "quote": "3.2. Perkančioji organizacija nereikalauja kokybės vadybos sistemos ir (arba) aplinkos apsaugos vadybos sistemos standartų taikymo.",
+   "file": "10393866_Skelbiamos apklausos pirkimo sąlygos.docx.txt"
+  },
+  {
+   "what": "Commitment that only persons with the right to practise will perform the contract; documents on request",
+   "quote": "Jeigu tiekėjo kvalifikacija dėl teisės verstis atitinkama veikla nebuvo tikrinama arba tikrinama ne visa apimtimi, tiekėjas perkančiajai organizacijai įsipareigoja, kad pirkimo sutartį vykdys tik tokią teisę turintys asmenys.",
+   "file": "10393866_Skelbiamos apklausos pirkimo sąlygos.docx.txt"
+  },
+  {
+   "what": "Joint bidders must submit a joint-activity agreement with solidary liability",
+   "quote": "Jei pirkimo procedūrose dalyvauja ūkio subjektų grupė, ji pateikia jungtinės veiklos sutartį arba tinkamai patvirtintą jos kopiją.",
+   "file": "10393866_Skelbiamos apklausos pirkimo sąlygos.docx.txt"
+  },
+  {
+   "what": "Bid validity at least 60 days",
+   "quote": "Pasiūlymas turi galioti ne trumpiau nei 60 dienų nuo pasiūlymų pateikimo termino pabaigos.",
+   "file": "10393866_Skelbiamos apklausos pirkimo sąlygos.docx.txt"
+  },
+  {
+   "what": "Contractor must appoint a suitably qualified works manager (contract obligation, not named at bid stage)",
+   "quote": "5.1.  paskirti  reikiamą kvalifikaciją turintį darbų vadovą;",
+   "file": "10393930_4 priedas Sutarties projektas.docx.txt"
+  },
+  {
+   "what": "Subcontractors must have the right to carry out construction activity",
+   "quote": "Subrangovai turi turėti teisę verstis statybos veikla, kuri reikalinga pirkimo sutarčiai įvykdyti.",
+   "file": "10393930_4 priedas Sutarties projektas.docx.txt"
+  }
+ ],
+ "notes": "No lots (\"Pirkimas nėra skaidomas į pirkimo dalis\"). Exclusion: offer form contains a declaration only on VPĮ 46(2¹) ground (\"Patvirtiname, kad tiekėjui nėra taikomas VPĮ 46 straipsnio 2¹ dalyje nustatytas pašalinimo pagrindas.\"); conditions mention EBVPD checks only \"jeigu taikytina\" and list no EBVPD among documents to submit. No performance security stated in the contract draft; conditions 13.7 mention it only \"jei reikalaujama pirkimo sąlygų priede\". docs/ contains dl_test.bin, byte-identical to the offer form."
+}

@@ -1,0 +1,39 @@
+{
+ "tender_id": "10378522",
+ "files_read": [
+  "10378879_Pirkimo dokumentai___Specialiosios prikimo sąlygos002.docx.txt"
+ ],
+ "chars_read": 9000,
+ "seconds": 50,
+ "qualification_requirements_set": "no",
+ "min_turnover": {
+  "required": false,
+  "quote": "Tiekėjams nenustatomi reikalavimai dėl kvalifikacijos ir kokybės vadybos sistemos standartų laikymosi.",
+  "file": "10378879_Pirkimo dokumentai___Specialiosios prikimo sąlygos002.docx.txt"
+ },
+ "similar_contracts": {
+  "required": false,
+  "quote": "Tiekėjams nenustatomi reikalavimai dėl kvalifikacijos ir kokybės vadybos sistemos standartų laikymosi.",
+  "file": "10378879_Pirkimo dokumentai___Specialiosios prikimo sąlygos002.docx.txt"
+ },
+ "certificates_or_licences": [],
+ "named_specialists": [],
+ "right_to_practice_required": {
+  "required": null
+ },
+ "bid_security": {
+  "required": false,
+  "amount": null,
+  "quote": "Perkančioji organizacija nereikalauja užtikrinti pasiūlymo galiojimą, tačiau pasilieka teisę kreiptis į teismą dėl žalos",
+  "file": "10378879_Pirkimo dokumentai___Specialiosios prikimo sąlygos002.docx.txt"
+ },
+ "exclusion_grounds": "unclear",
+ "other_requirements": [
+  {
+   "what": "No environmental management standard requirement",
+   "quote": "Tiekėjams nenustatomi reikalavimai dėl aplinkos apsaugos vadybos sistemos standartų laikymosi.",
+   "file": "10378879_Pirkimo dokumentai___Specialiosios prikimo sąlygos002.docx.txt"
+  }
+ ],
+ "notes": "Exclusion annex 1 refers to EBVPD form parts but the bid contents list (5.1) names neither EBVPD nor a declaration, so unclear. Contract draft only grepped for 'įvykdymo užtikrin' with no hit; general conditions not read."
+}

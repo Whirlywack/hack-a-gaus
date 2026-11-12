@@ -1,0 +1,1 @@
+https://claude.ai/artifact/QYfin4vr7HvTYRSNrxK5Am
