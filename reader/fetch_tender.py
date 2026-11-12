@@ -4,7 +4,7 @@
 Adapted from handoff-from-claude/reader/fetch/fetch_tender.py: same URLs, same parsing,
 one request every 2.2 seconds. Changes: the user agent identifies gaus and carries the
 contact address from FETCHER_CONTACT, paths are arguments, and the log holds only
-HTTP codes, sizes and file names.
+HTTP codes, sizes, file names and where a redirect ended (host and path).
 
 Usage: python3 -I reader/fetch_tender.py TENDER_ID WORK_DIR DOCS_DIR
 Exit codes: 0 documents fetched, 2 notice not served, 3 notice served but no documents.
@@ -15,6 +15,7 @@ import re
 import subprocess
 import sys
 import time
+import urllib.parse
 
 BASE = "https://viesiejipirkimai.lt"
 DELAY = 2.2
@@ -44,8 +45,9 @@ class Fetcher:
         self.ua, self.jar, self.last = ua, jar, 0.0
 
     def get(self, url, out, maxbytes=None):
-        """Save url to out. Returns "http|bytes|type", "ERR ..." if curl failed, or "SKIP <reason>"
-        if the body passed maxbytes; then out is deleted.
+        """Save url to out. Returns "http|bytes|type" (plus " redirected to host/path" after a
+        redirect), "ERR ..." if curl failed, or "SKIP <reason>" if the body passed maxbytes;
+        then out is deleted.
 
         curl's --max-filesize only refuses a body whose Content-Length is too big, so the body
         comes through a pipe and the bytes actually received are counted here as well."""
@@ -53,7 +55,8 @@ class Fetcher:
         if wait > 0:
             time.sleep(wait)
         cmd = ["curl", "-sS", "-m", "90", "-L", "-A", self.ua, "-c", self.jar, "-b", self.jar,
-               "-w", "%{stderr}" + WRITE_OUT + "%{http_code}|%{size_download}|%{content_type}\n"]
+               "-w", "%{stderr}" + WRITE_OUT
+               + "%{http_code}|%{size_download}|%{content_type}|%{num_redirects}|%{url_effective}\n"]
         if maxbytes:
             cmd += ["--max-filesize", str(maxbytes)]
         cmd.append(url)
@@ -77,7 +80,17 @@ class Fetcher:
         before, _, after = err.partition(WRITE_OUT)
         if p.returncode != 0:
             return "ERR " + (before.strip() or "curl exit %d" % p.returncode)[:100]
-        return after.strip()
+        code, size, ctype, redirects, final_url = after.strip().split("|", 4)
+        return "%s|%s|%s%s" % (code, size, ctype, _redirect_note(redirects, final_url))
+
+
+def _redirect_note(redirects, final_url):
+    """Where a redirect ended (host and path only, no session id or query), so a login page
+    can be told apart from a notice page that changed. The handoff's fetcher checked this too."""
+    if redirects == "0":
+        return ""
+    where = urllib.parse.urlsplit(final_url)
+    return " redirected to %s%s" % (where.netloc, where.path.split(";")[0])
 
 
 def _read(path):
