@@ -23,6 +23,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 
 # Skip rules from the handoff's cascade/convert.py. The name rules match the file's own name folded
 # to ASCII; the handoff matched the whole path, so a zip named for prices dropped every file in it.
+# Its extension rule is left out on purpose: it skipped Excel, which ticket #3 reads.
 BOILERPLATE_PATTERNS = ["espd-request"]  # generic EBVPD/ESPD request form, same text in every tender
 NAME_PATTERNS = ["kain", "samat", "ziniarast", "kiekiu", "kiekiai", "sutartiniai ikainiai"]  # price lists
 DIGIT_DENSITY_MAX = 0.30  # share of digits among non-space characters
@@ -105,6 +106,12 @@ def _safe_name(name):
     return re.sub(r"[^\w.\- ()ąčęėįšųūžĄČĘĖĮŠŲŪŽ]", "_", base)
 
 
+def text_name(label):
+    """The text file a document's text is saved under: zip members as "<zip name>__<member>",
+    the names the hand-checked keys cite."""
+    return label.replace("/", "__") + ".txt"
+
+
 def _entry(file, status, chars=0, reason=None):
     return {"file": file, "status": status, "chars": chars, "reason": reason}
 
@@ -144,7 +151,7 @@ def _convert_one(path, label, text_dir, converters, entries, seen):
         return
     os.makedirs(text_dir, exist_ok=True)
     try:
-        with open(os.path.join(text_dir, label.replace("/", "__") + ".txt"), "w", encoding="utf-8") as f:
+        with open(os.path.join(text_dir, text_name(label)), "w", encoding="utf-8") as f:
             f.write(text)
     except OSError as ex:
         entries.append(_entry(label, "skipped", n, "could not save text (%s)" % type(ex).__name__))
@@ -157,13 +164,15 @@ def convert_tree(docs_dir, text_dir, converters=None):
     """Convert every file in docs_dir (zips unpacked one level). Returns report entries."""
     converters = converters or DEFAULT_CONVERTERS
     entries, seen = [], {}
-    for name in sorted(os.listdir(docs_dir)):
+    names = [n for n in sorted(os.listdir(docs_dir)) if os.path.isfile(os.path.join(docs_dir, n))]
+    zips = [n for n in names if n.lower().endswith(".zip")]
+    # The tender's own files before the zips' members, as the handoff walked them, so a duplicate
+    # keeps the copy the notice lists by name.
+    for name in names:
+        if name not in zips:
+            _convert_one(os.path.join(docs_dir, name), name, text_dir, converters, entries, seen)
+    for name in zips:
         path = os.path.join(docs_dir, name)
-        if not os.path.isfile(path):
-            continue
-        if not name.lower().endswith(".zip"):
-            _convert_one(path, name, text_dir, converters, entries, seen)
-            continue
         try:
             z = zipfile.ZipFile(path)
             infos = [i for i in z.infolist() if not i.is_dir()]

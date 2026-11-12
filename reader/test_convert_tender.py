@@ -29,7 +29,7 @@ def distinct(n=500):
 
 def stand_ins():
     conv = distinct()
-    return {k: conv for k in ("docx", "doc", "pdf", "xlsx", "xls")}
+    return {k: conv for k in set(ct.FORMATS.values())}
 
 
 class ConvertTree(unittest.TestCase):
@@ -208,6 +208,20 @@ class ConvertTree(unittest.TestCase):
                          ("skipped", "duplicate of a.docx"))
         self.assertEqual(os.listdir(self.out), ["a.docx.txt"])
 
+    def test_a_document_listed_on_its_own_is_kept_over_its_copy_in_a_zip(self):
+        # handoff cascade/convert.py walked the tender's own files before the unpacked zips, so the
+        # copy kept is the one the notice lists by name, even when the zip's name sorts first
+        buf = io.BytesIO()
+        with zipfile.ZipFile(buf, "w") as z:
+            z.writestr("Techninė specifikacija.pdf", "x")
+        self.put("A dokumentai.zip", buf.getvalue())
+        self.put("Techninė specifikacija.pdf")
+        e = self.run_tree(pdf=fake("Tiekėjas turi ISO 9001.\n" * 20))
+
+        self.assertEqual(e["Techninė specifikacija.pdf"]["status"], "read")
+        copy = e["A dokumentai/Techninė specifikacija.pdf"]
+        self.assertEqual((copy["status"], copy["reason"]), ("skipped", "duplicate of Techninė specifikacija.pdf"))
+
     def test_unsupported_and_broken_files_are_skipped_not_fatal(self):
         self.put("plan.dwg")
         self.put("bad.docx")
@@ -291,9 +305,9 @@ class SkipRulesOnRealTenders(unittest.TestCase):
                     with zipfile.ZipFile(os.path.join(src, folder + ".zip"), "w") as z:
                         for member, path in members:
                             z.write(path, member)
-                conv = {k: _as_text for k in ("docx", "doc", "pdf", "xlsx", "xls")}
+                conv = {k: _as_text for k in set(ct.FORMATS.values())}
                 entries = ct.convert_tree(src, out, converters=conv)
-            by_text = {e["file"].replace("/", "__") + ".txt": e for e in entries}
+            by_text = {ct.text_name(e["file"]): e for e in entries}
             for cited in sorted(_key_cites(tid)):
                 if cited not in by_text:
                     absent.add((tid, cited))

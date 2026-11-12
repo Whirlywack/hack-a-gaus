@@ -110,6 +110,21 @@ class ReadTenderRequest(unittest.TestCase):
         self.read()
         self.assertEqual(self.client.requests[0]["max_tokens"], 128_000)
 
+    def test_a_tender_that_fits_the_window_is_sent_whole(self):
+        # Spec: files are left out only "if a tender does not fit the model's window". Context
+        # windows: on Claude 4.5 and newer, input plus max_tokens past the window is accepted and
+        # stops on model_context_window_exceeded, a failed read. So the input budget keeps 32K free
+        # for the answer, about 7 times the longest read in scoring run sonnet-1 (4,810 output
+        # tokens), not the whole 128K. 10392051, the largest hand-checked tender, billed 841,604.
+        r = self.read(flat_tokens=940_000)
+        self.assertEqual(r["files_skipped"], [])
+        self.assertEqual(len(self.client.requests), 1)
+
+    def test_input_that_leaves_less_than_32k_for_the_answer_is_not_sent(self):
+        with self.assertRaises(ReadFailed):
+            self.read(flat_tokens=960_000)  # 960K + 32K + the 20K margin is past the 1M window
+        self.assertEqual(self.client.requests, [])
+
     def test_thinking_is_adaptive_at_an_explicit_effort(self):
         # claude-sonnet-5-5 thinks when `thinking` is omitted and rejects budget_tokens with a 400:
         # effort is the only thinking control. "high" is the API default the scored run used.
@@ -224,27 +239,6 @@ class ReadTenderRequest(unittest.TestCase):
         self.assertEqual((entry["input_tokens"], entry["output_tokens"]), (1234, 567))
         self.assertAlmostEqual(entry["usd"], 1234 * 2 / 1e6 + 567 * 10 / 1e6, places=6)
         self.assertAlmostEqual(ledger["total_usd"], entry["usd"], places=6)
-
-
-class RoomForTheWholeAnswer(unittest.TestCase):
-    """Input, thinking and answer share the 1M window. A request is sent only when the window
-    still holds the full 128K output after the input, so a read is never cut by the window."""
-
-    def read(self, tokens):
-        self.client = FakeClient(flat_tokens=tokens)
-        ledger = os.path.join(tempfile.mkdtemp(), "l.json")
-        return read_tender(INVENTED, client=self.client, today="2026-11-12", ledger_path=ledger)
-
-    def test_input_that_leaves_less_than_the_whole_output_room_is_not_sent(self):
-        with self.assertRaises(ReadFailed):
-            self.read(900_000)  # 900K + 128K is past the window
-        self.assertEqual(self.client.requests, [])
-
-    def test_the_largest_hand_checked_tender_still_fits_whole(self):
-        # 10392051 billed 841,604 input tokens in scoring run sonnet-1 (ticket-13's ledger)
-        r = self.read(841_604)
-        self.assertEqual(r["files_skipped"], [])
-        self.assertEqual(len(self.client.requests), 1)
 
 
 class TenderThatDoesNotFit(unittest.TestCase):
