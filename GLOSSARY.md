@@ -21,7 +21,7 @@ _Avoid_: bidder, winner, firm
 ### Procurement
 
 **Notice** *(skelbimas)*:
-A record in the open-notice feed. Its kind is a Public tender *(pirkimas)*, a Market consultation *(rinkos konsultacija)*, a dynamic purchasing system, a specific contract inside one, or a qualification system.
+A record in the open-notice feed. Its kind is a Public tender *(pirkimas)*, a Market consultation *(rinkos konsultacija)*, a dynamic purchasing system, a specific contract inside one, a qualification system, a specific contract inside a framework agreement, or a procedure by invitation only. The last two are open only to a framework's parties or to the suppliers a Buyer invites, so they are never shown as Public tenders.
 _Avoid_: listing, announcement
 
 **Public tender** *(pirkimas)*:
