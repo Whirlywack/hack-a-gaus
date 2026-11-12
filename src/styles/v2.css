@@ -1,0 +1,1160 @@
+/* gaus v2: the drawn sheet.
+   No cards, no shadows, no rounded containers. The structure is visible:
+   hairline rules, ruled cells, corner brackets around pictures. Type carries
+   the hierarchy: a large two-tone answer, small uppercase labels with index
+   numbers, big plain numerals. One accent (ultramarine). */
+
+@font-face {
+  font-family: 'Gaus Sans';
+  src: url('./fonts/instrument-sans-latin-ext-standard-normal.woff2') format('woff2');
+  font-weight: 400 700;
+  font-stretch: 75% 100%;
+  font-display: swap;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'Gaus Sans';
+  src: url('./fonts/instrument-sans-latin-standard-normal.woff2') format('woff2');
+  font-weight: 400 700;
+  font-stretch: 75% 100%;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+html {
+  box-sizing: border-box;
+  height: 100%;
+  background: #eeebe6;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  height: 100%;
+  margin: 0;
+  background: #eeebe6;
+  overflow-x: hidden;
+}
+
+#root {
+  height: 100%;
+}
+
+html[data-mode='frame'],
+html[data-mode='frame'] body {
+  background: #e4e1dc !important;
+}
+
+.v {
+  --ground: #eeebe6;
+  --band: #e4e1dc;
+  --raise: #f7f5f1;
+  --line: #cdc8bf;
+  --line-2: #dcd8d0;
+  --ink: #17181a;
+  --ink-2: #5a5853;
+  --ink-3: #6c6963;
+  --mark: #86837d;
+  --dim: #7b7871;
+  --accent: #2b39d6;
+  --accent-soft: #dfe2f8;
+  --urgent: #b8283b;
+  --urgent-soft: #f6e1e2;
+  --font: 'Gaus Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --pad: 20px;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+
+  height: 100%;
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 15px;
+  line-height: 21px;
+  font-weight: 400;
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.v *,
+.v *::before,
+.v *::after {
+  box-sizing: border-box;
+}
+
+.v button {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-align: inherit;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.v a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.v h1,
+.v h2,
+.v h3,
+.v p {
+  margin: 0;
+}
+
+.v h1,
+.v h2,
+.v h3 {
+  font-weight: 500;
+}
+
+.v [data-tap] {
+  cursor: pointer;
+}
+
+.v :focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+/* ---------- Type ---------- */
+
+.v-display {
+  font-size: 27px;
+  line-height: 30px;
+  font-weight: 500;
+  letter-spacing: -0.032em;
+  text-wrap: balance;
+}
+
+.v-display .dim,
+.v-dim {
+  color: var(--dim);
+}
+
+.v-title {
+  font-size: 22px;
+  line-height: 26px;
+  font-weight: 500;
+  letter-spacing: -0.022em;
+}
+
+.v-rowtitle {
+  font-size: 16px;
+  line-height: 21px;
+  font-weight: 500;
+  letter-spacing: -0.012em;
+}
+
+.v-text {
+  font-size: 15px;
+  line-height: 21px;
+}
+
+.v-lead {
+  font-size: 16px;
+  line-height: 22px;
+  letter-spacing: -0.008em;
+}
+
+.v-small {
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--ink-2);
+}
+
+.v-strong {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.v-label {
+  display: inline-block;
+  font-size: 11px;
+  line-height: 14px;
+  font-weight: 600;
+  letter-spacing: 0.085em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+
+.v-label.is-accent {
+  color: var(--accent);
+}
+
+.v-label.is-urgent {
+  color: var(--urgent);
+}
+
+.v-idx {
+  font-size: 11px;
+  line-height: 14px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--ink-3);
+  font-variant-numeric: tabular-nums;
+}
+
+.v-num {
+  font-size: 34px;
+  line-height: 34px;
+  font-weight: 450;
+  letter-spacing: -0.045em;
+  font-variant-numeric: lining-nums;
+}
+
+.v-num .v-unit {
+  margin-left: 3px;
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 500;
+  letter-spacing: 0;
+  color: var(--ink-2);
+}
+
+.v-urgent {
+  color: var(--urgent);
+}
+
+.v-urgent .v-unit {
+  color: var(--urgent);
+}
+
+.clamp2,
+.clamp3 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.clamp2 {
+  -webkit-line-clamp: 2;
+}
+
+.clamp3 {
+  -webkit-line-clamp: 3;
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+/* ---------- Phone shell ---------- */
+
+.v-native {
+  --tab-h: calc(56px + env(safe-area-inset-bottom, 0px));
+  --top-safe: env(safe-area-inset-top, 0px);
+  position: relative;
+  height: 100%;
+  min-height: 480px;
+  overflow: hidden;
+  background: var(--ground);
+}
+
+.v-inframe {
+  --tab-h: 56px;
+  --top-safe: 0px;
+  position: absolute;
+  inset: 0;
+}
+
+.v-app {
+  position: absolute;
+  inset: 0;
+  background: var(--ground);
+}
+
+.v-scroll {
+  position: absolute;
+  inset: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.v-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.v-page {
+  min-height: 100%;
+  padding: var(--top-safe) 0 calc(var(--tab-h) + 40px);
+}
+
+.v-app[data-setup] .v-page {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 0;
+}
+
+.v-screen {
+  animation: v-in 200ms var(--ease) both;
+}
+
+@keyframes v-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+/* The top bar of a screen: one row, a rule under it */
+.v-bar {
+  position: sticky;
+  top: 0;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  height: 52px;
+  padding: 0 var(--pad);
+  border-bottom: 1px solid var(--line);
+  background: var(--ground);
+}
+
+.v-wordmark {
+  font-size: 19px;
+  line-height: 24px;
+  font-weight: 600;
+  letter-spacing: -0.04em;
+}
+
+.v-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  margin-left: -2px;
+  font-size: 14px;
+  font-weight: 550;
+  letter-spacing: -0.005em;
+}
+
+.v-acct {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--ink);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+}
+
+.v-acct-hit {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin-right: -7px;
+}
+
+/* Bottom tabs: four ruled cells, the active one carries the accent rule */
+.v-tabs {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 8;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  height: var(--tab-h);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  border-top: 1px solid var(--line);
+  background: var(--ground);
+}
+
+.v-inframe .v-tabs {
+  padding-bottom: 0;
+}
+
+.v .v-tab {
+  position: relative;
+  display: grid;
+  place-items: center;
+  height: 55px;
+  font-size: 13px;
+  font-weight: 550;
+  letter-spacing: -0.005em;
+  color: var(--ink-2);
+  text-align: center;
+}
+
+.v .v-tab + .v-tab {
+  border-left: 1px solid var(--line);
+}
+
+.v-tab::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  right: 0;
+  height: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 220ms var(--ease);
+}
+
+.v-tab[data-on] {
+  color: var(--ink);
+}
+
+.v-tab[data-on]::before {
+  transform: scaleX(1);
+}
+
+/* ---------- Blocks ---------- */
+
+.v-pad {
+  padding-left: var(--pad);
+  padding-right: var(--pad);
+}
+
+/* The answer: the one thing this screen says */
+.v-answer {
+  padding: 18px var(--pad) 22px;
+}
+
+.v-answer__meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.v .v-answer__sub {
+  margin-top: 12px;
+  max-width: 46ch;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--ink-2);
+}
+
+/* A section: a rule, a label with its count, then rows */
+.v-sec {
+  border-top: 1px solid var(--line);
+}
+
+.v-sec__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px var(--pad) 12px;
+}
+
+.v .v-sec__head[data-tap] {
+  width: 100%;
+  padding: 14px var(--pad) 12px;
+}
+
+.v-sec__note {
+  font-size: 12px;
+  line-height: 14px;
+  color: var(--ink-2);
+}
+
+.v-sec__right {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.v-row {
+  border-top: 1px solid var(--line-2);
+}
+
+/* Rule tabs: a rule above each option, the chosen one in the accent */
+.v-rtabs {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: 8px;
+  padding: 0 var(--pad) 18px;
+}
+
+.v .v-rtab {
+  position: relative;
+  display: grid;
+  gap: 3px;
+  align-content: start;
+  min-height: 44px;
+  padding-top: 9px;
+  border-top: 2px solid var(--line);
+  font-size: 13px;
+  line-height: 17px;
+  font-weight: 550;
+  letter-spacing: -0.005em;
+  color: var(--ink-2);
+  transition: border-color 180ms var(--ease), color 180ms var(--ease);
+}
+
+.v-rtab[data-on] {
+  border-top-color: var(--accent);
+  color: var(--ink);
+}
+
+.v-rtab[data-done] {
+  border-top-color: var(--accent);
+}
+
+.v-rtab[data-on] .v-idx {
+  color: var(--accent);
+}
+
+/* Ruled cells: a strip divided by vertical rules */
+.v-cells {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  border-top: 1px solid var(--line);
+}
+
+.v-cells > * + * {
+  border-left: 1px solid var(--line);
+}
+
+.v-cell {
+  padding: 14px var(--pad) 16px;
+}
+
+.v .v-cellbtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 46px;
+  padding: 0 14px;
+  font-size: 14px;
+  font-weight: 550;
+  letter-spacing: -0.005em;
+  color: var(--ink-2);
+  transition: background 160ms var(--ease), color 160ms var(--ease);
+}
+
+.v .v-cellbtn.is-accent {
+  color: var(--accent);
+}
+
+.v .v-cellbtn.is-fill {
+  background: var(--accent);
+  color: #fff;
+}
+
+.v .v-cellbtn.is-big {
+  min-height: 54px;
+  font-size: 15px;
+}
+
+/* Tags: small, square, drawn */
+.v-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 21px;
+  padding: 0 6px;
+  border: 1px solid var(--line);
+  font-size: 10px;
+  line-height: 12px;
+  font-weight: 600;
+  letter-spacing: 0.085em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  white-space: nowrap;
+}
+
+.v-tag.is-accent {
+  border-color: rgba(43, 57, 214, 0.45);
+  color: var(--accent);
+}
+
+.v-tag.is-urgent {
+  border-color: rgba(184, 40, 59, 0.45);
+  color: var(--urgent);
+}
+
+.v-tag.is-solid {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #fff;
+}
+
+/* Buttons */
+.v .v-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 18px;
+  border: 1px solid var(--ink);
+  font-size: 15px;
+  font-weight: 550;
+  letter-spacing: -0.008em;
+  color: var(--ink);
+  white-space: nowrap;
+  transition: background 160ms var(--ease), color 160ms var(--ease), border-color 160ms var(--ease);
+}
+
+.v .v-btn.is-primary {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #fff;
+}
+
+.v .v-btn.is-quiet {
+  border-color: var(--line);
+}
+
+.v .v-btn.is-small {
+  min-height: 34px;
+  padding: 0 11px;
+  font-size: 13px;
+}
+
+.v .v-btn.is-wide {
+  width: 100%;
+}
+
+.v .v-btn[data-on] {
+  border-color: var(--line);
+  color: var(--ink-2);
+}
+
+.v .v-btn[data-disabled] {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.v .v-textbtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  font-size: 14px;
+  font-weight: 550;
+  color: var(--accent);
+}
+
+.v .v-textbtn.is-quiet {
+  color: var(--ink-2);
+}
+
+/* Corner brackets: the frame around a picture or a quoted source */
+.v-brk {
+  --b: var(--ink-3);
+  --s: 9px;
+  padding: 12px 14px;
+  background:
+    linear-gradient(var(--b), var(--b)) left top / var(--s) 1px no-repeat,
+    linear-gradient(var(--b), var(--b)) left top / 1px var(--s) no-repeat,
+    linear-gradient(var(--b), var(--b)) right top / var(--s) 1px no-repeat,
+    linear-gradient(var(--b), var(--b)) right top / 1px var(--s) no-repeat,
+    linear-gradient(var(--b), var(--b)) left bottom / var(--s) 1px no-repeat,
+    linear-gradient(var(--b), var(--b)) left bottom / 1px var(--s) no-repeat,
+    linear-gradient(var(--b), var(--b)) right bottom / var(--s) 1px no-repeat,
+    linear-gradient(var(--b), var(--b)) right bottom / 1px var(--s) no-repeat;
+}
+
+/* A row that leads somewhere: label, value, arrow */
+.v-linkrow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 52px;
+  padding: 12px var(--pad);
+  border-top: 1px solid var(--line);
+}
+
+.v-linkrow__body {
+  display: grid;
+  gap: 3px;
+}
+
+.v-linkrow__value {
+  font-size: 15px;
+  line-height: 20px;
+  font-weight: 550;
+  letter-spacing: -0.008em;
+}
+
+.v-linkrow[data-plain] {
+  cursor: default;
+}
+
+.v-arrow {
+  display: inline-grid;
+  color: var(--ink-2);
+}
+
+[data-tap]:hover > .v-arrow,
+[data-tap]:hover .v-arrow.is-move {
+  color: var(--accent);
+}
+
+/* ---------- Tender rows (lists) ---------- */
+
+.v-trow {
+  display: grid;
+  grid-template-columns: 58px minmax(0, 1fr);
+  padding: 16px var(--pad) 16px;
+  border-top: 1px solid var(--line-2);
+}
+
+.v-sec__head + .v-trow,
+.v-sec__head + .v-row {
+  border-top-color: var(--line);
+}
+
+.v-trow__when {
+  padding-top: 1px;
+}
+
+.v-trow__when .v-num {
+  font-size: 28px;
+  line-height: 28px;
+}
+
+.v-trow__when .v-unit {
+  margin-left: 2px;
+  font-size: 12px;
+}
+
+.v-trow__body {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.v-trow__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px 10px;
+  margin-top: 6px;
+}
+
+.v-trow__tags {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.v-trow__acts {
+  border-top-color: var(--line-2);
+}
+
+/* ---------- Status strip on a tender ---------- */
+
+.v-status__date {
+  margin-top: 8px;
+  font-size: 17px;
+  line-height: 22px;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+}
+
+.v-status .v-num {
+  display: block;
+  margin-top: 8px;
+}
+
+/* ---------- Requirements ---------- */
+
+.v-req {
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr);
+  padding: 15px var(--pad) 17px;
+  border-top: 1px solid var(--line-2);
+}
+
+.v-req .v-idx {
+  padding-top: 1px;
+}
+
+.v-req__body {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+
+.v-req__answer {
+  font-size: 16px;
+  line-height: 22px;
+  letter-spacing: -0.008em;
+}
+
+.v-source {
+  display: grid;
+  gap: 8px;
+  margin-top: 6px;
+  font-size: 13.5px;
+  line-height: 19px;
+  color: var(--ink-2);
+}
+
+.v-source__file {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--ink-2);
+}
+
+.v-note {
+  padding: 14px var(--pad) 18px;
+  border-top: 1px solid var(--line-2);
+  font-size: 12.5px;
+  line-height: 18px;
+  color: var(--ink-2);
+}
+
+.v-facts {
+  display: grid;
+}
+
+.v-fact {
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr);
+  padding: 11px var(--pad);
+  border-top: 1px solid var(--line-2);
+  font-size: 15px;
+  line-height: 21px;
+}
+
+/* ---------- Stage stepper ---------- */
+
+.v-stage {
+  padding: 16px var(--pad) 6px;
+  border-top: 1px solid var(--line);
+}
+
+.v-stage .v-rtabs {
+  padding: 0;
+}
+
+.v-stage__foot {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* ---------- Spinner ---------- */
+
+.v-spin {
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--line);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: v-rot 800ms linear infinite;
+}
+
+@keyframes v-rot {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ---------- Frame mode (a phone drawn on the page) ---------- */
+
+.v-switch {
+  display: flex;
+  justify-content: center;
+  padding: 18px 16px 14px;
+}
+
+.v-switch[data-wide] {
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--line);
+  background: var(--band);
+}
+
+.v-modeseg {
+  display: grid;
+  grid-template-columns: repeat(2, 132px);
+  gap: 8px;
+}
+
+.v .v-modeseg .v-rtab {
+  min-height: 30px;
+  padding-top: 7px;
+}
+
+.v-stagewrap {
+  position: relative;
+  margin: 0 auto 32px;
+}
+
+.v-phonebox {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 416px;
+  height: 870px;
+  padding: 12px;
+  transform-origin: 0 0;
+}
+
+.v-phone {
+  box-sizing: content-box !important;
+  position: relative;
+  width: 390px;
+  height: 844px;
+  overflow: hidden;
+  border: 1px solid var(--ink);
+  background: var(--ground);
+}
+
+.v-phonebox.v-brk {
+  --b: var(--ink-2);
+  --s: 14px;
+}
+
+/* ---------- Desktop: one ruled sheet ---------- */
+
+.v-desk {
+  --pad: 28px;
+  min-height: 100%;
+  background: var(--ground);
+}
+
+.v-desk__frame {
+  width: min(1240px, 100% - 64px);
+  min-height: 100%;
+  margin: 0 auto;
+  border-left: 1px solid var(--line);
+  border-right: 1px solid var(--line);
+}
+
+.v-dtop {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: stretch;
+  height: 56px;
+  border-bottom: 1px solid var(--line);
+  background: var(--ground);
+}
+
+.v .v-dtop__mark {
+  display: flex;
+  align-items: center;
+  padding: 0 var(--pad);
+  border-right: 1px solid var(--line);
+}
+
+.v-dnav {
+  display: flex;
+  flex: 1;
+}
+
+.v .v-dnav__item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 0 22px;
+  border-right: 1px solid var(--line);
+  font-size: 14px;
+  font-weight: 550;
+  letter-spacing: -0.005em;
+  color: var(--ink-2);
+}
+
+.v-dnav__item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 220ms var(--ease);
+}
+
+.v-dnav__item[data-on] {
+  color: var(--ink);
+}
+
+.v-dnav__item[data-on]::before {
+  transform: scaleX(1);
+}
+
+.v-dtop__right {
+  display: flex;
+  align-items: center;
+  padding: 0 var(--pad);
+  border-left: 1px solid var(--line);
+}
+
+.v-dpage {
+  padding-bottom: 96px;
+}
+
+.v-desk .v-display {
+  font-size: 40px;
+  line-height: 43px;
+  letter-spacing: -0.036em;
+}
+
+.v-desk .v-title {
+  font-size: 30px;
+  line-height: 34px;
+  letter-spacing: -0.028em;
+}
+
+.v-desk .v-answer {
+  padding: 28px var(--pad) 34px;
+}
+
+.v-desk .v-answer .v-display {
+  max-width: 22ch;
+}
+
+.v-desk .v-answer__sub {
+  font-size: 15px;
+  line-height: 22px;
+}
+
+/* Columns divided by a rule */
+.v-cols {
+  display: grid;
+  grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr);
+  border-top: 1px solid var(--line);
+}
+
+.v-cols > * {
+  min-width: 0;
+}
+
+.v-cols > * + * {
+  border-left: 1px solid var(--line);
+}
+
+.v-cols > * > .v-sec:first-child,
+.v-cols > * > :first-child {
+  border-top: 0;
+}
+
+.v-cols[data-even] {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.v-cols[data-rev] {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.65fr);
+}
+
+.v-desk .v-trow {
+  grid-template-columns: 92px minmax(0, 1fr) auto;
+  column-gap: 8px;
+  align-items: start;
+  padding: 18px var(--pad);
+}
+
+.v-desk .v-trow__when .v-num {
+  font-size: 34px;
+  line-height: 34px;
+}
+
+.v-desk .v-trow__side {
+  display: grid;
+  justify-items: end;
+  gap: 8px;
+  padding-left: 16px;
+}
+
+.v-desk .v-rowtitle {
+  font-size: 17px;
+  line-height: 23px;
+}
+
+.v-desk .v-req {
+  grid-template-columns: 44px 190px minmax(0, 1fr);
+}
+
+.v-desk .v-req__body {
+  display: contents;
+}
+
+.v-desk .v-req__content {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+
+
+/* A plus where rules meet, as on a drawing */
+.v-nodes {
+  position: relative;
+}
+
+.v-nodes::before,
+.v-nodes::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  z-index: 2;
+  width: 9px;
+  height: 9px;
+  background:
+    linear-gradient(var(--ink-2), var(--ink-2)) center / 9px 1px no-repeat,
+    linear-gradient(var(--ink-2), var(--ink-2)) center / 1px 9px no-repeat;
+}
+
+.v-nodes::before {
+  left: -5px;
+}
+
+.v-nodes::after {
+  right: -5px;
+}
+
+/* ---------- Motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .v *,
+  .v *::before,
+  .v *::after {
+    animation-duration: 1ms !important;
+    transition-duration: 1ms !important;
+  }
+}
+
+/* Desktop: the frame's side rules run to the bottom of the window */
+html[data-mode='desktop'] .v {
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  min-height: 100%;
+}
+
+html[data-mode='desktop'] .v-desk {
+  display: flex;
+  flex: 1 0 auto;
+  flex-direction: column;
+  min-height: 0;
+}
+
+html[data-mode='desktop'] .v-desk__frame {
+  flex: 1 0 auto;
+  min-height: 0;
+}

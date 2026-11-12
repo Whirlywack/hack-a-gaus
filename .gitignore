@@ -2,3 +2,11 @@
 handoff-from-claude/readings/text/
 handoff-from-claude/readings/docs/
 gaus-handoff.zip
+
+node_modules/
+.next/
+next-env.d.ts
+*.tsbuildinfo
+.env*.local
+supabase/.temp/
+supabase/.branches/
