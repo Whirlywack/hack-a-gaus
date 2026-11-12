@@ -20,6 +20,10 @@ _Avoid_: bidder, winner, firm
 
 ### Procurement
 
+**Notice** *(skelbimas)*:
+A record in the open-notice feed. Its kind is a Public tender *(pirkimas)*, a Market consultation *(rinkos konsultacija)*, a dynamic purchasing system, a specific contract inside one, or a qualification system.
+_Avoid_: listing, announcement
+
 **Public tender** *(pirkimas)*:
 A procurement a Buyer has published for bidding. It is open until its deadline and finished *(baigtas)* after it.
 _Avoid_: contract, opportunity, lead
