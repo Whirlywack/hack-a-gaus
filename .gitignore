@@ -4,5 +4,19 @@ handoff-from-claude/readings/docs/
 gaus-handoff.zip
 reader/.venv/
 
+node_modules/
+.next/
+next-env.d.ts
+*.tsbuildinfo
+.env
+.env.*
+!.env.example
+supabase/.temp/
+supabase/.branches/
 __pycache__/
 *.pyc
+
+# Local agent tooling (worktrees live in .claude/worktrees/)
+.claude/
+.playwright-mcp/
+.serena/

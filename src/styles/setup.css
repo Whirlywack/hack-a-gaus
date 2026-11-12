@@ -1,0 +1,545 @@
+/* Start flow (Pradžia, Prisijungti). The only place the accent floods. */
+
+.su-page {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+/* ---- The flood ---- */
+.su-flood {
+  padding: 0 var(--pad) 26px;
+  background: var(--accent);
+  color: var(--ground);
+}
+
+.su-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  height: 52px;
+}
+
+.su-top__left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.v .su-back {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin-left: -12px;
+  color: var(--ground);
+}
+
+.v .su-toplink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: 14px;
+  font-weight: 550;
+  letter-spacing: -0.005em;
+  color: var(--ground);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+
+.su-prog {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.su-prog__step {
+  padding-top: 7px;
+  border-top: 2px solid rgba(238, 235, 230, 0.35);
+  transition: border-color 220ms var(--ease);
+}
+
+.su-prog__step[data-on] {
+  border-top-color: var(--ground);
+}
+
+.su-prog__n {
+  display: block;
+  font-size: 11px;
+  line-height: 14px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: rgba(238, 235, 230, 0.6);
+}
+
+.su-prog__step[data-on] .su-prog__n {
+  color: var(--ground);
+}
+
+.v .su-title {
+  margin-top: 26px;
+  color: var(--ground);
+}
+
+.v .su-top + .su-title {
+  margin-top: 18px;
+}
+
+.v .su-text {
+  margin-top: 10px;
+  max-width: 44ch;
+  font-size: 15px;
+  line-height: 21px;
+  color: rgba(238, 235, 230, 0.85);
+}
+
+/* ---- On the ground ---- */
+.su-content {
+  padding: 22px var(--pad) 0;
+}
+
+.su-content[data-bleed] {
+  padding: 0;
+}
+
+.su-fields {
+  display: grid;
+  gap: 16px;
+}
+
+.su-spacer {
+  flex: 1;
+  min-height: 28px;
+}
+
+.su-acts {
+  padding: 0 var(--pad) calc(16px + env(safe-area-inset-bottom, 0px));
+}
+
+.v .su-primary .v-btn {
+  justify-content: space-between;
+  min-height: 54px;
+  padding: 0 18px 0 20px;
+  font-size: 16px;
+}
+
+.v .su-primary .v-btn > svg {
+  transition: transform 180ms var(--ease);
+}
+
+.v .su-primary .v-btn:not([data-disabled]):hover > svg {
+  transform: translateX(3px);
+}
+
+.su-under {
+  display: flex;
+  justify-content: center;
+  min-height: 44px;
+  margin-top: 6px;
+  text-align: center;
+}
+
+/* Darbai: ruled rows with a check box */
+.su-kinds {
+  border-bottom: 1px solid var(--line);
+}
+
+.v .su-kind {
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr);
+  gap: 14px;
+  width: 100%;
+  padding: 14px var(--pad);
+  transition: background 160ms var(--ease);
+}
+
+.su-kind + .su-kind {
+  border-top: 1px solid var(--line-2);
+}
+
+.su-kind .p-check {
+  margin-top: 0;
+}
+
+.su-kind__body {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.su-kind__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.su-kind__name {
+  font-size: 15px;
+  line-height: 20px;
+  font-weight: 550;
+  letter-spacing: -0.008em;
+}
+
+.su-kind__count {
+  flex: none;
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--ink-2);
+  white-space: nowrap;
+}
+
+.su-kind__ex {
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--ink-2);
+}
+
+.su-kind[aria-checked='false'] .su-kind__name {
+  color: var(--ink-2);
+}
+
+/* Pirkimai: tender rows, read only */
+.su-found {
+  border-bottom: 1px solid var(--line);
+}
+
+.su-found .v-trow {
+  cursor: default;
+}
+
+.su-found .v-trow:first-child {
+  border-top: 0;
+}
+
+/* Sign-in: the forgotten-password disclosure, a ruled block */
+.su-forgot {
+  margin-top: 6px;
+}
+
+.su-chev {
+  display: inline-grid;
+  transition: transform 180ms var(--ease);
+}
+
+.su-chev[data-open] {
+  transform: rotate(180deg);
+}
+
+.su-forgot__block {
+  display: grid;
+  gap: 14px;
+  justify-items: stretch;
+  margin-top: 4px;
+  padding: 14px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  animation: v-in 200ms var(--ease) both;
+}
+
+.su-forgot__text {
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--ink-2);
+}
+
+.su-sent {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  line-height: 20px;
+  font-weight: 550;
+}
+
+.su-sent__mark {
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  background: var(--accent);
+  color: #fff;
+}
+
+@media (hover: hover) {
+  .v .su-kind:hover {
+    background: var(--raise);
+  }
+}
+
+/* E-mail confirmation: six ruled cells that share their borders */
+.su-email {
+  font-weight: 600;
+  color: var(--ground);
+  overflow-wrap: anywhere;
+}
+
+.su-verify {
+  padding: 22px var(--pad) 20px;
+}
+
+.su-code {
+  display: grid;
+  gap: 8px;
+}
+
+.su-code__cells {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  max-width: 372px;
+  border: 1px solid var(--ink);
+  background: var(--raise);
+}
+
+.su-code__cell {
+  position: relative;
+  display: grid;
+  place-items: center;
+  height: 60px;
+  font-size: 28px;
+  line-height: 1;
+  font-weight: 450;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+
+.su-code__cell + .su-code__cell {
+  border-left: 1px solid var(--ink);
+}
+
+.su-code__cell[data-at] {
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+
+/* The caret of the cell being typed into */
+.su-code__cell[data-caret]::after {
+  content: '';
+  width: 1.5px;
+  height: 26px;
+  background: var(--accent);
+  animation: su-caret 1.1s steps(1) infinite;
+}
+
+@keyframes su-caret {
+  50% {
+    opacity: 0;
+  }
+}
+
+.su-code[data-busy] .su-code__cell {
+  color: var(--ink-2);
+}
+
+/* The one real input lies over the cells; the cells draw what it holds */
+.v .su-code__input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: none;
+  opacity: 0;
+  font-size: 16px;
+  cursor: text;
+}
+
+.su-verify__status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 24px;
+  margin-top: 12px;
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--ink-2);
+}
+
+.su-wrong {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 550;
+  color: var(--ink);
+  animation: v-in 200ms var(--ease) both;
+}
+
+.su-wrong__mark {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 20px;
+  height: 20px;
+  background: var(--ink);
+  color: var(--ground);
+}
+
+.su-help {
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.su-help__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 16px;
+  min-height: 56px;
+  padding: 6px var(--pad);
+}
+
+.su-help__row + .su-help__row {
+  border-top: 1px solid var(--line-2);
+}
+
+.su-help__q {
+  display: grid;
+  gap: 1px;
+  min-width: 0;
+}
+
+.su-help__name {
+  font-size: 15px;
+  line-height: 20px;
+  font-weight: 500;
+}
+
+.su-help__row .v-textbtn {
+  flex: none;
+  white-space: nowrap;
+}
+
+.su-help__wait {
+  flex: none;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--ink-2);
+  text-align: right;
+}
+
+.su-help__clock {
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .su-code__cell[data-caret]::after {
+    animation: none;
+  }
+}
+
+/* ---- Desktop: two ruled columns, the flood on the left ---- */
+.su-desk {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+  min-height: 640px;
+}
+
+.su-desk .su-flood {
+  padding: 0 var(--pad) 40px;
+}
+
+.su-desk .su-top {
+  height: 64px;
+}
+
+.su-desk .su-back {
+  margin-left: -12px;
+}
+
+.su-desk .su-prog {
+  margin-top: 24px;
+}
+
+.v .su-desk .su-title {
+  margin-top: 40px;
+  max-width: 14ch;
+  font-size: 40px;
+  line-height: 43px;
+}
+
+.v .su-desk .su-top + .su-title {
+  margin-top: 32px;
+}
+
+.v .su-desk .su-text {
+  margin-top: 16px;
+  font-size: 16px;
+  line-height: 23px;
+}
+
+.su-right {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  border-left: 1px solid var(--line);
+}
+
+.su-desk .su-content {
+  padding: 40px var(--pad) 0;
+  max-width: 560px;
+}
+
+.su-desk .su-content[data-bleed] {
+  max-width: none;
+  padding: 0;
+}
+
+
+
+.su-desk .su-acts {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 24px;
+  padding: 28px var(--pad) 36px;
+}
+
+.su-desk .su-primary {
+  min-width: 240px;
+}
+
+.su-desk .su-under {
+  margin-top: 0;
+}
+
+.su-desk .su-proof {
+  border-top: 1px solid var(--line);
+}
+
+.su-desk .su-proof .su-found {
+  border-bottom: 0;
+}
+
+.su-desk .su-proof .su-found .v-trow:first-child {
+  border-top: 1px solid var(--line);
+}
+
+.su-desk .su-proof.is-lead {
+  border-top: 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.su-desk .su-proof.is-lead .su-found .v-trow:first-child {
+  border-top: 0;
+}
+
+/* Proof at the foot of the column: the section fills the rest of the height */
+.su-desk .su-acts:not(:last-child) {
+  flex: none;
+}
+
+.su-desk .su-verify {
+  padding: 40px var(--pad) 28px;
+}

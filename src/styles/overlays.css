@@ -1,0 +1,471 @@
+/* Overlays: the sheet (phone), the dialog and side panel (desktop), the
+   toast and the "Visi ekranai" list. Square, ruled, ink edges, no shadow. */
+
+.o-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 50;
+}
+
+html[data-mode='desktop'] .o-layer {
+  position: fixed;
+}
+
+.o-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(23, 24, 26, 0.38);
+  opacity: 0;
+  transition: opacity 220ms var(--ease);
+}
+
+.o-layer[data-open] .o-backdrop {
+  opacity: 1;
+}
+
+.o-panel {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--ground);
+  color: var(--ink);
+  outline: none;
+}
+
+.o-panel[data-kind='sheet'] {
+  right: 0;
+  bottom: 0;
+  left: 0;
+  max-height: calc(100% - 40px);
+  border-top: 1px solid var(--ink);
+  transform: translateY(100%);
+  transition: transform 220ms var(--ease);
+}
+
+.o-layer[data-open] .o-panel[data-kind='sheet'] {
+  transform: none;
+}
+
+.o-panel[data-kind='dialog'] {
+  top: 50%;
+  left: 50%;
+  width: min(460px, calc(100% - 48px));
+  max-height: calc(100% - 96px);
+  border: 1px solid var(--ink);
+  opacity: 0;
+  transform: translate(-50%, calc(-50% + 8px));
+  transition: opacity 200ms var(--ease), transform 220ms var(--ease);
+}
+
+.o-layer[data-open] .o-panel[data-kind='dialog'] {
+  opacity: 1;
+  transform: translate(-50%, -50%);
+}
+
+.o-panel[data-kind='drawer'] {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(480px, 100%);
+  border-left: 1px solid var(--ink);
+  transform: translateX(100%);
+  transition: transform 220ms var(--ease);
+}
+
+.o-layer[data-open] .o-panel[data-kind='drawer'] {
+  transform: none;
+}
+
+/* Head: the sheet's name, a square close button, a rule */
+.o-head {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  height: 52px;
+  padding: 0 var(--pad);
+  border-bottom: 1px solid var(--line);
+}
+
+.o-head[data-drag] {
+  touch-action: none;
+}
+
+.v .o-x {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  margin-right: -2px;
+  border: 1px solid var(--line);
+  color: var(--ink);
+  transition: border-color 160ms var(--ease);
+}
+
+.v .o-x:hover {
+  border-color: var(--ink);
+}
+
+.o-panel[data-kind='drawer'] .o-head {
+  height: 56px;
+}
+
+.o-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.o-body::-webkit-scrollbar {
+  display: none;
+}
+
+.v .o-title {
+  padding: 18px var(--pad) 18px;
+  font-size: 22px;
+  line-height: 26px;
+  font-weight: 500;
+  letter-spacing: -0.022em;
+  text-wrap: balance;
+}
+
+.v .o-title.is-contract {
+  font-size: 19px;
+  line-height: 24px;
+  letter-spacing: -0.018em;
+}
+
+/* Ruled rows */
+.o-rows {
+  display: grid;
+}
+
+.v .o-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  min-height: 54px;
+  padding: 14px var(--pad);
+  border-top: 1px solid var(--line-2);
+  transition: background 160ms var(--ease);
+}
+
+.o-title + .o-rows > .o-row:first-child {
+  border-top-color: var(--line);
+}
+
+.o-body > .o-rows:first-child > .o-row:first-child {
+  border-top: 0;
+}
+
+.o-row__text {
+  flex: 1;
+  min-width: 0;
+  font-size: 16px;
+  line-height: 21px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.o-option .v-idx {
+  width: 16px;
+  padding-top: 1px;
+}
+
+
+.o-link.is-quiet .o-row__text {
+  font-weight: 400;
+  color: var(--ink-2);
+}
+
+.o-chev {
+  transition: transform 180ms var(--ease);
+}
+
+.o-chev[data-open] {
+  transform: rotate(180deg);
+}
+
+.o-sub {
+  animation: v-in 180ms var(--ease) both;
+}
+
+.v .o-switchrow {
+  padding-left: calc(var(--pad) + 14px);
+}
+
+.o-switchrow .o-row__text {
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.o-switch {
+  position: relative;
+  flex: none;
+  width: 38px;
+  height: 22px;
+  border: 1px solid var(--ink);
+  transition: background 160ms var(--ease), border-color 160ms var(--ease);
+}
+
+.o-switch > span {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 14px;
+  height: 14px;
+  background: var(--ink);
+  transition: transform 180ms var(--ease), background 160ms var(--ease);
+}
+
+.o-switch[data-on] {
+  border-color: var(--accent);
+  background: var(--accent);
+}
+
+.o-switch[data-on] > span {
+  background: var(--ground);
+  transform: translateX(16px);
+}
+
+@media (hover: hover) {
+  .v .o-row:hover {
+    background: var(--raise);
+  }
+
+  .v .o-row:hover .v-arrow.is-move {
+    color: var(--accent);
+  }
+}
+
+/* The contract: labelled value cells */
+.o-cells {
+  display: grid;
+  border-top: 1px solid var(--line);
+}
+
+.o-cell {
+  display: grid;
+  gap: 6px;
+  align-content: start;
+  min-width: 0;
+  padding: 13px var(--pad) 14px;
+  border-bottom: 1px solid var(--line-2);
+}
+
+.o-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.o-pair > .o-cell + .o-cell {
+  border-left: 1px solid var(--line-2);
+}
+
+.o-value {
+  font-size: 15px;
+  line-height: 21px;
+  font-weight: 500;
+  letter-spacing: -0.008em;
+}
+
+.o-value.is-big {
+  font-size: 24px;
+  line-height: 28px;
+  font-weight: 450;
+  letter-spacing: -0.03em;
+}
+
+.o-dist {
+  display: block;
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 400;
+  color: var(--ink-2);
+}
+
+.o-dist[data-urgent] {
+  color: var(--urgent);
+}
+
+.v .o-partylink {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 8px;
+  color: var(--accent);
+  text-align: left;
+}
+
+.o-partylink .v-arrow {
+  margin-top: 3px;
+  color: var(--accent);
+}
+
+.o-foot {
+  padding: 20px var(--pad) 20px;
+}
+
+/* ---- Toast ---- */
+.o-toast {
+  position: absolute;
+  right: 12px;
+  bottom: calc(var(--tab-h, 56px) + 12px);
+  left: 12px;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 48px;
+  padding: 0 4px 0 16px;
+  background: var(--ink);
+  color: var(--ground);
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  animation: o-toast 200ms var(--ease) both;
+}
+
+html[data-mode='desktop'] .o-toast {
+  position: fixed;
+  right: auto;
+  bottom: 24px;
+  left: 50%;
+  min-width: 340px;
+  transform: translateX(-50%);
+  animation-name: o-toast-d;
+}
+
+.v .o-toast__action {
+  display: grid;
+  place-items: center;
+  min-height: 44px;
+  padding: 0 12px;
+  color: var(--ground);
+  font-weight: 550;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+
+@keyframes o-toast {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+@keyframes o-toast-d {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 8px);
+  }
+}
+
+/* ---- "Visi ekranai" ---- */
+.o-all {
+  position: fixed;
+  bottom: 16px;
+  left: 16px;
+  z-index: 80;
+}
+
+.v .o-all__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  height: 36px;
+  padding: 0 13px 0 11px;
+  border: 1px solid var(--ink);
+  background: var(--ground);
+  font-size: 12px;
+  line-height: 14px;
+  font-weight: 600;
+  letter-spacing: 0.085em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.o-all__btn[aria-expanded='true'] {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.o-all__glyph {
+  display: grid;
+  grid-template-columns: repeat(2, 5px);
+  gap: 2px;
+}
+
+.o-all__glyph > span {
+  width: 5px;
+  height: 5px;
+  border: 1px solid currentColor;
+}
+
+.o-all__list {
+  position: absolute;
+  bottom: 44px;
+  left: 0;
+  width: 380px;
+  max-height: 480px;
+  overflow-y: auto;
+  border: 1px solid var(--ink);
+  background: var(--ground);
+  scrollbar-width: thin;
+  animation: o-toast 160ms var(--ease) both;
+}
+
+.v .o-all__item {
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 14px;
+}
+
+.o-all__item + .o-all__item {
+  border-top: 1px solid var(--line-2);
+}
+
+.o-all__label {
+  overflow: hidden;
+  font-size: 14px;
+  line-height: 19px;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.o-all__hash {
+  max-width: 120px;
+  overflow: hidden;
+  font-size: 11px;
+  line-height: 14px;
+  color: var(--ink-3);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.o-all__item[data-here] .v-idx,
+.o-all__item[data-here] .o-all__label {
+  color: var(--accent);
+}
+
+@media (hover: hover) {
+  .v .o-all__item:hover {
+    background: var(--raise);
+  }
+}
+
+/* The panel takes focus when it opens; the ruled edge already shows where it is */
+.v .o-panel:focus-visible {
+  outline: none;
+}
