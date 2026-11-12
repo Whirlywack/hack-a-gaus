@@ -147,7 +147,7 @@ def convert_tree(docs_dir, text_dir, converters=None):
                     entries.append(_entry(label, "skipped", reason="unusable file name in zip"))
                     continue
                 if member.lower().endswith(".zip"):
-                    entries.append(_entry(label, "skipped", reason="nested zip (EBVPD)"))
+                    entries.append(_entry(label, "skipped", reason="nested zip, not unpacked"))
                     continue
                 try:
                     with z.open(i) as src, open(dst, "wb") as out:

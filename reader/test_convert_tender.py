@@ -73,6 +73,14 @@ class ConvertTree(unittest.TestCase):
         self.assertIn("nested zip", e["pack/EBVPD.zip"]["reason"])
         self.assertFalse(os.path.exists(os.path.join(self.tmp.name, "evil.pdf")))
 
+    def test_nested_zip_reason_does_not_claim_it_is_an_ebvpd(self):
+        buf = io.BytesIO()
+        with zipfile.ZipFile(buf, "w") as z:
+            z.writestr("Brėžiniai.zip", "x")
+        self.put("pack.zip", buf.getvalue())
+        e = self.run_tree()["pack/Brėžiniai.zip"]
+        self.assertEqual((e["status"], e["reason"]), ("skipped", "nested zip, not unpacked"))
+
     def test_zip_member_text_is_named_as_the_hand_checked_keys_cite_it(self):
         # handoff-from-claude/readings/key/10377061.json quotes from
         # "10377247_Pirkimas Nr. 3__4 priedas. Kvalifikacijos reikalavimai.docx.txt",
