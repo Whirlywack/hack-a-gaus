@@ -1,0 +1,167 @@
+/* Screen-specific rules. The system lives in v2.css. */
+
+/* ---- Šiandien ---- */
+.f-chev {
+  display: inline-grid;
+  color: var(--ink-2);
+  transition: transform 180ms var(--ease);
+}
+
+.f-chev[data-open] {
+  transform: rotate(180deg);
+}
+
+.f-aside {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 14px;
+  padding: 14px var(--pad);
+}
+
+.f-aside__text {
+  display: grid;
+  gap: 3px;
+}
+
+.f-aside .v-rowtitle {
+  color: var(--ink-2);
+}
+
+.f-sideacts {
+  display: inline-flex;
+  gap: 8px;
+}
+
+.f-top {
+  display: grid;
+  grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr);
+  align-items: end;
+}
+
+.f-top__tabs {
+  padding: 0 var(--pad) 34px;
+}
+
+.f-top__tabs .v-rtabs {
+  grid-auto-columns: 1fr;
+  padding: 0;
+}
+
+.f-side .v-note {
+  border-top-color: var(--line);
+}
+
+/* ---- Pirkimas ---- */
+.t-head {
+  padding: 18px var(--pad) 22px;
+}
+
+.t-tags {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.t-why {
+  padding: 12px var(--pad) 14px;
+  border-top: 1px solid var(--line);
+}
+
+.t-links .v-linkrow:first-child {
+  border-top-color: var(--line);
+}
+
+.t-links {
+  border-bottom: 1px solid var(--line);
+}
+
+.t-ok {
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  margin-top: 1px;
+  background: var(--accent);
+  color: #fff;
+}
+
+.t-unread {
+  display: grid;
+  gap: 16px;
+  justify-items: start;
+  padding: 4px var(--pad) 22px;
+}
+
+.t-reading {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 44px;
+}
+
+.t-plain {
+  border-top-color: var(--line);
+  font-size: 15px;
+  line-height: 21px;
+  color: var(--ink);
+}
+
+.t-result {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  border-top: 1px solid var(--line);
+}
+
+.t-result > * {
+  display: grid;
+  gap: 8px;
+  align-content: start;
+  padding: 14px var(--pad) 18px;
+}
+
+.t-result > * + * {
+  border-left: 1px solid var(--line);
+}
+
+.v .t-result__name {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 18px;
+  line-height: 23px;
+  font-weight: 500;
+  letter-spacing: -0.018em;
+}
+
+.v .t-result__name.is-link {
+  color: var(--accent);
+}
+
+.t-buyer {
+  display: grid;
+  gap: 8px;
+  justify-items: start;
+  padding: 0 var(--pad) 18px;
+}
+
+.v-desk .t-head {
+  padding: 8px var(--pad) 26px;
+}
+
+.v-desk .t-back {
+  margin-bottom: 10px;
+}
+
+.v-desk .t-cols {
+  border-top: 0;
+}
+
+.v-desk .t-cols > aside > .v-cells:first-child {
+  border-top: 0;
+}
+
+.v-desk .t-head .v-title {
+  max-width: 26ch;
+}

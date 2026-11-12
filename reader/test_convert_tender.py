@@ -64,6 +64,37 @@ class ConvertTree(unittest.TestCase):
         self.assertIn("nested zip", e["pack.zip/EBVPD.zip"]["reason"])
         self.assertFalse(os.path.exists(os.path.join(self.tmp.name, "evil.pdf")))
 
+    def test_hostile_zip_members_are_skipped_with_a_reason_and_the_rest_still_read(self):
+        long_extract = "n" * 300 + ".pdf"        # too long to unpack under any file system
+        long_text = "m" * 241 + ".pdf"           # unpacks, but its text file name is too long
+        buf = io.BytesIO()
+        with zipfile.ZipFile(buf, "w") as z:
+            z.writestr(zipfile.ZipInfo(".."), "x")
+            z.writestr(zipfile.ZipInfo("."), "x")
+            z.writestr("a/doc.pdf", "x")
+            z.writestr("b/doc.pdf", "x")
+            z.writestr(long_extract, "x")
+            z.writestr(long_text, "x")
+            z.writestr("crc.pdf", "ORIGINALDATA")
+            z.writestr("inner.docx", "x")
+        self.put("pack.zip", buf.getvalue().replace(b"ORIGINALDATA", b"CORRUPTEDDAT"))
+
+        entries = ct.convert_tree(self.src, self.out, converters={
+            k: fake("a" * 500) for k in ("docx", "doc", "pdf", "xlsx", "xls")})
+        e = {x["file"]: x for x in entries}
+
+        self.assertEqual(len(entries), 8)
+        for bad in ("pack.zip/..", "pack.zip/.", "pack.zip/" + long_extract,
+                    "pack.zip/" + long_text, "pack.zip/crc.pdf"):
+            with self.subTest(bad=bad[:40]):
+                self.assertEqual(e[bad]["status"], "skipped")
+                self.assertTrue(e[bad]["reason"])
+        docs = [x for x in entries if x["file"].endswith("doc.pdf")]
+        self.assertEqual([x["status"] for x in docs], ["read", "read"])
+        self.assertEqual(len({x["file"] for x in docs}), 2)
+        self.assertEqual(e["pack.zip/inner.docx"]["status"], "read")
+        self.assertEqual(len(os.listdir(self.out)), 3)  # both doc.pdf texts and inner.docx
+
     def test_unsupported_and_broken_files_are_skipped_not_fatal(self):
         self.put("plan.dwg")
         self.put("bad.docx")

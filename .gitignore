@@ -6,5 +6,19 @@ reader/.venv/
 # Raw live Readings from the scoring run (#13): they hold Quotes of tender text.
 reader/scoring_raw/
 
+node_modules/
+.next/
+next-env.d.ts
+*.tsbuildinfo
+.env
+.env.*
+!.env.example
+supabase/.temp/
+supabase/.branches/
 __pycache__/
 *.pyc
+
+# Local agent tooling (worktrees live in .claude/worktrees/)
+.claude/
+.playwright-mcp/
+.serena/

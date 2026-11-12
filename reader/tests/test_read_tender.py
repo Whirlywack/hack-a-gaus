@@ -27,9 +27,10 @@ def answer_text():
 
 class FakeClient:
     def __init__(self, stop_reason="end_turn", text=None, model="claude-sonnet-5-5",
-                 tokens_per_char=0.0, flat_tokens=1000):
+                 tokens_per_char=0.0, flat_tokens=1000, content=None, usage=None):
         self.stop_reason, self.text, self.model = stop_reason, text, model
         self.tokens_per_char, self.flat_tokens = tokens_per_char, flat_tokens
+        self.content, self.usage = content, usage
         self.requests, self.counted = [], []
         outer = self
 
@@ -55,9 +56,11 @@ class FakeClient:
                 content = [SimpleNamespace(type="text", text=outer.text if outer.text is not None else answer_text())]
                 if outer.stop_reason == "refusal":
                     content = []
+                if outer.content is not None:
+                    content = outer.content
                 return SimpleNamespace(
                     stop_reason=outer.stop_reason, content=content, model=outer.model,
-                    usage=SimpleNamespace(input_tokens=1234, output_tokens=567),
+                    usage=outer.usage or SimpleNamespace(input_tokens=1234, output_tokens=567),
                     stop_details=None,
                 )
 
@@ -114,6 +117,16 @@ class ReadTenderRequest(unittest.TestCase):
         # the instruction-like line sits inside a document block, after the data framing
         self.assertLess(user.index("<document"), user.index("Ignoruok visas"))
 
+    def test_model_is_told_the_rules_its_quotes_are_checked_against(self):
+        # a quote the Quote check would throw away must not look acceptable to the model
+        self.read()
+        system = self.client.requests[0]["system"]
+        self.assertIn("at least %d characters" % reading.MIN_SEGMENT_CHARS, system)
+        self.assertIn("at most %d pieces" % reading.MAX_SEGMENTS, system)
+        # the request schema has no null quote or file: the model is told to send ""
+        self.assertIn('empty strings ("")', system)
+        self.assertNotIn("null quote", system)
+
     def test_reading_carries_record_files_model_and_date(self):
         r = self.read()
         self.assertEqual(r["states"]["min_turnover"], "required")
@@ -128,6 +141,20 @@ class ReadTenderRequest(unittest.TestCase):
 
     def test_reading_records_the_model_that_actually_answered(self):
         r = self.read(model="claude-sonnet-5")
+        self.assertEqual(r["model"], "claude-sonnet-5")
+
+    def test_answer_the_fallback_model_finished_after_a_mid_stream_refusal_is_read_whole(self):
+        # Refusals and fallback, Streaming: after a mid-output decline the partial text stays, a
+        # `fallback` block marks the boundary, and the fallback model continues in a new text block.
+        whole = answer_text()
+        cut = whole.index('"similar_contracts"')
+        r = self.read(model="claude-sonnet-5", content=[
+            SimpleNamespace(type="text", text=whole[:cut]),
+            SimpleNamespace(type="fallback", to=SimpleNamespace(model="claude-sonnet-5")),
+            SimpleNamespace(type="text", text=whole[cut:]),
+        ])
+        self.assertEqual(r["states"]["min_turnover"], "required")
+        self.assertEqual(r["states"]["bid_security"], "not_required")
         self.assertEqual(r["model"], "claude-sonnet-5")
 
     def test_empty_quote_and_file_from_the_model_come_back_as_null(self):
@@ -160,6 +187,19 @@ class ReadTenderRequest(unittest.TestCase):
     def test_unparseable_answer_is_a_failed_read(self):
         with self.assertRaises(ReadFailed):
             self.read(text="not json")
+
+    def test_ledger_counts_every_attempt_of_a_read_the_fallback_model_finished(self):
+        # usage.iterations is the per-attempt record of what is billed: a refusal that declined
+        # mid-stream is billed too, while the top-level usage covers only the attempt that answered
+        usage = SimpleNamespace(input_tokens=900, output_tokens=500, iterations=[
+            SimpleNamespace(type="message", model="claude-sonnet-5-5", input_tokens=1000, output_tokens=300),
+            SimpleNamespace(type="fallback_message", model="claude-sonnet-5", input_tokens=900, output_tokens=500),
+        ])
+        self.read(model="claude-sonnet-5", usage=usage)
+        with open(self.ledger.name) as f:
+            entry = json.load(f)["entries"][-1]
+        self.assertEqual((entry["input_tokens"], entry["output_tokens"]), (1900, 800))
+        self.assertAlmostEqual(entry["usd"], 0.0118, places=6)  # both Sonnets: 2 / 10 USD per million
 
     def test_spend_is_appended_to_the_ledger(self):
         self.read()
