@@ -2,3 +2,6 @@
 handoff-from-claude/readings/text/
 handoff-from-claude/readings/docs/
 gaus-handoff.zip
+
+__pycache__/
+*.pyc
