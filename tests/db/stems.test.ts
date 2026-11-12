@@ -34,4 +34,10 @@ describe('Lithuanian text search stems (ADR-0002)', () => {
   it('does not match "dang" inside "priedangos"', async () => {
     expect(await stem('priedangos')).not.toBe(await stem('dangos'))
   })
+
+  // Text search sorts its stems, so taking the first one of several words
+  // would quietly give the wrong stem ("kelionių kelių" would give "kel").
+  it.each(['kelionių kelių', 'žvyro-skaldos'])('refuses %s, which is more than one word', async (text) => {
+    await expect(stem(text)).rejects.toThrow(/one word/)
+  })
 })

@@ -190,23 +190,21 @@ export function Num({ n, unit, urgent, className }: { n: ReactNode; unit?: strin
   )
 }
 
-/** The days left, read from "Liko 7 d.". */
-export const daysOf = (t: TenderRowData) => t.statusDays.replace(/\D+/g, '')
-
 /** A tender in a list: the days left as the numeral on the left, then title,
  * buyer, the deadline and what is on the right of it. */
-export function TenderRow({ t, onClick, tags, side, acts }: { t: TenderRowData; onClick: () => void; tags?: ReactNode; side?: ReactNode; acts?: ReactNode }) {
+export function TenderRow({ tender, onClick, tags, side, acts }: { tender: TenderRowData; onClick: () => void; tags?: ReactNode; side?: ReactNode; acts?: ReactNode }) {
+  const consultation = tender.kind === 'consultation'
   return (
     <>
       <Tap className="v-trow" onClick={onClick}>
         <div className="v-trow__when">
-          <Num n={daysOf(t)} unit={copy('unit.days')} urgent={t.urgent || t.pill === 'consult'} />
+          <Num n={tender.daysLeft} unit={copy('unit.days')} urgent={tender.urgent || consultation} />
         </div>
         <div className="v-trow__body">
-          <div className="v-rowtitle clamp2">{t.title}</div>
-          <div className="v-small">{t.buyer}</div>
+          <div className="v-rowtitle clamp2">{tender.title}</div>
+          <div className="v-small">{tender.buyer}</div>
           <div className="v-trow__meta">
-            <span className="v-small">{t.pill === 'consult' ? `${copy('tender.consultation')} · ${t.feedDeadline}` : t.feedDeadline}</span>
+            <span className="v-small">{consultation ? `${copy('tender.consultation')} · ${tender.feedDeadline}` : tender.feedDeadline}</span>
             {tags && <span className="v-trow__tags">{tags}</span>}
           </div>
         </div>
@@ -235,7 +233,7 @@ export function Wordmark() {
 export const ROUTE_NAMES: Record<string, string> = {
   siandien: copy('nav.today'),
   stebimi: copy('nav.following'),
-  pirkimas: 'Pirkimas',
+  pirkimas: copy('nav.tender'),
 }
 
 /** Back: an arrow and the name of the screen it returns to. */
@@ -267,9 +265,9 @@ export function TabBar() {
   const path = usePathname()
   return (
     <nav className="v-tabs" style={{ gridTemplateColumns: `repeat(${TABS.length}, 1fr)` }}>
-      {TABS.map((t) => (
-        <Link key={t.label} href={t.href} className="v-tab" data-on={path === t.href || undefined}>
-          {t.label}
+      {TABS.map((tab) => (
+        <Link key={tab.label} href={tab.href} className="v-tab" data-on={path === tab.href || undefined}>
+          {tab.label}
         </Link>
       ))}
     </nav>
@@ -282,9 +280,9 @@ export function DeskTop({ plain, right }: { plain?: boolean; right?: ReactNode }
     <header className="v-dtop v-nodes">
       <Link href="/" className="v-dtop__mark"><Wordmark /></Link>
       <nav className="v-dnav">
-        {!plain && TABS.map((t) => (
-          <Link key={t.label} href={t.href} className="v-dnav__item" data-on={path === t.href || undefined}>
-            {t.label}
+        {!plain && TABS.map((tab) => (
+          <Link key={tab.label} href={tab.href} className="v-dnav__item" data-on={path === tab.href || undefined}>
+            {tab.label}
           </Link>
         ))}
       </nav>

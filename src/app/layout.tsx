@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import { Shell } from '../ui/shell'
+import { MODE_SCRIPT } from '../ui/wide'
 import { t } from '../copy/register'
 import '../styles/v2.css'
 import '../styles/parts.css'
@@ -20,8 +21,12 @@ export const viewport: Viewport = {
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  // MODE_SCRIPT may change data-mode before React hydrates, hence suppressHydrationWarning.
   return (
-    <html lang="lt" data-mode="native">
+    <html lang="lt" data-mode="native" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: MODE_SCRIPT }} />
+      </head>
       <body className="v">
         <Shell>{children}</Shell>
       </body>
