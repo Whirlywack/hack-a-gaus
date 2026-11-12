@@ -486,7 +486,7 @@ def summary(result, meta):
     """The machine-readable outcome, without Quotes: what decides which fields may be shown."""
     return {
         "status": "pending operator judgement",
-        "title": meta["title"], "model": meta.get("model"), "date": meta.get("date"),
+        "title": meta["title"], "model": meta.get("model"), "reader": meta.get("reader"), "date": meta.get("date"),
         "per_field": result["per_field"], "total": result["total"],
         "wrong_or_invented": {f: sorted({d["tender"] for d in result["disagreements"]
                                          if d["field"] == f and d["verdict"] in ("wrong", "invented")})
@@ -598,25 +598,78 @@ def _estimate(args, keys):
         args.model, total_in, est["expected_usd"], est["worst_usd"], est["ledger_total_usd"], path))
 
 
-def _live(args, keys):
-    before = ledger_total(reading_mod.LEDGER_PATH)
-    run = run_live(_client(), sorted(keys), TEXT_DIR, os.path.join(RAW_DIR, args.name), model=args.model,
-                   label="score %s" % args.name, ledger_path=reading_mod.LEDGER_PATH, cap_usd=args.cap,
-                   today=datetime.date.today().isoformat(), log=print)
-    shown = {t: shown_record(r) for t, r in run["readings"].items() if r}
-    result = score_run(keys, shown)
-    after = ledger_total(reading_mod.LEDGER_PATH)
-    skipped = {t: r["files_skipped"] for t, r in run["readings"].items() if r and r["files_skipped"]}
-    notes = [KEY_NOTE,
+def _run_label(name):
+    return "score %s" % name
+
+
+def _unfound_with_files(reading):
+    """The Reading's unfound quotes, each with the file the model named for it."""
+    out = []
+    for u in reading.get("unfound_quotes", []):
+        m = re.match(r"(\w+)(?:\[(\d+)\])?$", u["field"])
+        entry = reading["record"].get(m.group(1)) if m else None
+        if m and m.group(2) is not None and isinstance(entry, list) and int(m.group(2)) < len(entry):
+            entry = entry[int(m.group(2))]
+        out.append(dict(u, file=entry.get("file") if isinstance(entry, dict) else None))
+    return out
+
+
+def run_meta(name, model, readings, ledger_path, reader, failures=None, date=None):
+    """The report's account of a run, from its Readings ({tender: Reading or None}) and the ledger:
+    which reader it ran, the tokens per tender, what failed, what it cost."""
+    failures = dict(failures or {})
+    for tender, r in readings.items():
+        if r is None:
+            failures.setdefault(tender, "no Reading (the read failed or was not made)")
+    with open(ledger_path, encoding="utf-8") as f:
+        entries = json.load(f)["entries"]
+    label = _run_label(name)
+    run_usd = sum(e["usd"] for e in entries if e.get("label") == label or e.get("label", "").startswith(label + " ("))
+    skipped = {t: r["files_skipped"] for t, r in readings.items() if r and r["files_skipped"]}
+    notes = ["Reader: %s." % reader, KEY_NOTE,
              "A tender whose read failed or was not made scores as nothing found.",
              "Tokens of a failed read are in reader/live_spend.json, not in the table below."]
     if skipped:
         notes.append("Files left out because they did not fit the window: %s" % json.dumps(skipped, ensure_ascii=False))
-    meta = {"title": "Scoring run %s (%s) against the 15 keys" % (args.name, args.model), "model": args.model,
-            "date": datetime.date.today().isoformat(), "usage": run["usage"], "failures": run["failures"],
-            "unfound": {t: r["unfound_quotes"] for t, r in run["readings"].items() if r},
-            "run_usd": round(after - before, 4), "ledger_total_usd": round(after, 4), "notes": notes}
-    return result, meta
+    return {"title": "Scoring run %s (%s) against the 15 keys" % (name, model), "model": model, "reader": reader,
+            "date": date, "notes": notes, "failures": failures,
+            "usage": {t: dict(r["usage"], model=r["model"]) for t, r in readings.items() if r},
+            "unfound": {t: _unfound_with_files(r) for t, r in readings.items() if r},
+            "run_usd": round(run_usd, 4), "ledger_total_usd": round(ledger_total(ledger_path), 4)}
+
+
+def _reader_version():
+    import subprocess
+    head = subprocess.run(["git", "-C", REPO, "rev-parse", "--short", "HEAD"], capture_output=True, text=True).stdout.strip()
+    dirty = subprocess.run(["git", "-C", REPO, "status", "--porcelain", "reader/reading.py"],
+                           capture_output=True, text=True).stdout.strip()
+    return "reader/reading.py at %s%s" % (head, " with uncommitted changes" if dirty else "")
+
+
+def _live(args, keys):
+    reader = args.reader or _reader_version()
+    today = datetime.date.today().isoformat()
+    run = run_live(_client(), sorted(keys), TEXT_DIR, os.path.join(RAW_DIR, args.name), model=args.model,
+                   label=_run_label(args.name), ledger_path=reading_mod.LEDGER_PATH, cap_usd=args.cap,
+                   today=today, log=print)
+    result = score_run(keys, {t: shown_record(r) for t, r in run["readings"].items() if r})
+    return result, run_meta(args.name, args.model, run["readings"], reading_mod.LEDGER_PATH, reader,
+                            failures=run["failures"], date=today)
+
+
+def _rescore(args, keys):
+    """Score a finished run again from its raw Readings. No API call."""
+    raw = os.path.join(RAW_DIR, args.name)
+    readings = {}
+    for tender in sorted(keys):
+        path = os.path.join(raw, tender + ".json")
+        readings[tender] = None
+        if os.path.exists(path):
+            with open(path, encoding="utf-8") as f:
+                readings[tender] = json.load(f)
+    date = next((r["date"] for r in readings.values() if r), None)
+    result = score_run(keys, {t: shown_record(r) for t, r in readings.items() if r})
+    return result, run_meta(args.name, args.model, readings, reading_mod.LEDGER_PATH, args.reader, date=date)
 
 
 def main(argv=None):
@@ -632,6 +685,11 @@ def main(argv=None):
     live.add_argument("--model", default=reading_mod.MODEL)
     live.add_argument("--name", required=True)
     live.add_argument("--cap", type=float, default=CAP_USD)
+    live.add_argument("--reader", help="which reader the run uses (default: the git commit of reader/reading.py)")
+    re_ = sub.add_parser("rescore", help="score a finished live run again from its raw Readings (free)")
+    re_.add_argument("--name", required=True)
+    re_.add_argument("--model", required=True)
+    re_.add_argument("--reader", required=True, help="which reader the run used")
     oc = sub.add_parser("outcome", help="write reader/scores/OUTCOME.md from the named runs' summaries")
     oc.add_argument("names", nargs="+")
     args = ap.parse_args(argv)
@@ -648,7 +706,7 @@ def main(argv=None):
     keys = load_records(KEYS_DIR)
     if args.cmd == "estimate":
         return _estimate(args, keys)
-    result, meta = (_offline if args.cmd == "offline" else _live)(args, keys)
+    result, meta = {"offline": _offline, "live": _live, "rescore": _rescore}[args.cmd](args, keys)
     path = _write(args.name, result, meta)
     t = result["total"]
     print("%s: %d correct, %d wrong, %d missed, %d invented of %d; report %s" % (

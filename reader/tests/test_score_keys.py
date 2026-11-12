@@ -490,6 +490,49 @@ class LiveRun(unittest.TestCase):
         self.assertAlmostEqual(self.ledger_total(), 2 * 1000 * 2 / 1e6, places=6)
 
 
+class RunMeta(unittest.TestCase):
+    """What a run's report says about itself, rebuilt from its raw Readings and the ledger."""
+
+    def setUp(self):
+        import json
+        import tempfile
+        self.ledger = os.path.join(tempfile.mkdtemp(), "ledger.json")
+        with open(self.ledger, "w") as f:
+            json.dump({"entries": [{"label": "earlier", "usd": 0.5}, {"label": "score run-x", "usd": 0.25},
+                                   {"label": "score run-x", "usd": 0.125}, {"label": "score run-y", "usd": 9.0}],
+                       "total_usd": 9.875}, f)
+        self.reading = {
+            "record": {"right_to_practice_required": {"required": True, "quote": "q1", "file": "a.txt"},
+                       "other_requirements": [{"what": "w", "quote": "q2", "file": "b.txt"}]},
+            "unfound_quotes": [{"field": "right_to_practice_required", "quote": "q1"},
+                               {"field": "other_requirements[0]", "quote": "q2"}],
+            "files_skipped": [], "model": "claude-sonnet-5-5",
+            "usage": {"counted_input_tokens": 10, "input_tokens": 11, "output_tokens": 5, "usd": 0.25},
+        }
+
+    def meta(self):
+        from score_keys import run_meta
+        return run_meta("run-x", "claude-sonnet-5-5", {"11111111": self.reading, "22222222": None},
+                        self.ledger, reader="reading.py at d0c5b7b")
+
+    def test_run_cost_is_the_sum_of_its_ledger_entries(self):
+        meta = self.meta()
+        self.assertAlmostEqual(meta["run_usd"], 0.375)
+        self.assertAlmostEqual(meta["ledger_total_usd"], 9.875)
+
+    def test_reader_version_tokens_and_failures_are_recorded(self):
+        meta = self.meta()
+        self.assertIn("reading.py at d0c5b7b", meta["reader"])
+        self.assertEqual(meta["usage"]["11111111"]["input_tokens"], 11)
+        self.assertEqual(meta["usage"]["11111111"]["model"], "claude-sonnet-5-5")
+        self.assertIn("22222222", meta["failures"])
+
+    def test_unfound_quotes_name_their_file(self):
+        unfound = self.meta()["unfound"]["11111111"]
+        self.assertEqual([(u["field"], u["file"]) for u in unfound],
+                         [("right_to_practice_required", "a.txt"), ("other_requirements[0]", "b.txt")])
+
+
 class Outcome(unittest.TestCase):
     """The outcome record: per field, whether the reader's model ever gave a wrong or invented value.
     It decides which fields #16 may show; the operator's judgement can still change it."""
