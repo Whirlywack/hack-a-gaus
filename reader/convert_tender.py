@@ -16,29 +16,33 @@ import zipfile
 
 MIN_CHARS = 100          # below this a file counts as having no text (scanned)
 MAX_ZIP_BYTES = 200 * 1024 * 1024
-KINDS = {".docx": "docx", ".doc": "doc", ".pdf": "pdf", ".xlsx": "xlsx", ".xlsm": "xlsx", ".xls": "xls"}
+FORMATS = {".docx": "docx", ".doc": "doc", ".pdf": "pdf", ".xlsx": "xlsx", ".xlsm": "xlsx", ".xls": "xls"}
+HERE = os.path.dirname(os.path.abspath(__file__))
 
 
-def _convert():
+def _handoff():
+    """reader/convert.py, the handoff's converters. Imported on first use, so the tests that
+    supply their own converters need no python-docx."""
     # python -I leaves the script folder off sys.path; append so this folder's convert.py loads
     # without shadowing anything in the standard library.
-    sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-    import convert  # reader/convert.py, the handoff functions
+    if HERE not in sys.path:
+        sys.path.append(HERE)
+    import convert
     return convert
 
 
 def _docx(path):
-    return _convert().docx_to_text(path)
+    return _handoff().docx_to_text(path)
 
 
 def _doc(path):
-    c = _convert()
+    c = _handoff()
     with tempfile.TemporaryDirectory() as wd:
         return c.docx_to_text(c.soffice_to_docx(path, wd))
 
 
 def _pdf(path):
-    return _convert().pdf_to_text(path)
+    return _handoff().pdf_to_text(path)
 
 
 def _xlsx(path):
@@ -69,6 +73,14 @@ def _xls(path):
 DEFAULT_CONVERTERS = {"docx": _docx, "doc": _doc, "pdf": _pdf, "xlsx": _xlsx, "xls": _xls}
 
 
+def clean(text):
+    """The handoff's clean() from cascade/convert.py, unchanged: it ran on every converted text
+    before the text was measured and saved."""
+    text = text.replace("\u00a0", " ").replace("\r", "")
+    text = re.sub(r"\n{3,}", "\n\n", text)
+    return text.strip() + "\n"
+
+
 def _safe_name(name):
     base = os.path.basename(name.replace("\\", "/")) or "x"
     return re.sub(r"[^\w.\- ()ąčęėįšųūžĄČĘĖĮŠŲŪŽ]", "_", base)
@@ -80,18 +92,18 @@ def _entry(file, status, chars=0, reason=None):
 
 def _convert_one(path, label, text_dir, converters, entries):
     ext = os.path.splitext(path)[1].lower()
-    kind = KINDS.get(ext)
-    if kind is None:
+    fmt = FORMATS.get(ext)
+    if fmt is None:
         entries.append(_entry(label, "skipped", reason="unsupported file type %s" % (ext or "(none)")))
         return
     try:
-        text = converters[kind](path)
+        text = clean(converters[fmt](path))
     except Exception as ex:
         entries.append(_entry(label, "skipped", reason="conversion failed (%s)" % type(ex).__name__))
         return
     n = len(text.strip())
     if n < MIN_CHARS:
-        why = "no text (scanned PDF)" if kind == "pdf" else "no text"
+        why = "no text (scanned PDF)" if fmt == "pdf" else "no text"
         entries.append(_entry(label, "skipped", n, why))
         return
     os.makedirs(text_dir, exist_ok=True)
@@ -124,13 +136,14 @@ def convert_tree(docs_dir, text_dir, converters=None):
         if sum(i.file_size for i in infos) > MAX_ZIP_BYTES:
             entries.append(_entry(name, "skipped", reason="zip too big to unpack"))
             continue
+        folder = name[:-4]  # as the handoff's extract.py: members of x.zip are x/<member>
         labels = set()
         with tempfile.TemporaryDirectory() as td:
             for idx, i in enumerate(infos):
                 member = _safe_name(i.filename)
-                label = name + "/" + member
+                label = folder + "/" + member
                 if label in labels:  # same base name twice: keep both texts apart
-                    label = "%s/%d_%s" % (name, idx, member)
+                    label = "%s/%d_%s" % (folder, idx, member)
                 labels.add(label)
                 # Unpacked under the member's index, so names never clash and never leave td.
                 dst = os.path.join(td, "%d_%s" % (idx, member))
@@ -138,7 +151,7 @@ def convert_tree(docs_dir, text_dir, converters=None):
                     entries.append(_entry(label, "skipped", reason="unusable file name in zip"))
                     continue
                 if member.lower().endswith(".zip"):
-                    entries.append(_entry(label, "skipped", reason="nested zip (EBVPD)"))
+                    entries.append(_entry(label, "skipped", reason="nested zip, not unpacked"))
                     continue
                 try:
                     with z.open(i) as src, open(dst, "wb") as out:

@@ -1,19 +1,13 @@
 #!/usr/bin/env python3
 """Conversion functions copied unchanged from handoff-from-claude/reader/cascade/convert.py
-(docx_to_text, soffice_to_docx, pdf_to_text, clean). Only the handoff's hard-coded paths,
-its main() and its by-name skip rules were dropped; convert_tender.py drives these."""
-import hashlib, json, os, re, shutil, subprocess, sys, tempfile
+(docx_to_text, soffice_to_docx, pdf_to_text and their helpers). The handoff's hard-coded
+paths, its main(), its skip rules and its digit-density check were dropped. Its clean() is
+in convert_tender.py, which drives these."""
+import os, re, subprocess
 import docx
-from docx.oxml.ns import qn
 
 W = "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}"
 MC = "{http://schemas.openxmlformats.org/markup-compatibility/2006}"
-
-SKIP_EXT = {".xlsx", ".xls", ".xml", ".png", ".jpg", ".jpeg", ".gif", ".tif", ".tiff", ".bmp", ".dwg", ".dxf",
-            ".zip", ".bin", ".txt", ".csv", ".svg", ".rar", ".7z", ".p7s", ".asice", ".edoc"}
-NAME_PATTERNS = ["kain", "samat", "ziniarast", "kiekiu", "kiekiai", "sutartiniai ikainiai"]
-BOILERPLATE_PATTERNS = ["espd-request"]  # generic EBVPD/ESPD request form, same text in every tender
-DIGIT_DENSITY_MAX = 0.30  # share of digits among non-space characters
 
 
 def anc_has(el, tags):
@@ -153,16 +147,3 @@ def pdf_to_text(path):
     txt = r.stdout.decode("utf-8", "replace").replace("\f", "\n")
     lines = [re.sub(r"[ \t]{3,}", "  ", l.rstrip()) for l in txt.split("\n")]
     return "\n".join(lines)
-
-
-def clean(text):
-    text = text.replace(" ", " ").replace("\r", "")
-    text = re.sub(r"\n{3,}", "\n\n", text)
-    return text.strip() + "\n"
-
-
-def digit_density(text):
-    s = re.sub(r"\s", "", text)
-    return (sum(c.isdigit() for c in s) / len(s)) if s else 0.0
-
-

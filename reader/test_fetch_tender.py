@@ -19,13 +19,21 @@ class FakePortal(BaseHTTPRequestHandler):
     the connection closes. Every other document is small."""
     user_agents = []
     listing = []
+    notice_to_login = False   # the notice page redirects to a login, as a portal refusing us might
 
     def log_message(self, *args):
         pass
 
     def do_GET(self):
         FakePortal.user_agents.append(self.headers.get("User-Agent", ""))
-        if "prepareViewCfTWS" in self.path:
+        if "prepareViewCfTWS" in self.path and FakePortal.notice_to_login:
+            self.send_response(302)
+            self.send_header("Location", "/epps/authenticate/login;jsessionid=S3SSION?ticket=S3CRET")
+            self.send_header("Content-Length", "0")
+            self.end_headers()
+        elif "authenticate/login" in self.path:
+            self._send(b"<html>Prisijungimas</html>")
+        elif "prepareViewCfTWS" in self.path:
             self._send(b"<html>Pirkimo vykdytojo pavadinimas</html>")
         elif "listContractDocuments" in self.path:
             self._send("".join("<tr><td><a onclick=\"downloadDocForAnonymous('%s')\">%s</a></td></tr>" % d
@@ -57,6 +65,7 @@ class FetchFromFakePortal(unittest.TestCase):
         self.tmp = tempfile.TemporaryDirectory()
         self.docs = os.path.join(self.tmp.name, "docs")
         FakePortal.user_agents = []
+        FakePortal.notice_to_login = False
 
     def tearDown(self):
         self.server.shutdown()
@@ -84,6 +93,16 @@ class FetchFromFakePortal(unittest.TestCase):
         self.assertIn("size cap", big[0])
         self.assertIn("documents downloaded: 1 of 2", log)
         self.assertTrue(all("ops@example.invalid" in ua for ua in FakePortal.user_agents))
+
+    def test_notice_page_sent_to_a_login_is_not_served_and_the_log_says_where_it_ended(self):
+        FakePortal.notice_to_login = True
+        code, log = self.fetch([("11", "small.pdf")])
+
+        self.assertEqual(code, 2)
+        self.assertIn("redirected to 127.0.0.1:%d/epps/authenticate/login" % self.server.server_port, log)
+        self.assertNotIn("S3SSION", log)
+        self.assertNotIn("S3CRET", log)
+        self.assertEqual(os.listdir(self.docs), [])
 
     def test_document_whose_name_is_too_long_to_save_is_passed_over(self):
         code, log = self.fetch([("13", "n" * 300 + ".pdf"), ("11", "small.pdf")])
