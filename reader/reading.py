@@ -19,9 +19,19 @@ from types import SimpleNamespace
 MODEL = "claude-sonnet-5-5"
 FALLBACK_BETA = "server-side-fallback-2026-07-01"
 CONTEXT_WINDOW = 1_000_000
-MAX_OUTPUT = 32_000
-# Room left for the system prompt, the answer and tokenizer drift.
-INPUT_BUDGET = CONTEXT_WINDOW - MAX_OUTPUT - 20_000
+# The model thinks before it answers (adaptive thinking is its default), and thinking tokens count
+# toward max_tokens and toward the window. So max_tokens is the model's whole output limit.
+MAX_OUTPUT = 128_000
+# Window kept free for the answer. Input plus max_tokens may pass the window: the API accepts the
+# request and, if the answer reaches the window, stops on model_context_window_exceeded, a failed
+# read. In scoring run sonnet-1 a read wrote 1,272 to 4,810 output tokens, thinking included, so
+# 32K is ample, and reserving the whole 128K would leave files out of tenders that fit.
+OUTPUT_ROOM = 32_000
+# The only control on how much it thinks (budget_tokens is a 400 on this model). "high" is the API
+# default and what the scored run used; a lower level is a quality change for a scoring run to judge.
+EFFORT = "high"
+# Margin for tokenizer drift and for what the count leaves out, such as the output schema.
+INPUT_BUDGET = CONTEXT_WINDOW - OUTPUT_ROOM - 20_000
 # USD per million tokens: (prompt tokens up to which the rate holds or None, input, output).
 # Claude Haiku 5.5 has a second rate card for prompts over 100 000 tokens.
 PRICES = {
@@ -283,9 +293,10 @@ def read_tender(folder, client, today=None, ledger_path=LEDGER_PATH, input_budge
     with client.beta.messages.stream(
         model=model,
         max_tokens=MAX_OUTPUT,
+        thinking={"type": "adaptive"},
         system=system,
         messages=[{"role": "user", "content": user}],
-        output_config={"format": {"type": "json_schema", "schema": RECORD_SCHEMA}},
+        output_config={"effort": EFFORT, "format": {"type": "json_schema", "schema": RECORD_SCHEMA}},
         **fallback,
     ) as stream:
         final = stream.get_final_message()

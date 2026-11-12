@@ -483,7 +483,7 @@ class LiveRun(unittest.TestCase):
 
     def test_the_run_stops_before_a_tender_that_could_take_the_ledger_past_the_cap(self):
         from test_read_tender import FakeClient
-        # the worst case for one tender is its counted input, a margin and max_tokens of output (0.33 USD here)
+        # the worst case for one tender is its counted input, a margin and max_tokens of output (1.292 USD here)
         self.start_ledger(14.80)
         client = FakeClient()
         run = self.run_live(client)
@@ -494,7 +494,9 @@ class LiveRun(unittest.TestCase):
 
     def test_the_total_is_checked_again_before_every_tender(self):
         from test_read_tender import FakeClient
-        self.start_ledger(14.665)  # room for one worst case (0.332), not for a second after the first
+        # (1 000 + 5 000) input at 2 USD and 128 000 output at 10 USD per million: 1.292 USD.
+        # Room for one worst case, not for a second after the first read's 0.008138 USD.
+        self.start_ledger(13.70)
         client = FakeClient()
         run = self.run_live(client)
         self.assertEqual(len(client.requests), 1)
@@ -506,7 +508,7 @@ class LiveRun(unittest.TestCase):
         # can lift a Haiku prompt counted just under 100 000 tokens into the dearer rate card
         from score_keys import worst_case_usd
         self.assertAlmostEqual(worst_case_usd("claude-haiku-5-5", 99_077),
-                               (99_077 + 5_000) * 0.5 / 1e6 + 32_000 * 2.5 / 1e6)
+                               (99_077 + 5_000) * 0.5 / 1e6 + 128_000 * 2.5 / 1e6)
 
     def test_a_failed_read_is_recorded_and_the_run_goes_on(self):
         from test_read_tender import FakeClient

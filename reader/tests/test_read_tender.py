@@ -104,6 +104,35 @@ class ReadTenderRequest(unittest.TestCase):
         self.assertEqual(req["fallbacks"], "default")
         self.assertIn("server-side-fallback-2026-07-01", req["betas"])
 
+    def test_the_answer_may_use_the_models_whole_output_limit_because_thinking_counts_toward_it(self):
+        # Context windows: "Thinking tokens are a subset of your max_tokens parameter";
+        # claude-sonnet-5-5 "can generate up to 128k output tokens (max_tokens)"
+        self.read()
+        self.assertEqual(self.client.requests[0]["max_tokens"], 128_000)
+
+    def test_a_tender_that_fits_the_window_is_sent_whole(self):
+        # Spec: files are left out only "if a tender does not fit the model's window". Context
+        # windows: on Claude 4.5 and newer, input plus max_tokens past the window is accepted and
+        # stops on model_context_window_exceeded, a failed read. So the input budget keeps 32K free
+        # for the answer, about 7 times the longest read in scoring run sonnet-1 (4,810 output
+        # tokens), not the whole 128K. 10392051, the largest hand-checked tender, billed 841,604.
+        r = self.read(flat_tokens=940_000)
+        self.assertEqual(r["files_skipped"], [])
+        self.assertEqual(len(self.client.requests), 1)
+
+    def test_input_that_leaves_less_than_32k_for_the_answer_is_not_sent(self):
+        with self.assertRaises(ReadFailed):
+            self.read(flat_tokens=960_000)  # 960K + 32K + the 20K margin is past the 1M window
+        self.assertEqual(self.client.requests, [])
+
+    def test_thinking_is_adaptive_at_an_explicit_effort(self):
+        # claude-sonnet-5-5 thinks when `thinking` is omitted and rejects budget_tokens with a 400:
+        # effort is the only thinking control. "high" is the API default the scored run used.
+        self.read()
+        req = self.client.requests[0]
+        self.assertEqual(req["thinking"], {"type": "adaptive"})
+        self.assertEqual(req["output_config"]["effort"], "high")
+
     def test_tokens_are_counted_before_sending(self):
         self.read()
         self.assertEqual(len(self.client.counted), 1)
@@ -181,8 +210,9 @@ class ReadTenderRequest(unittest.TestCase):
             self.read(stop_reason="refusal")
 
     def test_cut_off_answer_is_a_failed_read(self):
-        with self.assertRaises(ReadFailed):
-            self.read(stop_reason="max_tokens", text='{"tender_id": "99')
+        for reason in ("max_tokens", "model_context_window_exceeded"):
+            with self.subTest(reason=reason), self.assertRaises(ReadFailed):
+                self.read(stop_reason=reason, text='{"tender_id": "99')
 
     def test_unparseable_answer_is_a_failed_read(self):
         with self.assertRaises(ReadFailed):
