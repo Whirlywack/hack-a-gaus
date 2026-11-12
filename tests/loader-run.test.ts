@@ -4,17 +4,28 @@ import { redact, runSummary } from '../loader/notices.ts'
 describe('the run summary', () => {
   const summary = runSummary({
     walk: { total: 83102, skipped: 1, holes: [41], newestPublished: '2026-11-12T20:55:00.000Z' },
-    open: { tender: 1258, market_consultation: 115, dps: 200, dps_contract: 185, qualification_system: 0, unknown: 3 },
+    open: {
+      tender: 958,
+      market_consultation: 115,
+      dps: 651,
+      dps_contract: 186,
+      qualification_system: 14,
+      framework_contract: 18,
+      invitation_only: 136,
+      unknown: 3,
+    },
     unrecognised: [{ feed_type: 'notice.type.new', procedure_type: 'Open', count: 3 }],
     seconds: 171,
   })
 
   it('gives the number of open Notices of each kind', () => {
-    expect(summary).toContain('| Plain tenders | 1258 |')
+    expect(summary).toContain('| Public tenders | 958 |')
     expect(summary).toContain('| Market consultations | 115 |')
-    expect(summary).toContain('| Dynamic purchasing systems | 200 |')
-    expect(summary).toContain('| Specific contracts inside a DPS | 185 |')
-    expect(summary).toContain('| Qualification systems | 0 |')
+    expect(summary).toContain('| Dynamic purchasing systems | 651 |')
+    expect(summary).toContain('| Specific contracts inside a DPS | 186 |')
+    expect(summary).toContain('| Qualification systems | 14 |')
+    expect(summary).toContain('| Specific contracts inside a framework agreement | 18 |')
+    expect(summary).toContain('| By invitation only | 136 |')
     expect(summary).toContain('| Unknown | 3 |')
   })
 

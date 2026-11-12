@@ -14,6 +14,8 @@ export const KINDS = [
   'dps',
   'dps_contract',
   'qualification_system',
+  'framework_contract',
+  'invitation_only',
   'unknown',
 ] as const
 export type Kind = (typeof KINDS)[number]
@@ -74,16 +76,45 @@ export function feedTimeToUtc(
   return { utc: new Date(wall - vilniusOffset(first)).toISOString(), invalid: false }
 }
 
-// The notice types the feed gives in cftInvolves for an ordinary call for tenders.
+// The notice types the feed gives in cftInvolves for a call for tenders.
 const TENDER_TYPES = new Set(['notice.type.publicContract', 'notice.type.frameworkAgreement'])
 
+// A Public tender is a Notice any supplier may bid on: one of these procedures, each a
+// published call that any supplier may answer, by bidding or by asking to take part.
+// The list is the procedures whose open notices the portal showed to an anonymous
+// visitor on 12 November 2026 (whole feed, 83,102 records; up to 8 open notices
+// checked per procedure, every one opened without sign-in). A procedure not on it is
+// never a Public tender, so no screen shows it until it has been checked and added.
+const PUBLISHED_CALL = new Set([
+  'Open',
+  'Accelerated open',
+  'Simplified Open',
+  'Simplified Open with negotiations',
+  'Restricted',
+  'Competitive with negotiation',
+  'Competitive dialogue',
+  'Negotiated with prior call for competition',
+  'Negotiated with publication',
+])
+
+// Notices a general supplier cannot bid on. Same check: the portal sent an anonymous
+// visitor to sign in for every one of these (8 of 8 per procedure).
+const GATED = new Map<string, Kind>([
+  // A call-off among the parties to a framework agreement (titles: "atnaujintas
+  // varžymasis", renewed competition, on 482 of 2,413).
+  ['Specific Contract', 'framework_contract'],
+  // No published call: only the suppliers the Buyer invites may bid. "Simplified" is a
+  // low-value purchase by invitation ("neskelbiama apklausa" on 1,649 of 12,861 titles;
+  // online expression of interest off on all 105 open).
+  ['Simplified', 'invitation_only'],
+  ['Negotiated without prior publication', 'invitation_only'],
+  ['Negotiated without prior call for competition', 'invitation_only'],
+])
+
 /**
- * The kind of a Notice. The procedure names the special kinds; cftInvolves names an
- * ordinary tender. Seen in the feed on 12 November 2026: "Preliminary Market
- * Consultation" (cftInvolves null), "Dynamic Purchasing System" and "DPS Specific
- * Contract" (both notice.type.dps), "cft.procedure.type.qs.specific.contract"
- * (notice.type.dps, a specific contract inside a qualification system), and every
- * other procedure under notice.type.publicContract or notice.type.frameworkAgreement.
+ * The kind of a Notice, from its procedure and its notice type (cftInvolves). Only
+ * `tender` and `market_consultation` are shown in this build; every other kind,
+ * `unknown` included, is stored and not shown.
  */
 export function kindOf(rec: FeedRecord): Kind {
   const procedure = typeof rec.procedure === 'string' ? rec.procedure.trim() : ''
@@ -91,8 +122,12 @@ export function kindOf(rec: FeedRecord): Kind {
   if (procedure === 'Dynamic Purchasing System') return 'dps'
   if (procedure === 'DPS Specific Contract') return 'dps_contract'
   if (/qualification system|\bqs\b/i.test(procedure)) return 'qualification_system'
-  if (typeof rec.cftInvolves === 'string' && TENDER_TYPES.has(rec.cftInvolves)) return 'tender'
-  // A new notice type, or a procedure under notice.type.dps the loader has not seen.
+  const gated = GATED.get(procedure)
+  if (gated) return gated
+  if (typeof rec.cftInvolves === 'string' && TENDER_TYPES.has(rec.cftInvolves) && PUBLISHED_CALL.has(procedure)) {
+    return 'tender'
+  }
+  // A new notice type, or a procedure the loader has not checked: listed in the run summary.
   return 'unknown'
 }
 
@@ -102,6 +137,7 @@ export type Notice = {
   kind: Kind
   title: string | null
   buyer_name: string | null
+  buyer_code: string | null
   published_at: string | null
   deadline_at: string | null
   status: string | null
@@ -146,6 +182,8 @@ export function mapNotice(rec: FeedRecord): Notice {
     kind: kindOf({ cftInvolves: feedType, procedure }),
     title: text(rec.title),
     buyer_name: text(rec.caName),
+    // Text, not a number: a code can start with 0. A Market consultation has none.
+    buyer_code: code(typeof rec.caNumber === 'number' ? String(rec.caNumber) : rec.caNumber),
     published_at: published.utc,
     deadline_at: deadline.utc,
     status: code(rec.status),
@@ -167,6 +205,7 @@ const NOTICE_COLUMNS = [
   ['kind', 'text'],
   ['title', 'text'],
   ['buyer_name', 'text'],
+  ['buyer_code', 'text'],
   ['published_at', 'timestamptz'],
   ['deadline_at', 'timestamptz'],
   ['status', 'text'],
@@ -298,11 +337,13 @@ export async function unrecognisedKinds(sql: Sql): Promise<Unrecognised[]> {
 }
 
 const KIND_LABELS: Record<Kind, string> = {
-  tender: 'Plain tenders',
+  tender: 'Public tenders',
   market_consultation: 'Market consultations',
   dps: 'Dynamic purchasing systems',
   dps_contract: 'Specific contracts inside a DPS',
   qualification_system: 'Qualification systems',
+  framework_contract: 'Specific contracts inside a framework agreement',
+  invitation_only: 'By invitation only',
   unknown: 'Unknown',
 }
 
@@ -350,8 +391,8 @@ export function runSummary({
   return lines.join('\n')
 }
 
-/** The text with every secret masked, and the password inside a connection string too. */
-export function redact(text: string, secrets: Array<string | undefined>): string {
+/** The message with every secret masked, and the password inside a connection string too. */
+export function redact(message: string, secrets: Array<string | undefined>): string {
   const masks = new Set<string>()
   for (const s of secrets) {
     if (!s) continue
@@ -367,7 +408,7 @@ export function redact(text: string, secrets: Array<string | undefined>): string
     }
   }
   // Longest first, so a string that holds a shorter one is masked whole.
-  return [...masks].sort((a, b) => b.length - a.length).reduce((out, m) => out.split(m).join('***'), text)
+  return [...masks].sort((a, b) => b.length - a.length).reduce((out, m) => out.split(m).join('***'), message)
 }
 
 // The feed caps a page at 1,000 records (HTTP 400 above that, since 23 October 2026).

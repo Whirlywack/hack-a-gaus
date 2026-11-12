@@ -6,6 +6,7 @@ const record = {
   id: 8399723,
   title: 'Kelio Nr. 4 remonto darbai',
   caName: 'Jurbarko rajono savivaldybės administracija (PV)',
+  caNumber: '188771865',
   datePublished: '01-07-2026 10:00:00',
   tenderSubmissionDeadline: '30-07-2026 09:45:00',
   clarificationPeriodEnd: null,
@@ -26,6 +27,7 @@ describe('a feed record as a Notice', () => {
       kind: 'tender',
       title: 'Kelio Nr. 4 remonto darbai',
       buyer_name: 'Jurbarko rajono savivaldybės administracija (PV)',
+      buyer_code: '188771865',
       published_at: '2026-07-01T07:00:00.000Z',
       deadline_at: '2026-07-30T06:45:00.000Z',
       status: 'Bid submission',
@@ -38,6 +40,13 @@ describe('a feed record as a Notice', () => {
       estimated_value: 16528.93,
       date_invalid: false,
     })
+  })
+
+  it('keeps the Buyer code as text, and none when the feed has none', () => {
+    expect(mapNotice({ ...record, caNumber: ' 001234567 ' }).buyer_code).toBe('001234567')
+    expect(mapNotice({ ...record, caNumber: 188771865 }).buyer_code).toBe('188771865')
+    expect(mapNotice({ ...record, caNumber: null }).buyer_code).toBeNull()
+    expect(mapNotice({ ...record, caNumber: '' }).buyer_code).toBeNull()
   })
 
   it('takes a Market consultation reply date from the deadline field', () => {
@@ -152,28 +161,51 @@ describe('a feed time', () => {
 })
 
 // The kind of a Notice comes from two feed fields: cftInvolves (the notice type) and
-// procedure. The pairs below are the ones seen in the live feed on 12 November 2026
-// (12,102 sampled records); the counts are how often each pair appeared.
+// procedure. The pairs below are the ones seen in the whole live feed on 12 November 2026
+// (83,102 records); the counts are how often each pair appeared, then how many were open.
 describe('the kind of a Notice', () => {
   it.each([
-    // plain tenders: a public contract or a framework agreement, by any ordinary procedure
-    ['notice.type.publicContract', 'Open', 'tender'], // 3,692
-    ['notice.type.publicContract', 'Simplified', 'tender'], // 2,238
-    ['notice.type.publicContract', 'Simplified Open', 'tender'], // 1,627
-    ['notice.type.publicContract', 'Negotiated with prior call for competition', 'tender'], // 233
-    ['notice.type.frameworkAgreement', 'Open', 'tender'], // 222
-    ['notice.type.publicContract', 'Specific Contract', 'tender'], // 292
-    ['notice.type.publicContract', 'Negotiated without prior publication', 'tender'], // 214
-    ['notice.type.frameworkAgreement', 'Competitive with negotiation', 'tender'], // 19
+    // Public tenders: a published call any supplier may answer. The portal shows these
+    // notices to anyone without signing in.
+    ['notice.type.publicContract', 'Open', 'tender'], // 32,156; 692 open
+    ['notice.type.frameworkAgreement', 'Open', 'tender'], // 554; 9 open
+    ['notice.type.publicContract', 'Accelerated open', 'tender'], // 207; 2 open
+    ['notice.type.publicContract', 'Simplified Open', 'tender'], // 7,465; 137 open
+    ['notice.type.publicContract', 'Simplified Open with negotiations', 'tender'], // 295; 8 open
+    ['notice.type.publicContract', 'Restricted', 'tender'], // 142; 8 open
+    ['notice.type.publicContract', 'Competitive with negotiation', 'tender'], // 324; 7 open
+    ['notice.type.frameworkAgreement', 'Competitive with negotiation', 'tender'], // 34
+    ['notice.type.publicContract', 'Competitive dialogue', 'tender'], // 3; 1 open
+    ['notice.type.publicContract', 'Negotiated with prior call for competition', 'tender'], // 1,952; 75 open
+    ['notice.type.publicContract', 'Negotiated with publication', 'tender'], // 30; 3 open
+    // A specific contract inside a framework agreement: only the framework's parties may
+    // bid. The portal sends anyone else to sign in.
+    ['notice.type.publicContract', 'Specific Contract', 'framework_contract'], // 2,413; 18 open
+    // No published call: only the suppliers the Buyer invites may bid. The portal sends
+    // anyone else to sign in. "Simplified" is a low-value purchase by invitation
+    // (1,649 of its titles say "neskelbiama").
+    ['notice.type.publicContract', 'Simplified', 'invitation_only'], // 12,861; 105 open
+    ['notice.type.publicContract', 'Negotiated without prior publication', 'invitation_only'], // 1,265; 14 open
+    ['notice.type.frameworkAgreement', 'Negotiated without prior publication', 'invitation_only'], // 11
+    ['notice.type.publicContract', 'Negotiated without prior call for competition', 'invitation_only'], // 747; 17 open
+    ['notice.type.frameworkAgreement', 'Negotiated without prior call for competition', 'invitation_only'], // 16
     // Market consultations: no notice type, and their own procedure
-    [null, 'Preliminary Market Consultation', 'market_consultation'], // 1,833
+    [null, 'Preliminary Market Consultation', 'market_consultation'], // 13,463; 115 open
     // dynamic purchasing systems and the specific contracts inside them
-    ['notice.type.dps', 'Dynamic Purchasing System', 'dps'], // 245
-    ['notice.type.dps', 'DPS Specific Contract', 'dps_contract'], // 1,205
-    // a specific contract inside a qualification system
-    ['notice.type.dps', 'cft.procedure.type.qs.specific.contract', 'qualification_system'], // 7
+    ['notice.type.dps', 'Dynamic Purchasing System', 'dps'], // 817; 651 open
+    ['notice.type.dps', 'DPS Specific Contract', 'dps_contract'], // 8,204; 186 open
+    // qualification systems and the specific contracts inside them
+    ['notice.type.dps', 'Qualification System', 'qualification_system'], // 28; 14 open
+    ['notice.type.dps', 'cft.procedure.type.qs.specific.contract', 'qualification_system'], // 35
   ])('%s with procedure "%s" is %s', (cftInvolves, procedure, kind) => {
     expect(kindOf({ cftInvolves, procedure })).toBe(kind)
+  })
+
+  it('a procedure not seen open to every supplier is unknown, never a Public tender', () => {
+    // Seen in the feed, none open, so never checked on the portal.
+    expect(kindOf({ cftInvolves: 'notice.type.publicContract', procedure: 'Involving negotiations' })).toBe('unknown')
+    expect(kindOf({ cftInvolves: 'notice.type.publicContract', procedure: 'Accelerated restricted' })).toBe('unknown')
+    expect(kindOf({ cftInvolves: 'notice.type.publicContract', procedure: 'Something new' })).toBe('unknown')
   })
 
   it('a qualification system notice is a qualification system, however its procedure is spelled', () => {

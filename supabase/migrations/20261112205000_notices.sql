@@ -7,6 +7,7 @@ create table public.notices (
   kind           text not null,
   title          text,
   buyer_name     text,
+  buyer_code     text,
   published_at   timestamptz,
   deadline_at    timestamptz,
   status         text,
@@ -20,9 +21,27 @@ create table public.notices (
   first_seen_at  timestamptz not null default now(),
   updated_at     timestamptz not null default now(),
   constraint notices_kind_check check (
-    kind in ('tender', 'market_consultation', 'dps', 'dps_contract', 'qualification_system', 'unknown')
+    kind in (
+      'tender', 'market_consultation', 'dps', 'dps_contract', 'qualification_system',
+      'framework_contract', 'invitation_only', 'unknown'
+    )
   )
 );
+
+-- The kind decides what a screen may show: only 'tender' (a Public tender) and
+-- 'market_consultation'. A Public tender is a Notice any supplier may bid on, so the
+-- loader (loader/notices.ts, kindOf) gives 'tender' only to a published call: Open,
+-- Accelerated open, Simplified Open, Simplified Open with negotiations, Restricted,
+-- Competitive with negotiation, Competitive dialogue, Negotiated with prior call for
+-- competition, Negotiated with publication. Notices a general supplier cannot bid on
+-- get their own kind: 'framework_contract' (procedure "Specific Contract", a call-off
+-- among a framework agreement's parties) and 'invitation_only' ("Simplified",
+-- "Negotiated without prior publication", "Negotiated without prior call for
+-- competition": the Buyer invites the suppliers). Any procedure not checked is
+-- 'unknown', which is never shown either.
+-- Evidence, 12 November 2026, whole feed (83,102 records, 2,062 open): for up to 8 open
+-- notices of each procedure, the portal's notice page opened without sign-in for every
+-- published-call procedure, and redirected to sign-in for every gated one.
 
 -- Screens ask for the open Notices of one kind (tenders, Market consultations); about
 -- 2,000 of the feed's ~83,000 are open at a time.
@@ -125,10 +144,12 @@ comment on table public.notices is
 comment on column public.notices.id is
   'The feed''s record id, which is also the portal''s resourceId for the notice page.';
 comment on column public.notices.kind is
-  'tender (a plain Public tender), market_consultation, dps (dynamic purchasing system), dps_contract (specific contract inside a DPS), qualification_system, or unknown. Only tender and market_consultation are shown in this build.';
+  'tender (a Public tender: a published call any supplier may answer), market_consultation, dps (dynamic purchasing system), dps_contract (specific contract inside a DPS), qualification_system, framework_contract (specific contract inside a framework agreement), invitation_only (no published call; the Buyer invites suppliers), or unknown. Only tender and market_consultation are shown in this build.';
 comment on column public.notices.title is 'The title exactly as the Buyer wrote it.';
 comment on column public.notices.buyer_name is
   'The Buyer''s name as the feed gives it (caName), sometimes with a trailing "(PV)".';
+comment on column public.notices.buyer_code is
+  'The Buyer''s code as the feed gives it (caNumber), as text. Null on Market consultations, which the feed gives without one. Stored for linking Buyers to Contracts by code later; today they are linked by exact name (ADR-0005).';
 comment on column public.notices.deadline_at is
   'The bid deadline; for a Market consultation, the reply date. UTC.';
 comment on column public.notices.status is

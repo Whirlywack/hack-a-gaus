@@ -60,7 +60,16 @@ describe('open Notices by kind, for the run summary', () => {
   it('counts every kind, including those with none open', async () => {
     const before = await openNoticesByKind(sql)
     expect(Object.keys(before).sort()).toEqual(
-      ['dps', 'dps_contract', 'market_consultation', 'qualification_system', 'tender', 'unknown'],
+      [
+        'dps',
+        'dps_contract',
+        'framework_contract',
+        'invitation_only',
+        'market_consultation',
+        'qualification_system',
+        'tender',
+        'unknown',
+      ],
     )
     await load(
       rec(6101),
@@ -69,6 +78,9 @@ describe('open Notices by kind, for the run summary', () => {
       rec(6104, { cftInvolves: null, procedure: 'Preliminary Market Consultation', status: 'Proposal Submission' }),
       rec(6105, { cftInvolves: 'notice.type.dps', procedure: 'DPS Specific Contract' }),
       rec(6106, { cftInvolves: 'notice.type.new', procedure: 'Open' }),
+      rec(6107, { procedure: 'Specific Contract' }),
+      rec(6108, { procedure: 'Simplified' }),
+      rec(6109, { procedure: 'Negotiated without prior publication' }),
     )
     const after = await openNoticesByKind(sql)
     expect({
@@ -77,8 +89,19 @@ describe('open Notices by kind, for the run summary', () => {
       dps: after.dps - before.dps,
       dps_contract: after.dps_contract - before.dps_contract,
       qualification_system: after.qualification_system - before.qualification_system,
+      framework_contract: after.framework_contract - before.framework_contract,
+      invitation_only: after.invitation_only - before.invitation_only,
       unknown: after.unknown - before.unknown,
-    }).toEqual({ tender: 2, market_consultation: 1, dps: 0, dps_contract: 1, qualification_system: 0, unknown: 1 })
+    }).toEqual({
+      tender: 2,
+      market_consultation: 1,
+      dps: 0,
+      dps_contract: 1,
+      qualification_system: 0,
+      framework_contract: 1,
+      invitation_only: 2,
+      unknown: 1,
+    })
   })
 
   it('names the notice type and procedure of each unknown kind', async () => {

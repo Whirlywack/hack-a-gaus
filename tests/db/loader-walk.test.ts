@@ -51,7 +51,7 @@ describe('a walk of the feed', () => {
   it('stores every Notice with its kind, its details and its times in UTC', async () => {
     const { fetchPage } = feed({
       1: [
-        rec(1001, { tenderSubmissionDeadline: '30-07-2041 09:45:00', cpvCodes: '45233252, 45233141', contractAwardedInLots: true }),
+        rec(1001, { caNumber: '188771865', tenderSubmissionDeadline: '30-07-2041 09:45:00', cpvCodes: '45233252, 45233141', contractAwardedInLots: true }),
         rec(1002, { cftInvolves: null, procedure: 'Preliminary Market Consultation', status: 'Proposal Submission', evaluationMechanism: null }),
       ],
       2: [rec(1003, { cftInvolves: 'notice.type.dps', procedure: 'DPS Specific Contract' })],
@@ -63,6 +63,7 @@ describe('a walk of the feed', () => {
       kind: 'tender',
       title: 'Pirkimas 1001',
       buyer_name: 'Pirkėjas',
+      buyer_code: '188771865',
       status: 'Bid submission',
       cpv_main: '45233252',
       cpv_codes: ['45233252', '45233141'],
@@ -76,7 +77,7 @@ describe('a walk of the feed', () => {
       from public.notices where id = 1001`
     expect(local).toBe('30-07-2041 09:45:00')
 
-    expect((await notice(1002)).kind).toBe('market_consultation')
+    expect(await notice(1002)).toMatchObject({ kind: 'market_consultation', buyer_code: null })
     expect((await notice(1003)).kind).toBe('dps_contract')
   })
 })
