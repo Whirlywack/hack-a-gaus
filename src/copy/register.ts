@@ -73,6 +73,27 @@ export const COPY = {
   'start.next': pending('Button that moves to the next step', 'Toliau'),
   'start.signin': pending('Link for a returning user', 'Prisijungti'),
 
+  // Kinds of work of the road Trade, one per 5-digit CPV group. The database
+  // stores the same names (kinds_of_work.name); tests/db/kinds-of-work.test.ts
+  // keeps the two equal.
+  'kind.45233': pending(
+    'Name of the Kind of work for CPV group 45233: building, repairing and maintaining roads, streets, footpaths and car parks',
+    'Keliai ir gatvės',
+  ),
+  'kind.45231': pending(
+    'Name of the Kind of work for CPV group 45231: laying pipelines (water, sewer, heating, gas) and power and communication lines',
+    'Vamzdynai ir kabelių linijos',
+  ),
+  'kind.45232': pending(
+    'Name of the Kind of work for CPV group 45232: ancillary pipeline works, such as drains, sewers, heating mains and pumping stations',
+    'Pagalbiniai vamzdynų darbai',
+  ),
+  'kind.45236': pending(
+    'Name of the Kind of work for CPV group 45236: flat surfaces, mostly sports grounds and playgrounds',
+    'Sporto ir žaidimų aikštelės',
+  ),
+  'kind.45234': pending('Name of the Kind of work for CPV group 45234: railway track and rail works', 'Geležinkeliai'),
+
   // E-mail code
   'code.label': pending('Label of the 6-digit code field', 'Kodas iš laiško'),
   'code.aria': pending('Screen reader label of the 6-digit code field', '6 skaitmenų kodas iš laiško'),
