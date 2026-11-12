@@ -1,0 +1,21 @@
+{
+  "tender_id": "99999999",
+  "files_read": ["INVENTED_specialiosios_salygos.txt", "INVENTED_techninė_specifikacija.txt"],
+  "qualification_requirements_set": "yes",
+  "min_turnover": {"required": true, "amount_eur": 100000, "period": "per year, last 3 financial years",
+    "quote": "Tiekėjo vidutinė metinė apyvarta per paskutinius 3 finansinius metus turi būti ne mažesnė kaip 100 000 Eur be PVM.",
+    "file": "INVENTED_specialiosios_salygos.txt"},
+  "similar_contracts": {"required": true, "count": 1, "min_value_eur": 40000, "within_years": 3, "description": "one similar contract",
+    "quote": "Tiekėjas turi būti įvykdęs bent vieną panašų sutartį, kurios vertė ne mažesnė kaip 400 000 Eur",
+    "file": "INVENTED_specialiosios_salygos.txt"},
+  "certificates_or_licences": [
+    {"name": "ISO 9001", "quote": "Tiekėjas turi turėti ISO 9001 sertifikatą arba lygiavertį dokumentą.", "file": "INVENTED_specialiosios_salygos.txt"},
+    {"name": "ISO 14001", "quote": "Tiekėjas turi turėti ISO 14001 sertifikatą.", "file": "INVENTED_specialiosios_salygos.txt"}
+  ],
+  "named_specialists": [],
+  "right_to_practice_required": {"required": null, "quote": null, "file": null},
+  "bid_security": {"required": false, "amount": null, "quote": "Pasiūlymo galiojimo užtikrinimas nereikalaujamas.", "file": "INVENTED_specialiosios_salygos.txt"},
+  "exclusion_grounds": "unclear",
+  "other_requirements": [],
+  "notes": ""
+}

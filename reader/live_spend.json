@@ -1,0 +1,23 @@
+{
+  "entries": [
+    {
+      "date": "2026-11-12",
+      "label": "proof-1 (rejected with HTTP 400 for too many union types in the schema; not billed)",
+      "tender": "INVENTED_tender_99999999",
+      "model": "claude-sonnet-5-5",
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "usd": 0.0
+    },
+    {
+      "date": "2026-11-12",
+      "label": "proof-2",
+      "tender": "INVENTED_tender_99999999",
+      "model": "claude-sonnet-5-5",
+      "input_tokens": 2784,
+      "output_tokens": 1550,
+      "usd": 0.021068
+    }
+  ],
+  "total_usd": 0.021068
+}
