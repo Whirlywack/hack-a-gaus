@@ -189,6 +189,14 @@ const UPSERT_NOTICES = `
   where (${changing.map((n) => `notices.${n}`).join(', ')})
     is distinct from (${changing.map((n) => `excluded.${n}`).join(', ')})`
 
+// The value, from the same page parameter, into the table no client role can read.
+const UPSERT_VALUES = `
+  insert into loader.notice_values (notice_id, estimated_value)
+  select id, estimated_value
+  from jsonb_to_recordset($1::text::jsonb) as r(id bigint, estimated_value numeric)
+  on conflict (notice_id) do update set estimated_value = excluded.estimated_value
+  where notice_values.estimated_value is distinct from excluded.estimated_value`
+
 // The feed caps a page at 1,000 records (HTTP 400 above that, since 23 October 2026).
 export const PAGE_SIZE = 1_000
 // How old the newest publication date may be when the walk ends. The real feed's tail
@@ -248,7 +256,13 @@ export async function walkNotices(
     const byId = new Map<unknown, FeedRecord>()
     for (const r of good) byId.set(r.id, r)
     const notices = [...byId.values()].map(mapNotice)
-    if (notices.length > 0) await sql.unsafe(UPSERT_NOTICES, [JSON.stringify(notices)])
+    if (notices.length > 0) {
+      const page = JSON.stringify(notices)
+      await sql.begin(async (tx) => {
+        await tx.unsafe(UPSERT_NOTICES, [page])
+        await tx.unsafe(UPSERT_VALUES, [page])
+      })
+    }
     acc.total += notices.length
     for (const n of notices) {
       if (n.published_at != null && (acc.newest == null || n.published_at > acc.newest)) acc.newest = n.published_at

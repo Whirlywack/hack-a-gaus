@@ -70,6 +70,31 @@ comment on column loader.walks.records is 'Records stored or confirmed in this w
 comment on column loader.walks.skipped is 'Records skipped for a missing or non-numeric id.';
 comment on column loader.walks.holes is 'Pages still empty after one re-fetch, inside a run of later pages with data.';
 
+-- The value on a Notice is stored but shown nowhere: it was filled on 8 of 15 test
+-- notices and misleading on 2. It lives here, out of reach of every client role, so no
+-- screen, API call or assistant can show it by accident.
+create table loader.notice_values (
+  notice_id       bigint primary key references public.notices (id),
+  estimated_value numeric
+);
+comment on table loader.notice_values is
+  'The estimated value on each Notice, in EUR, null when not stated. Stored, never shown.';
+
+revoke all on loader.walks, loader.notice_values from public, anon, authenticated, service_role;
+
+-- Notices are public procurement data: anyone may read them, and only the loader, which
+-- connects as the tables' owner, writes them. The Data API roles get read access and
+-- nothing else (TRUNCATE is not covered by row-level security, so it is revoked too).
+alter table public.notices enable row level security;
+
+create policy "Notices are readable by everyone"
+  on public.notices for select
+  to anon, authenticated
+  using (true);
+
+revoke all on public.notices from public, anon, authenticated, service_role;
+grant select on public.notices to anon, authenticated, service_role;
+
 comment on table public.notices is
   'Every Notice from the open-notice feed. Written only by the loader; updated, never deleted.';
 comment on column public.notices.id is

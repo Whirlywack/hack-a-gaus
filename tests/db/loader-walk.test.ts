@@ -204,7 +204,7 @@ describe('a Notice already stored', () => {
   it('cannot be deleted, not even by the loader', async () => {
     await walkNotices(sql, feed({ 1: [rec(2201)] }).fetchPage)
     await expect(sql`delete from public.notices where id = 2201`).rejects.toThrow(/never deleted/)
-    await expect(sql`truncate public.notices`).rejects.toThrow(/never deleted/)
+    await expect(sql`truncate public.notices cascade`).rejects.toThrow(/never deleted/)
     expect(await notice(2201)).toBeDefined()
   })
 })
