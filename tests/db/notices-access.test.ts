@@ -96,3 +96,70 @@ describe('the notices table', () => {
     await expect(asRole(role, 'select * from loader.walks')).rejects.toThrow(/permission denied/)
   })
 })
+
+describe('what a client may read of the notices', () => {
+  beforeAll(() =>
+    load(
+      rec(5201),
+      rec(5202, { cftInvolves: null, procedure: 'Preliminary Market Consultation', status: 'Proposal Submission' }),
+      rec(5203, { cftInvolves: 'notice.type.dps', procedure: 'Dynamic Purchasing System', status: 'Established' }),
+      rec(5204, { cftInvolves: 'notice.type.dps', procedure: 'DPS Specific Contract' }),
+      rec(5205, { cftInvolves: 'notice.type.dps', procedure: 'Qualification System' }),
+      rec(5206, { procedure: 'Specific Contract' }),
+      rec(5207, { procedure: 'Simplified' }),
+      rec(5208, { cftInvolves: 'notice.type.new', procedure: 'Open' }),
+    ),
+  )
+
+  // Only these two kinds are shown in this build; the others include notices a general
+  // supplier cannot bid on, so no client can read them, past any screen's filter.
+  it.each(['anon', 'authenticated'] as const)('%s sees Public tenders and Market consultations only', async (role) => {
+    const rows = await asRole(role, 'select id, kind from public.notices where id between 5201 and 5208 order by id')
+    expect(rows).toEqual([
+      { id: '5201', kind: 'tender' },
+      { id: '5202', kind: 'market_consultation' },
+    ])
+  })
+
+  it.each(CLIENTS)('%s may read these columns and no others', async (role) => {
+    const rows = await sql`
+      select column_name from information_schema.columns
+      where table_schema = 'public' and table_name = 'notices'
+        and has_column_privilege(${role}, 'public.notices', column_name, 'SELECT')
+      order by column_name`
+    expect(rows.map((r) => r.column_name)).toEqual([
+      'buyer_code',
+      'buyer_name',
+      'cpv_codes',
+      'cpv_main',
+      'date_invalid',
+      'deadline_at',
+      'evaluation',
+      'feed_type',
+      'first_seen_at',
+      'id',
+      'in_lots',
+      'kind',
+      'procedure_type',
+      'published_at',
+      'status',
+      'title',
+      'updated_at',
+    ])
+  })
+
+  // A raw feed record or a contact field added to the table later stays unreadable until
+  // a migration grants it on purpose.
+  it.each(CLIENTS)('%s cannot read a column added later, such as a raw feed record', async (role) => {
+    // Always rolled back: the column never outlives the test.
+    const failure = await sql
+      .begin(async (tx) => {
+        await tx.unsafe('alter table public.notices add column raw jsonb')
+        await tx.unsafe(`set local role ${role}`)
+        await tx.unsafe('select raw from public.notices limit 1')
+        throw new Error('raw was readable')
+      })
+      .catch((e: Error) => e)
+    expect(failure.message).toMatch(/permission denied/)
+  })
+})
