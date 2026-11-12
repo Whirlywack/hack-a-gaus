@@ -1,0 +1,80 @@
+{
+  "status": "pending operator judgement",
+  "title": "Scoring: sonnet-alone-offline against the 15 keys",
+  "model": null,
+  "reader": null,
+  "date": null,
+  "per_field": {
+    "qualification_requirements_set": {
+      "correct": 13,
+      "wrong": 0,
+      "missed": 2,
+      "invented": 0
+    },
+    "similar_contracts": {
+      "correct": 13,
+      "wrong": 0,
+      "missed": 2,
+      "invented": 0
+    },
+    "min_turnover": {
+      "correct": 15,
+      "wrong": 0,
+      "missed": 0,
+      "invented": 0
+    },
+    "certificates_or_licences": {
+      "correct": 12,
+      "wrong": 1,
+      "missed": 2,
+      "invented": 0
+    },
+    "named_specialists": {
+      "correct": 15,
+      "wrong": 0,
+      "missed": 0,
+      "invented": 0
+    },
+    "right_to_practice_required": {
+      "correct": 10,
+      "wrong": 0,
+      "missed": 5,
+      "invented": 0
+    },
+    "bid_security": {
+      "correct": 15,
+      "wrong": 0,
+      "missed": 0,
+      "invented": 0
+    },
+    "exclusion_grounds": {
+      "correct": 12,
+      "wrong": 0,
+      "missed": 3,
+      "invented": 0
+    }
+  },
+  "total": {
+    "correct": 105,
+    "wrong": 1,
+    "missed": 14,
+    "invented": 0,
+    "cells": 120
+  },
+  "wrong_or_invented": {
+    "qualification_requirements_set": [],
+    "similar_contracts": [],
+    "min_turnover": [],
+    "certificates_or_licences": [
+      "10324146"
+    ],
+    "named_specialists": [],
+    "right_to_practice_required": [],
+    "bid_security": [],
+    "exclusion_grounds": []
+  },
+  "usage": {},
+  "failures": {},
+  "run_usd": null,
+  "ledger_total_usd": null
+}

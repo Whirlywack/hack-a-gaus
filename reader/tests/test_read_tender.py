@@ -241,6 +241,51 @@ class ReadTenderRequest(unittest.TestCase):
         self.assertAlmostEqual(ledger["total_usd"], entry["usd"], places=6)
 
 
+class UsageAndModels(unittest.TestCase):
+    """What the scoring run needs from one read: the API's token count, and a comparison model."""
+
+    def read(self, model="claude-sonnet-5-5", **kw):
+        self.client = FakeClient(model=model, **kw)
+        self.ledger = os.path.join(tempfile.mkdtemp(), "l.json")
+        return read_tender(INVENTED, client=self.client, today="2026-11-12", ledger_path=self.ledger,
+                           model=model, label="test")
+
+    def ledger_entry(self):
+        with open(self.ledger) as f:
+            return json.load(f)["entries"][-1]
+
+    def test_reading_carries_the_token_count_the_api_returned(self):
+        r = self.read()
+        self.assertEqual(r["usage"]["input_tokens"], 1234)
+        self.assertEqual(r["usage"]["output_tokens"], 567)
+        self.assertEqual(r["usage"]["counted_input_tokens"], 1000)
+        self.assertAlmostEqual(r["usage"]["usd"], self.ledger_entry()["usd"], places=6)
+
+    def test_haiku_request_names_haiku_and_has_no_server_side_fallback(self):
+        # Claude Haiku 5.5 has no server-side refusal fallback
+        self.read(model="claude-haiku-5-5")
+        req = self.client.requests[0]
+        self.assertEqual(req["model"], "claude-haiku-5-5")
+        self.assertNotIn("fallbacks", req)
+        self.assertNotIn("betas", req)
+        self.assertEqual(self.client.counted[0]["model"], "claude-haiku-5-5")
+
+    def test_haiku_is_priced_at_its_own_rate(self):
+        # 0.10 / 0.50 USD per million tokens for prompts up to 100 000 tokens
+        self.read(model="claude-haiku-5-5")
+        self.assertAlmostEqual(self.ledger_entry()["usd"], 1234 * 0.10 / 1e6 + 567 * 0.50 / 1e6, places=6)
+
+    def test_long_haiku_prompts_are_priced_at_the_higher_rate(self):
+        self.assertAlmostEqual(reading.usd("claude-haiku-5-5", 200_000, 1_000), 200_000 * 0.5 / 1e6 + 1_000 * 2.5 / 1e6)
+        self.assertAlmostEqual(reading.usd("claude-haiku-5-5", 100_000, 1_000), 100_000 * 0.1 / 1e6 + 1_000 * 0.5 / 1e6)
+
+    def test_sonnet_price_is_unchanged(self):
+        self.assertAlmostEqual(reading.usd("claude-sonnet-5-5", 1_000_000, 100_000), 2.0 + 1.0)
+
+    def test_an_unknown_answering_model_is_priced_at_the_dearest_known_rate(self):
+        self.assertGreaterEqual(reading.usd("claude-something-new", 1_000_000, 0), 2.0)
+
+
 class TenderThatDoesNotFit(unittest.TestCase):
     def test_files_are_left_out_and_listed_never_cut(self):
         # 1 token per char: the two fixture files cannot both fit in a tiny budget
