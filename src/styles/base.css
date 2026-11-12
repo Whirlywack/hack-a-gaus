@@ -5,7 +5,14 @@ body.v {
   isolation: isolate;
 }
 
-/* The shell's phone box scrolls inside itself, so the page does not scroll. */
+/* The server always sends the phone layout. On a wide window it stays hidden
+   until React has drawn the desktop frame, instead of flashing first. */
+html[data-mode='desktop'] .v-native {
+  visibility: hidden;
+}
+
+/* Base UI portals the sheet to <body>, so it is fixed to the window rather
+   than placed inside the phone box like the prototype's .o-layer. */
 .b-backdrop {
   position: fixed;
   inset: 0;
