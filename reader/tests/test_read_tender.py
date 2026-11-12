@@ -178,6 +178,19 @@ class ReadTenderRequest(unittest.TestCase):
         with self.assertRaises(ReadFailed):
             self.read(text="not json")
 
+    def test_ledger_counts_every_attempt_of_a_read_the_fallback_model_finished(self):
+        # usage.iterations is the per-attempt record of what is billed: a refusal that declined
+        # mid-stream is billed too, while the top-level usage covers only the attempt that answered
+        usage = SimpleNamespace(input_tokens=900, output_tokens=500, iterations=[
+            SimpleNamespace(type="message", model="claude-sonnet-5-5", input_tokens=1000, output_tokens=300),
+            SimpleNamespace(type="fallback_message", model="claude-sonnet-5", input_tokens=900, output_tokens=500),
+        ])
+        self.read(model="claude-sonnet-5", usage=usage)
+        with open(self.ledger.name) as f:
+            entry = json.load(f)["entries"][-1]
+        self.assertEqual((entry["input_tokens"], entry["output_tokens"]), (1900, 800))
+        self.assertAlmostEqual(entry["usd"], 0.0118, places=6)  # both Sonnets: 2 / 10 USD per million
+
     def test_spend_is_appended_to_the_ledger(self):
         self.read()
         with open(self.ledger.name) as f:

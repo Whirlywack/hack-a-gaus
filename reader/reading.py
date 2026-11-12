@@ -14,6 +14,7 @@ import os
 import re
 import secrets
 import unicodedata
+from types import SimpleNamespace
 
 MODEL = "claude-sonnet-5-5"
 FALLBACK_BETA = "server-side-fallback-2026-07-01"
@@ -219,6 +220,16 @@ def _usd(input_tokens, output_tokens):
     return (input_tokens * PRICE_PER_MTOK["input"] + output_tokens * PRICE_PER_MTOK["output"]) / 1e6
 
 
+def _billed_usage(final):
+    """The tokens billed for this answer, over every attempt. When the server-side fallback ran,
+    usage.iterations lists each attempt, and a refusal that declined mid-stream is billed too; the
+    top-level usage covers only the attempt that produced the answer. The reader's model and its
+    only fallback target (claude-sonnet-5) cost the same per token."""
+    attempts = getattr(final.usage, "iterations", None) or [final.usage]
+    return SimpleNamespace(input_tokens=sum(a.input_tokens for a in attempts),
+                           output_tokens=sum(a.output_tokens for a in attempts))
+
+
 def append_ledger(path, entry):
     ledger = {"entries": [], "total_usd": 0.0}
     if os.path.exists(path):
@@ -262,7 +273,7 @@ def read_tender(folder, client, today=None, ledger_path=LEDGER_PATH, input_budge
     ) as stream:
         final = stream.get_final_message()
 
-    usage = final.usage
+    usage = _billed_usage(final)
     append_ledger(ledger_path, {
         "date": today or datetime.date.today().isoformat(),
         "label": label, "tender": tender_id, "model": final.model,
