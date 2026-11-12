@@ -189,22 +189,119 @@ const UPSERT_NOTICES = `
   where (${changing.map((n) => `notices.${n}`).join(', ')})
     is distinct from (${changing.map((n) => `excluded.${n}`).join(', ')})`
 
-/** Store one page of feed records. */
-async function storePage(sql: Sql, records: FeedRecord[]): Promise<number> {
-  const notices = records.map(mapNotice)
-  await sql.unsafe(UPSERT_NOTICES, [JSON.stringify(notices)])
-  return notices.length
-}
-
+// The feed caps a page at 1,000 records (HTTP 400 above that, since 23 October 2026).
 export const PAGE_SIZE = 1_000
+// How old the newest publication date may be when the walk ends. The real feed's tail
+// is minutes old; an older tail means the walk was cut short by a run of spurious empty
+// pages, and finishing would quietly drop every Notice past the cut.
+const FRESHNESS_DAYS = 7
+// From the first empty page, look this many pages ahead before believing it is the end.
+const PROBE_STEPS = [1, 2, 4, 8, 16]
+// More malformed records than this in one walk means the feed's shape has changed.
+const MALFORMED_LIMIT = 100
+// About 2 million records, some 25 times today's 83,000: a backstop against a feed that
+// keeps repeating pages instead of ending.
+const MAX_PAGES = 2_000
 
-/** Walk the whole feed from page 1 and store every Notice. */
-export async function walkNotices(sql: Sql, fetchPage: FetchPage): Promise<{ total: number }> {
-  let total = 0
-  for (let pageNum = 1; ; pageNum++) {
-    const page = await fetchPage(PAGE_SIZE, pageNum)
-    if (page.length === 0) break
-    total += await storePage(sql, page)
+export type WalkResult = { total: number; skipped: number; holes: number[]; newestPublished: string | null }
+
+const vilniusDay = (instant: Date) => new Intl.DateTimeFormat('sv-SE', { timeZone: 'Europe/Vilnius' }).format(instant)
+
+/**
+ * Walk the whole feed from page 1, store every Notice, and record the walk in
+ * loader.walks. Ported from the old loader's walkLive, with the same rules:
+ *
+ * - An empty page is not trusted as the end. Pages +1, +2, +4, +8 and +16 are probed; if
+ *   one has data, the empty run was spurious: its pages are re-fetched once (still-empty
+ *   ones are reported as holes, healed by the next walk) and the walk goes on.
+ * - When every probe is empty, the walk finishes only if the newest publication date seen
+ *   is at most 7 days old (Vilnius days). Otherwise it refuses, and records nothing.
+ * - Records without a numeric id are skipped and counted; more than 100 stops the walk.
+ * - A run of 16+ spurious empty pages while the tail is fresh ends the walk early. The
+ *   pages beyond are picked up by the next hourly walk (accepted trade-off, old loader).
+ */
+export async function walkNotices(
+  sql: Sql,
+  fetchPage: FetchPage,
+  { maxPages = MAX_PAGES }: { maxPages?: number } = {},
+): Promise<WalkResult> {
+  const startedAt = new Date()
+  const acc = { total: 0, skipped: 0, newest: null as string | null }
+  const holes: number[] = []
+
+  const store = async (records: FeedRecord[]) => {
+    const good = records.filter((r) => typeof r.id === 'number' && Number.isSafeInteger(r.id) && r.id > 0)
+    const bad = records.length - good.length
+    if (bad > 0) {
+      acc.skipped += bad
+      // Field names only: the log never carries a record's contents.
+      const example = records.find((r) => !good.includes(r))
+      console.warn(`skipped ${bad} record(s) without a numeric id; first has fields: ${Object.keys(example ?? {}).join(', ')}`)
+      if (acc.skipped > MALFORMED_LIMIT) {
+        throw new Error(
+          `walkNotices: ${acc.skipped} malformed records (missing or non-numeric id) in one walk; ` +
+            'the feed has probably changed shape, so the walk stops',
+        )
+      }
+    }
+    // One id twice in a page would make the upsert touch a row twice and fail: last wins.
+    const byId = new Map<unknown, FeedRecord>()
+    for (const r of good) byId.set(r.id, r)
+    const notices = [...byId.values()].map(mapNotice)
+    if (notices.length > 0) await sql.unsafe(UPSERT_NOTICES, [JSON.stringify(notices)])
+    acc.total += notices.length
+    for (const n of notices) {
+      if (n.published_at != null && (acc.newest == null || n.published_at > acc.newest)) acc.newest = n.published_at
+    }
   }
-  return { total }
+
+  let pageNum = 1
+  for (;;) {
+    if (pageNum > maxPages) {
+      throw new Error(`walkNotices: more than ${maxPages} pages; the feed may be repeating pages instead of ending`)
+    }
+    const page = await fetchPage(PAGE_SIZE, pageNum)
+    if (page.length > 0) {
+      await store(page)
+      // Always step to the next page after data: probes start from the first EMPTY page,
+      // or a geometric step from a short page could hop over a page with data.
+      pageNum++
+      continue
+    }
+
+    let jumped = false
+    for (const step of PROBE_STEPS) {
+      const probe = await fetchPage(PAGE_SIZE, pageNum + step)
+      if (probe.length === 0) continue
+      // The empty run was spurious. Re-fetch each page in it once before going on: the
+      // steps skip pages (+3 when +4 hits), and a page empty once may answer again.
+      for (let gap = pageNum; gap < pageNum + step; gap++) {
+        const again = await fetchPage(PAGE_SIZE, gap)
+        if (again.length > 0) await store(again)
+        else holes.push(gap)
+      }
+      await store(probe)
+      pageNum += step + 1
+      jumped = true
+      break
+    }
+    if (jumped) continue
+
+    // Every probe is empty: the end, if the tail is fresh. Publication dates are compared
+    // as Vilnius calendar days, as the feed writes them.
+    const cutoff = vilniusDay(new Date(Date.now() - FRESHNESS_DAYS * 864e5))
+    if (acc.newest == null || vilniusDay(new Date(acc.newest)) < cutoff) {
+      throw new Error(
+        `walkNotices: refusing to finish: the newest publication date seen (${acc.newest ?? 'none'}) is stale, ` +
+          `more than ${FRESHNESS_DAYS} days old, so the walk has probably been cut short`,
+      )
+    }
+    break
+  }
+
+  await sql`
+    insert into loader.walks (started_at, records, skipped, holes, newest_published_at)
+    values (${startedAt}, ${acc.total}, ${acc.skipped}, string_to_array(${holes.join(',')}, ',')::integer[], ${acc.newest})`
+  if (holes.length > 0) console.warn(`pages still empty after one re-fetch (the next walk heals them): ${holes.join(', ')}`)
+  return { total: acc.total, skipped: acc.skipped, holes, newestPublished: acc.newest }
 }

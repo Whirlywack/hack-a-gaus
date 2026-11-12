@@ -80,6 +80,103 @@ describe('a walk of the feed', () => {
   })
 })
 
+const walks = async () => (await sql`select count(*)::int as n from loader.walks`)[0].n as number
+const lastWalk = async () => (await sql`select * from loader.walks order by id desc limit 1`)[0]
+
+// Ported from the old loader's walkLive tests. The feed has no total count, and it has
+// returned spurious empty pages mid-walk, so an empty page is not trusted as the end.
+describe('where a walk ends', () => {
+  it('walks pages until a real end, probes past it, and records the walk', async () => {
+    const before = await walks()
+    const { fetchPage, calls } = feed({ 1: [rec(3001)], 2: [rec(3002)] })
+    const out = await walkNotices(sql, fetchPage)
+    expect(out).toMatchObject({ total: 2, holes: [], skipped: 0 })
+    // Probes past the first empty page (3) happened, and found nothing.
+    expect(Math.max(...calls)).toBeGreaterThan(3)
+    expect(await walks()).toBe(before + 1)
+    expect(await lastWalk()).toMatchObject({ records: 2, skipped: 0, holes: [] })
+  })
+
+  it('jumps a spurious empty run when a probe finds later pages, re-fetching the gap once', async () => {
+    const { fetchPage, calls } = feed({ 1: [rec(3101)], 4: [rec(3104)] })
+    const out = await walkNotices(sql, fetchPage)
+    expect(out.total).toBe(2)
+    expect(out.holes).toEqual([2, 3])
+    const visits = (p: number) => calls.filter((c) => c === p).length
+    expect(Math.max(visits(2), visits(3))).toBeGreaterThanOrEqual(2)
+    expect(await notice(3104)).toBeDefined()
+  })
+
+  it('recovers a gap page that answers on the second try', async () => {
+    let page2 = 0
+    const fetchPage: FetchPage = async (_size, n) => {
+      if (n === 1) return [rec(3201)]
+      if (n === 2) return page2++ === 0 ? [] : [rec(3202)]
+      if (n === 3) return [rec(3203)]
+      return []
+    }
+    const out = await walkNotices(sql, fetchPage)
+    expect(out.total).toBe(3)
+    expect(out.holes).toEqual([])
+    expect(await notice(3202)).toBeDefined()
+  })
+
+  it('refuses to finish when the newest publication date is more than 7 days old', async () => {
+    const before = await walks()
+    const { fetchPage } = feed({ 1: [rec(3301, { datePublished: feedTime(-8) })] })
+    await expect(walkNotices(sql, fetchPage)).rejects.toThrow(/refusing to finish.*stale/i)
+    // A refused walk records nothing, so the freshness record still shows the last good one.
+    expect(await walks()).toBe(before)
+  })
+
+  it('finishes when the newest publication date is 7 days old', async () => {
+    const { fetchPage } = feed({ 1: [rec(3351, { datePublished: feedTime(-7) })] })
+    await expect(walkNotices(sql, fetchPage)).resolves.toMatchObject({ total: 1 })
+  })
+
+  it('refuses to finish when the feed is empty from page 1', async () => {
+    const before = await walks()
+    await expect(walkNotices(sql, feed({}).fetchPage)).rejects.toThrow(/refusing to finish/i)
+    expect(await walks()).toBe(before)
+  })
+
+  it('stops a walk that never ends', async () => {
+    const fetchPage: FetchPage = async () => [rec(3401)]
+    await expect(walkNotices(sql, fetchPage, { maxPages: 5 })).rejects.toThrow(/more than 5 pages/)
+  })
+})
+
+describe('a malformed record', () => {
+  it('is skipped and counted when its id is missing or not a number', async () => {
+    const { fetchPage } = feed({ 1: [rec(3501), { ...rec(3502), id: 'oops' }, { ...rec(3503), id: null }, rec(3504)] })
+    const out = await walkNotices(sql, fetchPage)
+    expect(out).toMatchObject({ total: 2, skipped: 2 })
+    expect(await lastWalk()).toMatchObject({ records: 2, skipped: 2 })
+  })
+
+  it('stops the walk when more than 100 are skipped', async () => {
+    const before = await walks()
+    const bad = Array.from({ length: 101 }, (_, i) => ({ ...rec(3600 + i), id: `bad-${i}` }))
+    await expect(walkNotices(sql, feed({ 1: bad }).fetchPage)).rejects.toThrow(/101 malformed/)
+    expect(await walks()).toBe(before)
+  })
+})
+
+describe('a page', () => {
+  it('holding one id twice stores the last of them', async () => {
+    const { fetchPage } = feed({ 1: [rec(3701), rec(3701, { title: 'antras' }), rec(3702)] })
+    expect((await walkNotices(sql, fetchPage)).total).toBe(2)
+    expect((await notice(3701)).title).toBe('antras')
+  })
+
+  it('of 1,000 records is stored whole', async () => {
+    const full = Array.from({ length: 1000 }, (_, i) => rec(100_000 + i))
+    expect((await walkNotices(sql, feed({ 1: full }).fetchPage)).total).toBe(1000)
+    const [{ n }] = await sql`select count(*)::int as n from public.notices where id between 100000 and 100999`
+    expect(n).toBe(1000)
+  })
+})
+
 describe('a Notice already stored', () => {
   it('is updated by the next walk, and kept when the feed no longer lists it', async () => {
     await walkNotices(sql, feed({ 1: [rec(2001), rec(2002)] }).fetchPage)

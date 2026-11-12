@@ -48,6 +48,28 @@ create trigger notices_refuse_truncate
 
 revoke all on function public.notices_refuse_delete() from public, anon, authenticated;
 
+-- The loader's own records live in their own schema, which the Data API does not expose
+-- and which no client role can use.
+create schema if not exists loader;
+comment on schema loader is 'The notice loader''s own records. Not exposed through the Data API.';
+
+-- One row per walk that finished: the freshness record. A walk that is refused (stale
+-- tail, malformed feed, runaway) writes nothing here, so the newest row is always the
+-- last good walk.
+create table loader.walks (
+  id                  bigint generated always as identity primary key,
+  started_at          timestamptz not null,
+  finished_at         timestamptz not null default now(),
+  records             integer not null,
+  skipped             integer not null,
+  holes               integer[] not null default '{}',
+  newest_published_at timestamptz
+);
+comment on table loader.walks is 'Every finished walk of the feed. The newest row says how fresh public.notices is.';
+comment on column loader.walks.records is 'Records stored or confirmed in this walk.';
+comment on column loader.walks.skipped is 'Records skipped for a missing or non-numeric id.';
+comment on column loader.walks.holes is 'Pages still empty after one re-fetch, inside a run of later pages with data.';
+
 comment on table public.notices is
   'Every Notice from the open-notice feed. Written only by the loader; updated, never deleted.';
 comment on column public.notices.id is
