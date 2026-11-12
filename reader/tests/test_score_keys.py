@@ -399,6 +399,32 @@ class Report(unittest.TestCase):
         self.assertIn("38 200,00 Eur", md)
         self.assertIn("10382107_Pirkimo sąlygos", md)
 
+    def block(self, md, tender, field):
+        """The text of one disagreement, from its heading to the next heading."""
+        start = md.index("#### %s · %s:" % (tender, field))
+        end = md.find("\n#", start + 1)
+        return md[start:end if end != -1 else len(md)]
+
+    def test_a_quote_that_failed_the_quote_check_is_shown_with_its_disagreement(self):
+        # sonnet-1 10378522: the model said "true", its Quote was not word for word, so the field
+        # reads as nothing found; the operator judging the cell needs to see that Quote there
+        failed = "Tiekėjas, teikdamas pasiūlymą, įsipareigoja, kad sutartį vykdys tik teisę verstis veikla turinčius asmenys."
+        item = "Tiekėjas turi turėti galiojantį IATA sertifikatą, kurio šiame tekste nėra."
+        md = self.render(unfound={
+            "10378522": [{"field": "right_to_practice_required", "quote": failed, "file": "salygos.docx.txt"}],
+            "10324146": [{"field": "certificates_or_licences[1]", "quote": item, "file": "4 priedas.docx.txt"},
+                         {"field": "other_requirements[0]", "quote": "Kita sąlyga, kurios nėra.", "file": "a.txt"}],
+        })
+        rtp = self.block(md, "10378522", "right_to_practice_required")
+        self.assertIn(failed, rtp)
+        self.assertIn("salygos.docx.txt", rtp)
+        self.assertIn("failed the Quote check", rtp)
+        certs = self.block(md, "10324146", "certificates_or_licences")
+        self.assertIn(item, certs)
+        self.assertNotIn("Kita sąlyga", certs)
+        # a field the key does not score is not a disagreement; its Quote stays in the list at the end
+        self.assertIn("Kita sąlyga", md)
+
     def test_tokens_per_tender_are_listed(self):
         md = self.render(usage={"10324146": {"counted_input_tokens": 50000, "input_tokens": 50123,
                                              "output_tokens": 4000, "usd": 0.140246, "model": "claude-sonnet-5-5"}})

@@ -74,6 +74,7 @@ Key: 2 item(s). Reading: 1 item(s).
 Key: false. Reading: nothing found.
 - Key Quote: “Tiekėjams nenustatomi reikalavimai dėl kvalifikacijos ir kokybės vadybos sistemos standartų laikymosi.” (`10378879_Pirkimo dokumentai___Specialiosios prikimo sąlygos002.docx.txt`)
 - Reading Quote: no quote
+- Reading Quote that failed the Quote check, so not scored: “Tiekėjas, teikdamas pasiūlymą, įsipareigoja, kad sutartį vykdys tik teisę verstis atitinkama veikla turinčius asmenys.” (`10378879_Pirkimo dokumentai___Specialiosios prikimo sąlygos002.docx.txt`)
 
 #### 10383512 · certificates_or_licences: missed
 Key: 1 item(s). Reading: 0 item(s).
@@ -119,6 +120,7 @@ Key: false. Reading: nothing found.
 Key: false. Reading: nothing found.
 - Key Quote: “Techninio ir profesinio pajėgumo reikalavimai | Techninio ir profesinio pajėgumo reikalavimai | Techninio ir profesinio pajėgumo reikalavimai 1. | Netaikoma | Netaikoma” (`10397674_Pirkimo dokumentai.docx.txt`)
 - Reading Quote: no quote
+- Reading Quote that failed the Quote check, so not scored: “Netaikoma” (`10397674_Pirkimo dokumentai.docx.txt`)
 
 ## Reading quotes that failed the Quote check (scored as not found)
 

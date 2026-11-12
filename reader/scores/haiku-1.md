@@ -113,6 +113,8 @@ Key: 1 item(s). Reading: 0 item(s).
 Key: 2 item(s). Reading: 0 item(s).
 - Key item not in the Reading: statybos darbų vadovas (statybos inžinierius ar architektas): “a) statybos darbų vadovą (statybos inžinierių ar architektą), turintį statybos inžinerijos arba statybos technologijų studijų krypties (šakos) kvalifikacinį laipsnį” (`10383897_Skelbiamos_apklausos_specialiosios_salygos.docx.txt`)
 - Key item not in the Reading: geodezininkas: “b) specialistą, turintį geodezininko kvalifikacijos pažymėjimą.” (`10383897_Skelbiamos_apklausos_specialiosios_salygos.docx.txt`)
+- Reading Quote that failed the Quote check, so not scored: “a) statybos darbų vadovą (statybos inžinierių ar architektą), turintį statybos inžinerijos arba statybos technologijų studijų krypties (šakos) kvalifikacinį laipsnį” (`10383862_Skelbiamos_apklausos_specialiosios_salygos (9).pdf.txt`)
+- Reading Quote that failed the Quote check, so not scored: “b) specialistą, turintį geodezininko kvalifikacijos pažymėjimą.” (`10383862_Skelbiamos_apklausos_specialiosios_salygos (9).pdf.txt`)
 
 #### 10383512 · right_to_practice_required: invented
 Key: nothing found. Reading: true.

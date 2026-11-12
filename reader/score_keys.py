@@ -422,7 +422,8 @@ def _value(field, cell):
     return show(cell["key"]), show(cell["reading"])
 
 
-def _disagreement_md(d):
+def _disagreement_md(d, unfound=()):
+    """One disagreement. unfound: the tender's Reading Quotes that failed the Quote check."""
     lines = ["#### %s · %s: %s%s" % (d["tender"], d["field"], d["verdict"], " (soft)" if d.get("soft") else "")]
     k, r = _value(d["field"], d)
     lines.append("Key: %s. Reading: %s.%s" % (k, r, (" Differs: %s." % d["why"]) if d.get("why") else ""))
@@ -436,6 +437,9 @@ def _disagreement_md(d):
     else:
         lines.append("- Key Quote: %s" % _q(d["key_quote"], d["key_file"]))
         lines.append("- Reading Quote: %s" % _q(d["reading_quote"], d["reading_file"]))
+    for u in unfound:
+        if u["field"].split("[")[0] == d["field"]:
+            lines.append("- Reading Quote that failed the Quote check, so not scored: %s" % _q(u.get("quote"), u.get("file")))
     return "\n".join(lines)
 
 
@@ -480,7 +484,7 @@ def render_report(result, meta):
 
     out += ["## Disagreements (%d)" % len(result["disagreements"]), ""]
     for d in result["disagreements"]:
-        out += [_disagreement_md(d), ""]
+        out += [_disagreement_md(d, (meta.get("unfound") or {}).get(d["tender"], ())), ""]
 
     if result["name_only"]:
         out += ["## Items matched by name only (counted as matching; please check)", ""]
