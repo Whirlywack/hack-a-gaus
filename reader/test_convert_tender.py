@@ -49,7 +49,7 @@ class ConvertTree(unittest.TestCase):
 
     def test_text_is_cleaned_as_the_handoff_did_before_it_is_measured_and_saved(self):
         self.put("a.pdf")
-        raw = "a" * 200 + " x\r\n\n\n\n" + "b" * 200 + "\n\n"
+        raw = "a" * 200 + "\u00a0x\r\n\n\n\n" + "b" * 200 + "\n\n"
         e = self.run_tree(pdf=fake(raw))["a.pdf"]
         with open(os.path.join(self.out, "a.pdf.txt"), encoding="utf-8") as f:
             saved = f.read()

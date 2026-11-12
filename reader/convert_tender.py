@@ -76,7 +76,7 @@ DEFAULT_CONVERTERS = {"docx": _docx, "doc": _doc, "pdf": _pdf, "xlsx": _xlsx, "x
 def clean(text):
     """The handoff's clean() from cascade/convert.py, unchanged: it ran on every converted text
     before the text was measured and saved."""
-    text = text.replace(" ", " ").replace("\r", "")
+    text = text.replace("\u00a0", " ").replace("\r", "")
     text = re.sub(r"\n{3,}", "\n\n", text)
     return text.strip() + "\n"
 
