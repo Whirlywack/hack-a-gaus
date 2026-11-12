@@ -197,6 +197,85 @@ const UPSERT_VALUES = `
   on conflict (notice_id) do update set estimated_value = excluded.estimated_value
   where notice_values.estimated_value is distinct from excluded.estimated_value`
 
+const FEED_URL = 'https://viesiejipirkimai.lt/epps-integration/api/cft-details-export'
+const ATTEMPTS = 5
+
+/**
+ * The feed answers with a bare list of records. Anything else (an error object, an
+ * envelope) must fail loudly and must not be retried: read as a page it would look
+ * empty and end the walk early.
+ */
+export function assertPageShape(body: unknown, pageNum: number): asserts body is FeedRecord[] {
+  if (!Array.isArray(body)) throw new Error(`feed page ${pageNum}: the answer is not a list of records`)
+}
+
+/**
+ * Fetch pages of the feed. Network failures, server errors (5xx), rate limits (429) and
+ * unreadable JSON are retried, 5 attempts in all, waiting 1, 2, 4 and 8 seconds; any
+ * other HTTP error fails at once (401 is a refused key). Each request times out after 60
+ * seconds: the feed has hung for days with a valid key before. Errors never hold the key.
+ */
+export function feedFetcher({
+  key,
+  fetch: fetchFn = fetch,
+  sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms)),
+}: {
+  key: string | undefined
+  fetch?: (url: string, init: RequestInit) => Promise<Response>
+  sleep?: (ms: number) => Promise<void>
+}): FetchPage {
+  if (!key) throw new Error('the feed key is not set (VPT_API_KEY)')
+  return async (pageSize, pageNum) => {
+    let last = ''
+    for (let attempt = 0; attempt < ATTEMPTS; attempt++) {
+      if (attempt > 0) await sleep(Math.min(30_000, 1000 * 2 ** (attempt - 1)))
+      let res: Response
+      try {
+        res = await fetchFn(FEED_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json', apiKey: key },
+          body: JSON.stringify({ pageSize, pageNum }),
+          signal: AbortSignal.timeout(60_000),
+        })
+      } catch (e) {
+        last = e instanceof Error ? `${e.name}: ${e.message}` : 'network error'
+        continue
+      }
+      if (!res.ok) {
+        if (res.status >= 500 || res.status === 429) {
+          last = `HTTP ${res.status}`
+          continue
+        }
+        const why = res.status === 401 ? ' (the feed key was refused)' : ''
+        throw new Error(`feed page ${pageNum}: HTTP ${res.status}${why}, not retried`)
+      }
+      let body: unknown
+      try {
+        body = await res.json()
+      } catch {
+        last = 'unreadable JSON'
+        continue
+      }
+      // Outside the retries: a changed shape is not a passing fault.
+      assertPageShape(body, pageNum)
+      return body
+    }
+    throw new Error(`feed page ${pageNum} failed after ${ATTEMPTS} attempts: ${last}`)
+  }
+}
+
+/** How many Notices of each kind are open now (public.notice_is_open). Every kind is listed. */
+export async function openNoticesByKind(sql: Sql): Promise<Record<Kind, number>> {
+  const rows = await sql<{ kind: Kind; open: number }[]>`
+    select kind, count(*)::int as open
+    from public.notices n
+    where public.notice_is_open(n)
+    group by kind`
+  const counts = Object.fromEntries(KINDS.map((k) => [k, 0])) as Record<Kind, number>
+  for (const r of rows) counts[r.kind] = r.open
+  return counts
+}
+
 // The feed caps a page at 1,000 records (HTTP 400 above that, since 23 October 2026).
 export const PAGE_SIZE = 1_000
 // How old the newest publication date may be when the walk ends. The real feed's tail

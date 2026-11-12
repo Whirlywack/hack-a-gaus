@@ -24,6 +24,31 @@ create table public.notices (
   )
 );
 
+-- Screens ask for the open Notices of one kind (tenders, Market consultations); about
+-- 2,000 of the feed's ~83,000 are open at a time.
+create index notices_kind_deadline_idx on public.notices (kind, deadline_at);
+
+-- Whether a Notice is open: its deadline (or reply date) is still ahead, and its status
+-- is not one the feed uses for a Notice that no longer takes bids or replies. A status
+-- the loader has not seen counts as open, so a renamed status cannot empty the feed;
+-- the deadline still bounds it. Statuses seen in the feed, 12 November 2026: open are
+-- Bid submission (tenders), Proposal Submission (consultations), Established (DPS).
+-- Usable from the Data API as a computed field: notices?select=*,notice_is_open
+create function public.notice_is_open(n public.notices)
+returns boolean
+language sql
+stable
+set search_path = ''
+as $$
+  select coalesce(n.deadline_at > pg_catalog.now(), false)
+    and (n.status is null or n.status <> all (array[
+      'Evaluation', 'Awaiting bid opening', 'Proposal Submission Closed',
+      'Awarded', 'Concluded', 'Closed', 'Cancelled', 'Terminated'
+    ]))
+$$;
+comment on function public.notice_is_open(public.notices) is
+  'A Notice is open while its deadline or reply date is ahead and its status is not a closed one.';
+
 -- A Notice is never deleted: Follows point at it after its deadline has passed. The
 -- refusal holds for every role, the loader's included. To remove a row on purpose, drop
 -- these triggers in a migration that says why.
