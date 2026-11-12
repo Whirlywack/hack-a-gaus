@@ -1,0 +1,46 @@
+name: Reader runner test
+
+# Fetches one tender's notice page and documents, converts them to text, and reports
+# file names, character lengths and skip reasons. No document text goes to the log or
+# to any artifact: the text stays in the job's temp folder and is discarded with it.
+on:
+  workflow_dispatch:
+    inputs:
+      tender_id:
+        description: Tender number
+        required: true
+        default: "10383512"
+
+permissions:
+  contents: read
+  packages: read
+
+jobs:
+  read:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    container:
+      image: ghcr.io/whirlywack/gaus-reader:latest
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    env:
+      FETCHER_CONTACT: ${{ secrets.FETCHER_CONTACT }}
+      TENDER_ID: ${{ inputs.tender_id || '10383512' }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Tools on the image
+        run: |
+          soffice --version | cut -c1-40
+          pdftotext -v 2>&1 | head -1
+      - name: Unit tests
+        run: python3 -m unittest discover -s reader -p "test_*.py"
+      - name: Fetch
+        id: fetch
+        run: python3 -I reader/fetch_tender.py "$TENDER_ID" "$RUNNER_TEMP/work" "$RUNNER_TEMP/docs"
+      - name: Convert
+        run: python3 -I reader/convert_tender.py "$RUNNER_TEMP/docs" "$RUNNER_TEMP/text" "$RUNNER_TEMP/report.json"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: reading-report-${{ env.TENDER_ID }}
+          path: ${{ runner.temp }}/report.json

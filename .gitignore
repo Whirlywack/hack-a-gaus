@@ -3,4 +3,6 @@ handoff-from-claude/readings/text/
 handoff-from-claude/readings/docs/
 gaus-handoff.zip
 reader/.venv/
+
 __pycache__/
+*.pyc
