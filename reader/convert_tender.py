@@ -6,18 +6,27 @@ Usage: python3 -I reader/convert_tender.py DOCS_DIR TEXT_DIR REPORT_JSON
 The report and the log carry file names, character lengths and skip reasons only.
 Document text is written to TEXT_DIR and nowhere else.
 """
+import hashlib
 import json
 import os
 import re
 import shutil
 import sys
 import tempfile
+import unicodedata
 import zipfile
 
 MIN_CHARS = 100          # below this a file counts as having no text (scanned)
 MAX_ZIP_BYTES = 200 * 1024 * 1024
 FORMATS = {".docx": "docx", ".doc": "doc", ".pdf": "pdf", ".xlsx": "xlsx", ".xlsm": "xlsx", ".xls": "xls"}
 HERE = os.path.dirname(os.path.abspath(__file__))
+
+# Skip rules from the handoff's cascade/convert.py. The name rules match the file's own name folded
+# to ASCII; the handoff matched the whole path, so a zip named for prices dropped every file in it.
+# Its extension rule is left out on purpose: it skipped Excel, which ticket #3 reads.
+BOILERPLATE_PATTERNS = ["espd-request"]  # generic EBVPD/ESPD request form, same text in every tender
+NAME_PATTERNS = ["kain", "samat", "ziniarast", "kiekiu", "kiekiai", "sutartiniai ikainiai"]  # price lists
+DIGIT_DENSITY_MAX = 0.30  # share of digits among non-space characters
 
 
 def _handoff():
@@ -81,20 +90,46 @@ def clean(text):
     return text.strip() + "\n"
 
 
+def digit_density(text):
+    """The handoff's digit_density() from cascade/convert.py."""
+    s = re.sub(r"\s", "", text)
+    return (sum(c.isdigit() for c in s) / len(s)) if s else 0.0
+
+
+def ascii_fold(s):
+    """The handoff's ascii_fold() from cascade/common.py: accents dropped, lower-cased."""
+    return "".join(c for c in unicodedata.normalize("NFKD", s) if not unicodedata.combining(c)).lower()
+
+
 def _safe_name(name):
     base = os.path.basename(name.replace("\\", "/")) or "x"
     return re.sub(r"[^\w.\- ()ąčęėįšųūžĄČĘĖĮŠŲŪŽ]", "_", base)
+
+
+def text_name(label):
+    """The text file a document's text is saved under: zip members as "<zip name>__<member>",
+    the names the hand-checked keys cite."""
+    return label.replace("/", "__") + ".txt"
 
 
 def _entry(file, status, chars=0, reason=None):
     return {"file": file, "status": status, "chars": chars, "reason": reason}
 
 
-def _convert_one(path, label, text_dir, converters, entries):
+def _convert_one(path, label, text_dir, converters, entries, seen):
+    """seen maps the hash of each saved text, whitespace normalised, to the file it came from."""
     ext = os.path.splitext(path)[1].lower()
     fmt = FORMATS.get(ext)
     if fmt is None:
         entries.append(_entry(label, "skipped", reason="unsupported file type %s" % (ext or "(none)")))
+        return
+    name = ascii_fold(label.rsplit("/", 1)[-1])
+    if any(p in name for p in BOILERPLATE_PATTERNS):
+        entries.append(_entry(label, "skipped", reason="generic ESPD request form (boilerplate)"))
+        return
+    hit = [p for p in NAME_PATTERNS if p in name]
+    if hit:
+        entries.append(_entry(label, "skipped", reason="price list / bill of quantities by name (%s)" % hit[0]))
         return
     try:
         text = clean(converters[fmt](path))
@@ -106,27 +141,38 @@ def _convert_one(path, label, text_dir, converters, entries):
         why = "no text (scanned PDF)" if fmt == "pdf" else "no text"
         entries.append(_entry(label, "skipped", n, why))
         return
+    dd = digit_density(text)
+    if dd > DIGIT_DENSITY_MAX:
+        entries.append(_entry(label, "skipped", n, "numeric-dense (%.2f) price list / quantities" % dd))
+        return
+    h = hashlib.sha256(re.sub(r"\s+", " ", text).encode()).hexdigest()
+    if h in seen:
+        entries.append(_entry(label, "skipped", n, "duplicate of " + seen[h]))
+        return
     os.makedirs(text_dir, exist_ok=True)
     try:
-        with open(os.path.join(text_dir, label.replace("/", "__") + ".txt"), "w", encoding="utf-8") as f:
+        with open(os.path.join(text_dir, text_name(label)), "w", encoding="utf-8") as f:
             f.write(text)
     except OSError as ex:
         entries.append(_entry(label, "skipped", n, "could not save text (%s)" % type(ex).__name__))
         return
+    seen[h] = label  # only a saved text counts, so a copy of a text that could not be saved is still read
     entries.append(_entry(label, "read", n))
 
 
 def convert_tree(docs_dir, text_dir, converters=None):
     """Convert every file in docs_dir (zips unpacked one level). Returns report entries."""
     converters = converters or DEFAULT_CONVERTERS
-    entries = []
-    for name in sorted(os.listdir(docs_dir)):
+    entries, seen = [], {}
+    names = [n for n in sorted(os.listdir(docs_dir)) if os.path.isfile(os.path.join(docs_dir, n))]
+    zips = [n for n in names if n.lower().endswith(".zip")]
+    # The tender's own files before the zips' members, as the handoff walked them, so a duplicate
+    # keeps the copy the notice lists by name.
+    for name in names:
+        if name not in zips:
+            _convert_one(os.path.join(docs_dir, name), name, text_dir, converters, entries, seen)
+    for name in zips:
         path = os.path.join(docs_dir, name)
-        if not os.path.isfile(path):
-            continue
-        if not name.lower().endswith(".zip"):
-            _convert_one(path, name, text_dir, converters, entries)
-            continue
         try:
             z = zipfile.ZipFile(path)
             infos = [i for i in z.infolist() if not i.is_dir()]
@@ -159,7 +205,7 @@ def convert_tree(docs_dir, text_dir, converters=None):
                 except Exception as ex:  # bad name for this disk, bad CRC, encrypted, odd compression
                     entries.append(_entry(label, "skipped", reason="could not unpack (%s)" % type(ex).__name__))
                     continue
-                _convert_one(dst, label, text_dir, converters, entries)
+                _convert_one(dst, label, text_dir, converters, entries, seen)
     return entries
 
 
