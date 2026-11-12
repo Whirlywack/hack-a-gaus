@@ -1,9 +1,12 @@
 """Tests for the convert-and-report seam.
 Run from the repo root: python3 -m unittest discover -s reader -p "test_convert_tender.py"
 """
+import importlib.util
 import io
 import json
 import os
+import shutil
+import subprocess
 import tempfile
 import unittest
 import zipfile
@@ -147,6 +150,67 @@ class ConvertTree(unittest.TestCase):
         for blob in (lines, json.dumps(e)):
             self.assertNotIn("SECRET", blob)
             self.assertNotIn("37060000000", blob)
+
+
+TOOLS = (shutil.which("soffice") and shutil.which("pdftotext")
+         and importlib.util.find_spec("docx") and importlib.util.find_spec("openpyxl"))
+MARKER = "Tiekėjas turi ISO 9001 standartą"
+
+
+@unittest.skipUnless(TOOLS, "needs the reader image: LibreOffice, pdftotext, python-docx, openpyxl")
+class RealConverters(unittest.TestCase):
+    """The real converters on files made here: each format the ticket names is read."""
+
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.src = os.path.join(self.tmp.name, "docs")
+        self.out = os.path.join(self.tmp.name, "text")
+        self.work = os.path.join(self.tmp.name, "work")
+        os.makedirs(self.src)
+        os.makedirs(self.work)
+
+    def tearDown(self):
+        self.tmp.cleanup()
+
+    def soffice(self, path, fmt, name):
+        subprocess.run(["soffice", "--headless", "--norestore",
+                        "-env:UserInstallation=file://" + os.path.join(self.tmp.name, "profile"),
+                        "--convert-to", fmt, "--outdir", self.work, path],
+                       capture_output=True, timeout=240, stdin=subprocess.DEVNULL)
+        made = os.path.join(self.work, os.path.splitext(os.path.basename(path))[0] + "." + fmt)
+        shutil.move(made, os.path.join(self.src, name))
+
+    def test_word_pdf_excel_legacy_doc_xls_and_zip_are_read(self):
+        import docx
+        import openpyxl
+        word = os.path.join(self.work, "w.docx")
+        d = docx.Document()
+        for _ in range(6):
+            d.add_paragraph(MARKER)
+        d.save(word)
+        sheet = os.path.join(self.work, "s.xlsx")
+        wb = openpyxl.Workbook()
+        for i in range(6):
+            wb.active.append([MARKER, i])
+        wb.save(sheet)
+
+        shutil.copy(word, os.path.join(self.src, "a.docx"))
+        self.soffice(word, "doc", "b.doc")
+        self.soffice(word, "pdf", "c.pdf")
+        shutil.copy(sheet, os.path.join(self.src, "d.xlsx"))
+        self.soffice(sheet, "xls", "e.xls")
+        with zipfile.ZipFile(os.path.join(self.src, "f.zip"), "w") as z:
+            z.write(word, "vidinis.docx")
+            z.writestr("EBVPD.zip", b"PK")
+
+        e = {x["file"]: x for x in ct.convert_tree(self.src, self.out)}
+
+        for name in ("a.docx", "b.doc", "c.pdf", "d.xlsx", "e.xls", "f/vidinis.docx"):
+            with self.subTest(name=name):
+                self.assertEqual(e[name]["status"], "read", e[name]["reason"])
+                with open(os.path.join(self.out, name.replace("/", "__") + ".txt"), encoding="utf-8") as f:
+                    self.assertIn(MARKER, f.read())
+        self.assertEqual(e["f/EBVPD.zip"]["status"], "skipped")
 
 
 if __name__ == "__main__":
