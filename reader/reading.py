@@ -14,6 +14,7 @@ import os
 import re
 import secrets
 import unicodedata
+from types import SimpleNamespace
 
 MODEL = "claude-sonnet-5-5"
 FALLBACK_BETA = "server-side-fallback-2026-07-01"
@@ -139,7 +140,7 @@ def _quoted(props):
     # "" means nothing found; read_tender turns it back into null (the API limits unions in a schema)
     props["quote"] = {"type": "string"}
     props["file"] = {"type": "string"}
-    return {"type": "object", "properties": props, "required": list(props), "additionalProperties": False}
+    return _obj(props)
 
 
 def _obj(props):
@@ -177,8 +178,11 @@ is given inside <document_{nonce} name="..."> ... </document_{nonce}> tags.
 
 Rules for the record:
 - Report only what the documents state. A value not stated in the documents is null: never a guess, never a "typical" value.
-- Every non-null finding carries a verbatim Lithuanian quote (at most 300 characters) copied exactly from one document, and that document's file name. Do not translate, correct or shorten inside a quote.
-- `required: false` needs a quote too when the documents say so explicitly (for example "kvalifikacijos reikalavimai netaikomi"); if the documents are silent, use `required: null` and null quote and file.
+- Every non-null finding carries a verbatim Lithuanian quote of at least 20 characters and at most 300, copied exactly \
+from one document, and that document's file name exactly as its tag gives it. Do not translate, correct or shorten \
+inside a quote. Quote one continuous passage; only if you must leave text out, mark each gap with "..." and use at \
+most 3 pieces, each at least 20 characters.
+- `required: false` needs a quote too when the documents say so explicitly (for example "kvalifikacijos reikalavimai netaikomi"); if the documents are silent, use `required: null`, with quote and file as empty strings ("").
 - Amounts: put the normalised number in the field and copy the number as written into the quote; give the VAT basis in `notes`.
 - If requirements differ by lot (pirkimo dalis), record the strictest in the fields and list the per-lot values in `notes`.
 - `min_value_eur` for similar contracts expressed as a share of the bid or estimated value is null, with the rule in `description`.
@@ -219,6 +223,16 @@ def _usd(input_tokens, output_tokens):
     return (input_tokens * PRICE_PER_MTOK["input"] + output_tokens * PRICE_PER_MTOK["output"]) / 1e6
 
 
+def _billed_usage(final):
+    """The tokens billed for this answer, over every attempt. When the server-side fallback ran,
+    usage.iterations lists each attempt, and a refusal that declined mid-stream is billed too; the
+    top-level usage covers only the attempt that produced the answer. The reader's model and its
+    only fallback target (claude-sonnet-5) cost the same per token."""
+    attempts = getattr(final.usage, "iterations", None) or [final.usage]
+    return SimpleNamespace(input_tokens=sum(a.input_tokens for a in attempts),
+                           output_tokens=sum(a.output_tokens for a in attempts))
+
+
 def append_ledger(path, entry):
     ledger = {"entries": [], "total_usd": 0.0}
     if os.path.exists(path):
@@ -234,6 +248,7 @@ def append_ledger(path, entry):
 def read_tender(folder, client, today=None, ledger_path=LEDGER_PATH, input_budget=INPUT_BUDGET,
                 model=MODEL, label="read"):
     """Read one tender folder. Returns the checked Reading, or raises ReadFailed."""
+    today = today or datetime.date.today().isoformat()  # one date for the ledger and the Reading
     tender_id = os.path.basename(os.path.normpath(folder))
     texts = load_texts(folder)
     if not texts:
@@ -262,7 +277,7 @@ def read_tender(folder, client, today=None, ledger_path=LEDGER_PATH, input_budge
     ) as stream:
         final = stream.get_final_message()
 
-    usage = final.usage
+    usage = _billed_usage(final)
     append_ledger(ledger_path, {
         "date": today or datetime.date.today().isoformat(),
         "label": label, "tender": tender_id, "model": final.model,
@@ -273,7 +288,9 @@ def read_tender(folder, client, today=None, ledger_path=LEDGER_PATH, input_budge
     # The stop reason comes before the content.
     if final.stop_reason != "end_turn":
         raise ReadFailed("the read stopped with %r, not end_turn" % final.stop_reason)
-    text = next((b.text for b in final.content if b.type == "text"), None)
+    # Every text block, in order: after a mid-stream refusal the fallback model continues the
+    # partial answer in a new text block, after a `fallback` block.
+    text = "".join(b.text for b in final.content if b.type == "text")
     try:
         record = json.loads(text)
     except (TypeError, ValueError):
