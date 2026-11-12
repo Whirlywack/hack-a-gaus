@@ -39,12 +39,12 @@ export const COPY = {
   'tender.consultation': entry('Tag on a row that is a market consultation, not a tender yet', 'Rinkos konsultacija'),
 
   // Pradžia (start)
-  'start.title': entry('Question that opens the start flow', 'Kokius darbus atliekate?'),
+  'start.title': entry('Question that opens the start flow', 'Kokius darbus dirbate?'),
   'start.text': entry(
     'Tells the user to describe their work freely and what they get in return',
     'Parašykite savais žodžiais. Parodysime viešuosius pirkimus, kuriuose galite dalyvauti.',
   ),
-  'start.field.label': entry('Label of the text field where the user describes their work', 'Jūsų darbai'),
+  'start.field.label': entry('Label of the text field where the user describes their work', 'Darbai'),
   'start.field.placeholder': entry('Example shown inside the empty field', 'pvz., gatvių remontas, šaligatviai'),
   'start.next': entry('Button that moves to the next step', 'Toliau'),
   'start.signin': entry('Link for a returning user', 'Prisijungti'),

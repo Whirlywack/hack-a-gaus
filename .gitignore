@@ -7,6 +7,8 @@ node_modules/
 .next/
 next-env.d.ts
 *.tsbuildinfo
-.env*.local
+.env
+.env.*
+!.env.example
 supabase/.temp/
 supabase/.branches/
