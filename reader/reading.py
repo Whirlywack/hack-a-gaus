@@ -273,7 +273,9 @@ def read_tender(folder, client, today=None, ledger_path=LEDGER_PATH, input_budge
     # The stop reason comes before the content.
     if final.stop_reason != "end_turn":
         raise ReadFailed("the read stopped with %r, not end_turn" % final.stop_reason)
-    text = next((b.text for b in final.content if b.type == "text"), None)
+    # Every text block, in order: after a mid-stream refusal the fallback model continues the
+    # partial answer in a new text block, after a `fallback` block.
+    text = "".join(b.text for b in final.content if b.type == "text")
     try:
         record = json.loads(text)
     except (TypeError, ValueError):

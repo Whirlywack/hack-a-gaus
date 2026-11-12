@@ -27,9 +27,10 @@ def answer_text():
 
 class FakeClient:
     def __init__(self, stop_reason="end_turn", text=None, model="claude-sonnet-5-5",
-                 tokens_per_char=0.0, flat_tokens=1000):
+                 tokens_per_char=0.0, flat_tokens=1000, content=None, usage=None):
         self.stop_reason, self.text, self.model = stop_reason, text, model
         self.tokens_per_char, self.flat_tokens = tokens_per_char, flat_tokens
+        self.content, self.usage = content, usage
         self.requests, self.counted = [], []
         outer = self
 
@@ -55,9 +56,11 @@ class FakeClient:
                 content = [SimpleNamespace(type="text", text=outer.text if outer.text is not None else answer_text())]
                 if outer.stop_reason == "refusal":
                     content = []
+                if outer.content is not None:
+                    content = outer.content
                 return SimpleNamespace(
                     stop_reason=outer.stop_reason, content=content, model=outer.model,
-                    usage=SimpleNamespace(input_tokens=1234, output_tokens=567),
+                    usage=outer.usage or SimpleNamespace(input_tokens=1234, output_tokens=567),
                     stop_details=None,
                 )
 
@@ -128,6 +131,20 @@ class ReadTenderRequest(unittest.TestCase):
 
     def test_reading_records_the_model_that_actually_answered(self):
         r = self.read(model="claude-sonnet-5")
+        self.assertEqual(r["model"], "claude-sonnet-5")
+
+    def test_answer_the_fallback_model_finished_after_a_mid_stream_refusal_is_read_whole(self):
+        # Refusals and fallback, Streaming: after a mid-output decline the partial text stays, a
+        # `fallback` block marks the boundary, and the fallback model continues in a new text block.
+        whole = answer_text()
+        cut = whole.index('"similar_contracts"')
+        r = self.read(model="claude-sonnet-5", content=[
+            SimpleNamespace(type="text", text=whole[:cut]),
+            SimpleNamespace(type="fallback", to=SimpleNamespace(model="claude-sonnet-5")),
+            SimpleNamespace(type="text", text=whole[cut:]),
+        ])
+        self.assertEqual(r["states"]["min_turnover"], "required")
+        self.assertEqual(r["states"]["bid_security"], "not_required")
         self.assertEqual(r["model"], "claude-sonnet-5")
 
     def test_empty_quote_and_file_from_the_model_come_back_as_null(self):
