@@ -342,6 +342,31 @@ describe('code-exclude words', () => {
   })
 })
 
+// A kind's words can change after it is stored (the operator edits them, or a
+// model-proposed kind is revised). Matching must follow the words it holds now.
+describe('a kind whose words change', () => {
+  const underGeneralRepair = (db: Db, title: string) => matchKindIn(db, roads, title, ['45453000'])
+
+  it('stops matching by an include word it no longer holds, and starts on a new one', async () => {
+    await rolledBack(async (tx) => {
+      await tx`update public.kinds_of_work set include_words = array['gatvė'] where id = ${roads}`
+      expect((await underGeneralRepair(tx, 'Kelio remontas')).matched).toBe(false)
+      expect(await underGeneralRepair(tx, 'Gatvės remontas')).toEqual({ matched: true, matched_by: 'word', matched_on: 'Gatvės' })
+    })
+  })
+
+  it('applies a new exclude word and a new code-exclude word', async () => {
+    await rolledBack(async (tx) => {
+      await tx`
+        update public.kinds_of_work
+        set exclude_words = array['remontas'], code_exclude_words = array['projektas']
+        where id = ${roads}`
+      expect((await underGeneralRepair(tx, 'Kelio remontas')).matched).toBe(false)
+      expect((await matchKindIn(tx, roads, 'Gatvės projektas', ['45233142-6'])).matched).toBe(false)
+    })
+  })
+})
+
 describe('the checks over all 230 rows of the Jurbarkas file (spec, Seam 1)', () => {
   it('reads all 230 rows', () => {
     expect(contracts).toHaveLength(230)

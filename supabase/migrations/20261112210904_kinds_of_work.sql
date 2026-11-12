@@ -60,6 +60,18 @@ as $$
   from pg_catalog.unnest(words) as w
 $$;
 
+-- The stems of a list of words, as lt_stems gives them for a title.
+create function public.lt_stems_of(words text[])
+returns text[]
+language sql
+immutable
+strict
+parallel safe
+set search_path = ''
+as $$
+  select public.lt_stems(pg_catalog.array_to_string(words, ' '))
+$$;
+
 create table public.kinds_of_work (
   id uuid primary key default gen_random_uuid(),
   -- Lithuanian, as shown on screen.
@@ -72,6 +84,14 @@ create table public.kinds_of_work (
   include_words text[] not null default '{}' check (public.lt_single_words(include_words)),
   exclude_words text[] not null default '{}' check (public.lt_single_words(exclude_words)),
   code_exclude_words text[] not null default '{}' check (public.lt_single_words(code_exclude_words)),
+  -- The stems of the three word lists, kept so that matching a feed of about
+  -- 2,000 notices does not stem the kinds' words again for every notice.
+  -- Postgres recomputes them whenever the words change. A new stemmer (a
+  -- Postgres major upgrade) needs them recomputed by hand:
+  --   update public.kinds_of_work set include_words = include_words;
+  include_stems text[] generated always as (public.lt_stems_of(include_words)) stored,
+  exclude_stems text[] generated always as (public.lt_stems_of(exclude_words)) stored,
+  code_exclude_stems text[] generated always as (public.lt_stems_of(code_exclude_words)) stored,
   origin text not null check (origin in ('hand_checked', 'model_proposed')),
   -- Tendered Contracts of 3,000 EUR or more in the 12 months of the pull of
   -- 11 November 2026, and one real Contract title with its id: fixed values
@@ -134,10 +154,9 @@ declare
     where pg_catalog.btrim(c) <> ''
     order by o
   );
-  title_words text[] := coalesce(public.lt_words(title), '{}');
   title_stems text[] := coalesce(public.lt_stems(title), '{}');
   missing uuid;
-  include_stems text[];
+  hit_stems text[];
 begin
   select i into missing
   from pg_catalog.unnest(ids) as i
@@ -158,7 +177,7 @@ begin
     order by o
     limit 1
   ) hit
-  where not (title_stems && public.lt_stems(pg_catalog.array_to_string(k.code_exclude_words, ' ')))
+  where not (title_stems && k.code_exclude_stems)
   order by u.ord
   limit 1;
   if found then
@@ -169,15 +188,12 @@ begin
 
   -- A word match: the first kind whose division holds the main code and whose
   -- include words are in the title, unless the title holds an exclude word.
-  select k.id, s.include_stems into kind_id, include_stems
+  select k.id, k.include_stems into kind_id, hit_stems
   from pg_catalog.unnest(ids) with ordinality as u(id, ord)
   join public.kinds_of_work k on k.id = u.id
-  cross join lateral (
-    select public.lt_stems(pg_catalog.array_to_string(k.include_words, ' ')) as include_stems
-  ) s
   where pg_catalog.left(codes[1], 2) = any(array(select pg_catalog.left(g, 2) from pg_catalog.unnest(k.cpv_groups) g))
-    and title_stems && s.include_stems
-    and not (title_stems && public.lt_stems(pg_catalog.array_to_string(k.exclude_words, ' ')))
+    and title_stems && k.include_stems
+    and not (title_stems && k.exclude_stems)
   order by u.ord
   limit 1;
   if not found then
@@ -185,9 +201,10 @@ begin
     return;
   end if;
 
+  -- The first title word, as written, whose stem is one of that kind's.
   select w into matched_on
-  from pg_catalog.unnest(title_words) with ordinality as t(w, o)
-  where public.lt_stems(w) && include_stems
+  from pg_catalog.unnest(public.lt_words(title)) with ordinality as t(w, o)
+  where public.lt_stems(w) && hit_stems
   order by o
   limit 1;
   matched := true;

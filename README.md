@@ -27,7 +27,7 @@ Tests that need the database live in `tests/db/`. Everything else runs without D
 
 ## Matching
 
-Matching lives in the database (ADR-0002). `public.match_kind(kind_id, title, main_cpv, cpv_codes)` matches a Notice against one Kind of work, and `public.match_kinds(kind_ids, title, main_cpv, cpv_codes)` against a Trade's kinds. Both return `matched`, `matched_by` (`code` or `word`) and `matched_on` (the Notice's code, or the title word as written); `match_kinds` also returns the `kind_id` that matched. The five road kinds and the hand-checked road Trade (`hand_checked_trade_kinds`, trade `road`) are seeded by migration. Tests: `tests/db/matching.test.ts` and `tests/db/kinds-of-work.test.ts`.
+Matching lives in the database (ADR-0002). `public.match_kind(kind_id, title, main_cpv, cpv_codes)` matches a Notice against one Kind of work, and `public.match_kinds(kind_ids, title, main_cpv, cpv_codes)` against a Trade's kinds. Both return `matched`, `matched_by` (`code` or `word`) and `matched_on` (the Notice's code, or the title word as written); `match_kinds` also returns the `kind_id` that matched. Each kind keeps the stems of its words (`include_stems`, `exclude_stems`, `code_exclude_stems`), which Postgres recomputes whenever the words change, so a match stems only the title. The five road kinds and the hand-checked road Trade (`hand_checked_trade_kinds`, trade `road`) are seeded by migration. Tests: `tests/db/matching.test.ts` and `tests/db/kinds-of-work.test.ts`.
 
 ## Layout
 
