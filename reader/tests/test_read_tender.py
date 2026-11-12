@@ -104,6 +104,20 @@ class ReadTenderRequest(unittest.TestCase):
         self.assertEqual(req["fallbacks"], "default")
         self.assertIn("server-side-fallback-2026-07-01", req["betas"])
 
+    def test_the_answer_may_use_the_models_whole_output_limit_because_thinking_counts_toward_it(self):
+        # Context windows: "Thinking tokens are a subset of your max_tokens parameter";
+        # claude-sonnet-5-5 "can generate up to 128k output tokens (max_tokens)"
+        self.read()
+        self.assertEqual(self.client.requests[0]["max_tokens"], 128_000)
+
+    def test_thinking_is_adaptive_at_an_explicit_effort(self):
+        # claude-sonnet-5-5 thinks when `thinking` is omitted and rejects budget_tokens with a 400:
+        # effort is the only thinking control. "high" is the API default the scored run used.
+        self.read()
+        req = self.client.requests[0]
+        self.assertEqual(req["thinking"], {"type": "adaptive"})
+        self.assertEqual(req["output_config"]["effort"], "high")
+
     def test_tokens_are_counted_before_sending(self):
         self.read()
         self.assertEqual(len(self.client.counted), 1)
@@ -181,8 +195,9 @@ class ReadTenderRequest(unittest.TestCase):
             self.read(stop_reason="refusal")
 
     def test_cut_off_answer_is_a_failed_read(self):
-        with self.assertRaises(ReadFailed):
-            self.read(stop_reason="max_tokens", text='{"tender_id": "99')
+        for reason in ("max_tokens", "model_context_window_exceeded"):
+            with self.subTest(reason=reason), self.assertRaises(ReadFailed):
+                self.read(stop_reason=reason, text='{"tender_id": "99')
 
     def test_unparseable_answer_is_a_failed_read(self):
         with self.assertRaises(ReadFailed):
@@ -209,6 +224,27 @@ class ReadTenderRequest(unittest.TestCase):
         self.assertEqual((entry["input_tokens"], entry["output_tokens"]), (1234, 567))
         self.assertAlmostEqual(entry["usd"], 1234 * 2 / 1e6 + 567 * 10 / 1e6, places=6)
         self.assertAlmostEqual(ledger["total_usd"], entry["usd"], places=6)
+
+
+class RoomForTheWholeAnswer(unittest.TestCase):
+    """Input, thinking and answer share the 1M window. A request is sent only when the window
+    still holds the full 128K output after the input, so a read is never cut by the window."""
+
+    def read(self, tokens):
+        self.client = FakeClient(flat_tokens=tokens)
+        ledger = os.path.join(tempfile.mkdtemp(), "l.json")
+        return read_tender(INVENTED, client=self.client, today="2026-11-12", ledger_path=ledger)
+
+    def test_input_that_leaves_less_than_the_whole_output_room_is_not_sent(self):
+        with self.assertRaises(ReadFailed):
+            self.read(900_000)  # 900K + 128K is past the window
+        self.assertEqual(self.client.requests, [])
+
+    def test_the_largest_hand_checked_tender_still_fits_whole(self):
+        # 10392051 billed 841,604 input tokens in scoring run sonnet-1 (ticket-13's ledger)
+        r = self.read(841_604)
+        self.assertEqual(r["files_skipped"], [])
+        self.assertEqual(len(self.client.requests), 1)
 
 
 class TenderThatDoesNotFit(unittest.TestCase):
