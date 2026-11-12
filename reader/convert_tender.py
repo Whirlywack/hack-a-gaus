@@ -9,6 +9,7 @@ Document text is written to TEXT_DIR and nowhere else.
 import json
 import os
 import re
+import shutil
 import sys
 import tempfile
 import zipfile
@@ -94,8 +95,12 @@ def _convert_one(path, label, text_dir, converters, entries):
         entries.append(_entry(label, "skipped", n, why))
         return
     os.makedirs(text_dir, exist_ok=True)
-    with open(os.path.join(text_dir, label.replace("/", "__") + ".txt"), "w", encoding="utf-8") as f:
-        f.write(text)
+    try:
+        with open(os.path.join(text_dir, label.replace("/", "__") + ".txt"), "w", encoding="utf-8") as f:
+            f.write(text)
+    except OSError as ex:
+        entries.append(_entry(label, "skipped", n, "could not save text (%s)" % type(ex).__name__))
+        return
     entries.append(_entry(label, "read", n))
 
 
@@ -119,16 +124,28 @@ def convert_tree(docs_dir, text_dir, converters=None):
         if sum(i.file_size for i in infos) > MAX_ZIP_BYTES:
             entries.append(_entry(name, "skipped", reason="zip too big to unpack"))
             continue
+        labels = set()
         with tempfile.TemporaryDirectory() as td:
-            for i in infos:
+            for idx, i in enumerate(infos):
                 member = _safe_name(i.filename)
                 label = name + "/" + member
+                if label in labels:  # same base name twice: keep both texts apart
+                    label = "%s/%d_%s" % (name, idx, member)
+                labels.add(label)
+                # Unpacked under the member's index, so names never clash and never leave td.
+                dst = os.path.join(td, "%d_%s" % (idx, member))
+                if not member.strip(".") or os.path.dirname(dst) != td:
+                    entries.append(_entry(label, "skipped", reason="unusable file name in zip"))
+                    continue
                 if member.lower().endswith(".zip"):
                     entries.append(_entry(label, "skipped", reason="nested zip (EBVPD)"))
                     continue
-                dst = os.path.join(td, member)
-                with z.open(i) as src, open(dst, "wb") as out:
-                    out.write(src.read())
+                try:
+                    with z.open(i) as src, open(dst, "wb") as out:
+                        shutil.copyfileobj(src, out)
+                except Exception as ex:  # bad name for this disk, bad CRC, encrypted, odd compression
+                    entries.append(_entry(label, "skipped", reason="could not unpack (%s)" % type(ex).__name__))
+                    continue
                 _convert_one(dst, label, text_dir, converters, entries)
     return entries
 
