@@ -104,6 +104,35 @@ class ReadTenderRequest(unittest.TestCase):
         self.assertEqual(req["fallbacks"], "default")
         self.assertIn("server-side-fallback-2026-07-01", req["betas"])
 
+    def test_the_answer_may_use_the_models_whole_output_limit_because_thinking_counts_toward_it(self):
+        # Context windows: "Thinking tokens are a subset of your max_tokens parameter";
+        # claude-sonnet-5-5 "can generate up to 128k output tokens (max_tokens)"
+        self.read()
+        self.assertEqual(self.client.requests[0]["max_tokens"], 128_000)
+
+    def test_a_tender_that_fits_the_window_is_sent_whole(self):
+        # Spec: files are left out only "if a tender does not fit the model's window". Context
+        # windows: on Claude 4.5 and newer, input plus max_tokens past the window is accepted and
+        # stops on model_context_window_exceeded, a failed read. So the input budget keeps 32K free
+        # for the answer, about 7 times the longest read in scoring run sonnet-1 (4,810 output
+        # tokens), not the whole 128K. 10392051, the largest hand-checked tender, billed 841,604.
+        r = self.read(flat_tokens=940_000)
+        self.assertEqual(r["files_skipped"], [])
+        self.assertEqual(len(self.client.requests), 1)
+
+    def test_input_that_leaves_less_than_32k_for_the_answer_is_not_sent(self):
+        with self.assertRaises(ReadFailed):
+            self.read(flat_tokens=960_000)  # 960K + 32K + the 20K margin is past the 1M window
+        self.assertEqual(self.client.requests, [])
+
+    def test_thinking_is_adaptive_at_an_explicit_effort(self):
+        # claude-sonnet-5-5 thinks when `thinking` is omitted and rejects budget_tokens with a 400:
+        # effort is the only thinking control. "high" is the API default the scored run used.
+        self.read()
+        req = self.client.requests[0]
+        self.assertEqual(req["thinking"], {"type": "adaptive"})
+        self.assertEqual(req["output_config"]["effort"], "high")
+
     def test_tokens_are_counted_before_sending(self):
         self.read()
         self.assertEqual(len(self.client.counted), 1)
@@ -181,8 +210,9 @@ class ReadTenderRequest(unittest.TestCase):
             self.read(stop_reason="refusal")
 
     def test_cut_off_answer_is_a_failed_read(self):
-        with self.assertRaises(ReadFailed):
-            self.read(stop_reason="max_tokens", text='{"tender_id": "99')
+        for reason in ("max_tokens", "model_context_window_exceeded"):
+            with self.subTest(reason=reason), self.assertRaises(ReadFailed):
+                self.read(stop_reason=reason, text='{"tender_id": "99')
 
     def test_unparseable_answer_is_a_failed_read(self):
         with self.assertRaises(ReadFailed):
@@ -209,6 +239,51 @@ class ReadTenderRequest(unittest.TestCase):
         self.assertEqual((entry["input_tokens"], entry["output_tokens"]), (1234, 567))
         self.assertAlmostEqual(entry["usd"], 1234 * 2 / 1e6 + 567 * 10 / 1e6, places=6)
         self.assertAlmostEqual(ledger["total_usd"], entry["usd"], places=6)
+
+
+class UsageAndModels(unittest.TestCase):
+    """What the scoring run needs from one read: the API's token count, and a comparison model."""
+
+    def read(self, model="claude-sonnet-5-5", **kw):
+        self.client = FakeClient(model=model, **kw)
+        self.ledger = os.path.join(tempfile.mkdtemp(), "l.json")
+        return read_tender(INVENTED, client=self.client, today="2026-11-12", ledger_path=self.ledger,
+                           model=model, label="test")
+
+    def ledger_entry(self):
+        with open(self.ledger) as f:
+            return json.load(f)["entries"][-1]
+
+    def test_reading_carries_the_token_count_the_api_returned(self):
+        r = self.read()
+        self.assertEqual(r["usage"]["input_tokens"], 1234)
+        self.assertEqual(r["usage"]["output_tokens"], 567)
+        self.assertEqual(r["usage"]["counted_input_tokens"], 1000)
+        self.assertAlmostEqual(r["usage"]["usd"], self.ledger_entry()["usd"], places=6)
+
+    def test_haiku_request_names_haiku_and_has_no_server_side_fallback(self):
+        # Claude Haiku 5.5 has no server-side refusal fallback
+        self.read(model="claude-haiku-5-5")
+        req = self.client.requests[0]
+        self.assertEqual(req["model"], "claude-haiku-5-5")
+        self.assertNotIn("fallbacks", req)
+        self.assertNotIn("betas", req)
+        self.assertEqual(self.client.counted[0]["model"], "claude-haiku-5-5")
+
+    def test_haiku_is_priced_at_its_own_rate(self):
+        # 0.10 / 0.50 USD per million tokens for prompts up to 100 000 tokens
+        self.read(model="claude-haiku-5-5")
+        self.assertAlmostEqual(self.ledger_entry()["usd"], 1234 * 0.10 / 1e6 + 567 * 0.50 / 1e6, places=6)
+
+    def test_long_haiku_prompts_are_priced_at_the_higher_rate(self):
+        self.assertAlmostEqual(reading.usd("claude-haiku-5-5", 200_000, 1_000), 200_000 * 0.5 / 1e6 + 1_000 * 2.5 / 1e6)
+        self.assertAlmostEqual(reading.usd("claude-haiku-5-5", 100_000, 1_000), 100_000 * 0.1 / 1e6 + 1_000 * 0.5 / 1e6)
+
+    def test_sonnet_price_is_unchanged(self):
+        self.assertAlmostEqual(reading.usd("claude-sonnet-5-5", 1_000_000, 100_000), 2.0 + 1.0)
+
+    def test_an_unknown_answering_model_is_priced_at_the_dearest_known_rate(self):
+        self.assertGreaterEqual(reading.usd("claude-something-new", 1_000_000, 0), 2.0)
 
 
 class TenderThatDoesNotFit(unittest.TestCase):

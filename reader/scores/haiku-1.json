@@ -1,0 +1,199 @@
+{
+  "status": "pending operator judgement",
+  "title": "Scoring run haiku-1 (claude-haiku-5-5) against the 15 keys",
+  "model": "claude-haiku-5-5",
+  "reader": "reader as merged to main at 825b917 (review-4), run from ticket-13 commit a9a62c0, which adds per-model pricing, the usage field and no fallback for Haiku; on Haiku the request has no server-side fallback",
+  "date": "2026-11-12",
+  "per_field": {
+    "qualification_requirements_set": {
+      "correct": 15,
+      "wrong": 0,
+      "missed": 0,
+      "invented": 0
+    },
+    "similar_contracts": {
+      "correct": 10,
+      "wrong": 1,
+      "missed": 4,
+      "invented": 0
+    },
+    "min_turnover": {
+      "correct": 13,
+      "wrong": 0,
+      "missed": 2,
+      "invented": 0
+    },
+    "certificates_or_licences": {
+      "correct": 11,
+      "wrong": 2,
+      "missed": 2,
+      "invented": 0
+    },
+    "named_specialists": {
+      "correct": 13,
+      "wrong": 1,
+      "missed": 1,
+      "invented": 0
+    },
+    "right_to_practice_required": {
+      "correct": 6,
+      "wrong": 2,
+      "missed": 4,
+      "invented": 3
+    },
+    "bid_security": {
+      "correct": 14,
+      "wrong": 0,
+      "missed": 1,
+      "invented": 0
+    },
+    "exclusion_grounds": {
+      "correct": 12,
+      "wrong": 1,
+      "missed": 2,
+      "invented": 0
+    }
+  },
+  "total": {
+    "correct": 94,
+    "wrong": 7,
+    "missed": 16,
+    "invented": 3,
+    "cells": 120
+  },
+  "wrong_or_invented": {
+    "qualification_requirements_set": [],
+    "similar_contracts": [
+      "10377061"
+    ],
+    "min_turnover": [],
+    "certificates_or_licences": [
+      "10324146",
+      "10377061"
+    ],
+    "named_specialists": [
+      "10324146"
+    ],
+    "right_to_practice_required": [
+      "10377061",
+      "10378522",
+      "10383512",
+      "10384200",
+      "10389181"
+    ],
+    "bid_security": [],
+    "exclusion_grounds": [
+      "10393450"
+    ]
+  },
+  "usage": {
+    "10324146": {
+      "counted_input_tokens": 143311,
+      "input_tokens": 145029,
+      "output_tokens": 6190,
+      "usd": 0.087989,
+      "model": "claude-haiku-5-5"
+    },
+    "10377061": {
+      "counted_input_tokens": 99033,
+      "input_tokens": 100751,
+      "output_tokens": 7183,
+      "usd": 0.068333,
+      "model": "claude-haiku-5-5"
+    },
+    "10378522": {
+      "counted_input_tokens": 78573,
+      "input_tokens": 80291,
+      "output_tokens": 4817,
+      "usd": 0.010438,
+      "model": "claude-haiku-5-5"
+    },
+    "10382017": {
+      "counted_input_tokens": 132094,
+      "input_tokens": 133812,
+      "output_tokens": 5510,
+      "usd": 0.080681,
+      "model": "claude-haiku-5-5"
+    },
+    "10383512": {
+      "counted_input_tokens": 144650,
+      "input_tokens": 146368,
+      "output_tokens": 4511,
+      "usd": 0.084461,
+      "model": "claude-haiku-5-5"
+    },
+    "10384200": {
+      "counted_input_tokens": 226070,
+      "input_tokens": 227788,
+      "output_tokens": 6455,
+      "usd": 0.130031,
+      "model": "claude-haiku-5-5"
+    },
+    "10387051": {
+      "counted_input_tokens": 46855,
+      "input_tokens": 48573,
+      "output_tokens": 5306,
+      "usd": 0.00751,
+      "model": "claude-haiku-5-5"
+    },
+    "10388453": {
+      "counted_input_tokens": 12512,
+      "input_tokens": 14230,
+      "output_tokens": 2989,
+      "usd": 0.002917,
+      "model": "claude-haiku-5-5"
+    },
+    "10389181": {
+      "counted_input_tokens": 71833,
+      "input_tokens": 73551,
+      "output_tokens": 7395,
+      "usd": 0.011053,
+      "model": "claude-haiku-5-5"
+    },
+    "10389970": {
+      "counted_input_tokens": 100265,
+      "input_tokens": 101983,
+      "output_tokens": 1762,
+      "usd": 0.055397,
+      "model": "claude-haiku-5-5"
+    },
+    "10392051": {
+      "counted_input_tokens": 839983,
+      "input_tokens": 841701,
+      "output_tokens": 2429,
+      "usd": 0.426923,
+      "model": "claude-haiku-5-5"
+    },
+    "10393450": {
+      "counted_input_tokens": 28951,
+      "input_tokens": 30669,
+      "output_tokens": 4701,
+      "usd": 0.005417,
+      "model": "claude-haiku-5-5"
+    },
+    "10394052": {
+      "counted_input_tokens": 46007,
+      "input_tokens": 47725,
+      "output_tokens": 3604,
+      "usd": 0.006574,
+      "model": "claude-haiku-5-5"
+    },
+    "10396017": {
+      "counted_input_tokens": 54556,
+      "input_tokens": 56274,
+      "output_tokens": 6693,
+      "usd": 0.008974,
+      "model": "claude-haiku-5-5"
+    },
+    "10397525": {
+      "counted_input_tokens": 222450,
+      "input_tokens": 224168,
+      "output_tokens": 7254,
+      "usd": 0.130219,
+      "model": "claude-haiku-5-5"
+    }
+  },
+  "failures": {},
+  "run_usd": 1.1169,
+  "ledger_total_usd": 11.0536
+}
