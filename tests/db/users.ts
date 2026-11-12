@@ -21,6 +21,16 @@ export async function signUp(auth: Sql, email = `${randomUUID()}@example.lt`): P
   return id
 }
 
+// Delete a User the way Supabase Auth does (the dashboard, the admin API): the
+// auth.users row goes, as supabase_auth_admin.
+export async function deleteUser(auth: Sql, id: string): Promise<void> {
+  await auth.begin(async (tx) => {
+    await tx`set local role supabase_auth_admin`
+    await tx`set local search_path = auth`
+    await tx`delete from users where id = ${id}`
+  })
+}
+
 // Run queries as a signed-in User, the way the Data API does: as the
 // authenticated role, with the User's JWT claims. The local image's auth.uid()
 // reads request.jwt.claim.sub and the hosted one reads request.jwt.claims, so

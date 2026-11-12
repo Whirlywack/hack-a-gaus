@@ -2,6 +2,7 @@
 -- 1001_workspace.sql, with these changes:
 --
 -- - The sign-up trigger is new. The old repo added members by hand.
+-- - A Workspace is deleted with its last User, and its data with it (new).
 -- - A User belongs to one Workspace, as the glossary says, so a membership is
 --   keyed by its User. Several Users can still share a Workspace later.
 --   Roles and invitations are out of scope, so the old role column is gone.
@@ -100,6 +101,39 @@ revoke all on function private.create_workspace_for_new_user() from public, anon
 create trigger create_workspace_after_sign_up
   after insert on auth.users
   for each row execute function private.create_workspace_for_new_user();
+
+-- A Workspace is deleted with its last User, and everything it owns goes with
+-- it. Deleting a User in Supabase Auth removes their membership through the
+-- foreign key's cascade; this trigger then deletes the emptied Workspace, which
+-- cascades to its Trades, Follows and every other table of Workspace data. So
+-- the way to delete a Workspace is to delete its Users.
+--
+-- Every table that names a Workspace must therefore let it go: on delete
+-- cascade for Workspace data, on delete set null for public data that only
+-- records which Workspace asked (a Reading). Anything else would make deleting
+-- a User fail.
+--
+-- The lock on the Workspace row makes two Users leaving at once see each other
+-- go, so the last one out always deletes it.
+create function private.delete_workspace_without_users()
+returns trigger
+language plpgsql
+security definer
+set search_path = ''
+as $$
+begin
+  perform 1 from public.workspaces w where w.id = old.workspace_id for update;
+  delete from public.workspaces w
+  where w.id = old.workspace_id
+    and not exists (select 1 from public.workspace_members m where m.workspace_id = old.workspace_id);
+  return null;
+end;
+$$;
+revoke all on function private.delete_workspace_without_users() from public, anon, authenticated;
+
+create trigger delete_workspace_after_last_user
+  after delete on public.workspace_members
+  for each row execute function private.delete_workspace_without_users();
 
 -- Users who signed up before the trigger existed get their Workspace here.
 do $$

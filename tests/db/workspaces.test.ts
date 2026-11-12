@@ -1,7 +1,8 @@
 import { randomUUID } from 'node:crypto'
 import postgres from 'postgres'
+import type { TransactionSql } from 'postgres'
 import { afterAll, describe, expect, it } from 'vitest'
-import { asAnon, asUser, authConnection, signUp as signUpWith } from './users'
+import { asAnon, asUser, authConnection, deleteUser, signUp as signUpWith } from './users'
 
 // ADR-0004: everything a person creates belongs to a Workspace, and each
 // Workspace's data is visible only to its own Users (user story 77).
@@ -132,6 +133,22 @@ describe('Follows', () => {
     expect(await followsSeenBy(ana)).toEqual([])
   })
 
+  it('can change nothing but its Stage, and keeps the time it was made', async () => {
+    const ana = await signUp()
+    const anas = await workspaceOf(ana)
+    await follow(ana, 707, 'watching')
+
+    const attempts = [
+      () => asUser(sql, ana, (tx) => tx`
+        insert into public.follows (workspace_id, notice_id, stage, created_at)
+        values (${anas}, 708, 'watching', '2020-01-01')`),
+      () => asUser(sql, ana, (tx) => tx`update public.follows set notice_id = 709 where notice_id = 707`),
+      () => asUser(sql, ana, (tx) => tx`update public.follows set created_at = '2020-01-01' where notice_id = 707`),
+    ]
+    for (const attempt of attempts) await expect(attempt()).rejects.toThrow(/permission denied/)
+    expect(await followsSeenBy(ana)).toEqual([{ notice_id: 707, stage: 'watching' }])
+  })
+
   it('cannot be added to another Workspace', async () => {
     const ana = await signUp()
     const ben = await signUp()
@@ -175,84 +192,130 @@ describe('Follows', () => {
   })
 })
 
-const addTrade = async (user: string, name: string) => {
-  const workspace = await workspaceOf(user)
+// Setup (#12) ends by turning the ticked Kinds of work into the Workspace's one
+// Trade, in a single call. Returns the new Trade's id.
+const createFirstTrade = async (user: string, name: string, kinds: string[] = [randomUUID()]) => {
   const [row] = await asUser(sql, user, (tx) => tx<{ id: string }[]>`
-    insert into public.trades (workspace_id, name) values (${workspace}, ${name}) returning id`)
+    select public.create_first_trade(${name}, ${kinds}::uuid[]) as id`)
   return row.id
 }
 
 const tradesSeenBy = (user: string) =>
-  asUser(sql, user, (tx) => tx<{ name: string }[]>`select name from public.trades order by name`)
+  asUser(sql, user, (tx) => tx<{ workspace_id: string; name: string }[]>`
+    select workspace_id, name from public.trades order by name`)
+
+const kindsSeenBy = (user: string) =>
+  asUser(sql, user, (tx) => tx<{ trade_id: string; kind_id: string }[]>`
+    select trade_id, kind_id from public.trade_kinds order by kind_id`)
 
 describe('Trades', () => {
-  it('are named, and seen only by their own Workspace', async () => {
+  it('are created by setup as one named Trade with its Kinds of work, seen only by its own Workspace', async () => {
     const ana = await signUp()
     const ben = await signUp()
-    await addTrade(ana, 'Keliai ir gatvės')
-    await addTrade(ben, 'Vamzdynai')
-    await addTrade(ben, 'Aikštelės')
+    const [roads, pipes] = [randomUUID(), randomUUID()]
+    const anasTrade = await createFirstTrade(ana, 'Keliai ir gatvės', [roads, pipes, roads])
+    const bensTrade = await createFirstTrade(ben, 'Vamzdynai', [pipes])
 
-    expect(await tradesSeenBy(ana)).toEqual([{ name: 'Keliai ir gatvės' }])
-    expect(await tradesSeenBy(ben)).toEqual([{ name: 'Aikštelės' }, { name: 'Vamzdynai' }])
+    expect(await tradesSeenBy(ana)).toEqual([{ workspace_id: await workspaceOf(ana), name: 'Keliai ir gatvės' }])
+    expect(await tradesSeenBy(ben)).toEqual([{ workspace_id: await workspaceOf(ben), name: 'Vamzdynai' }])
+    expect(await kindsSeenBy(ana)).toEqual([roads, pipes].sort().map((kind_id) => ({ trade_id: anasTrade, kind_id })))
+    expect(await kindsSeenBy(ben)).toEqual([{ trade_id: bensTrade, kind_id: pipes }])
   })
 
-  it('can be renamed and removed by their own Workspace', async () => {
+  it('are created by setup only once per Workspace', async () => {
     const ana = await signUp()
-    const trade = await addTrade(ana, 'Keliai')
+    await createFirstTrade(ana, 'Keliai')
 
-    await asUser(sql, ana, (tx) => tx`update public.trades set name = 'Keliai ir gatvės' where id = ${trade}`)
-    expect(await tradesSeenBy(ana)).toEqual([{ name: 'Keliai ir gatvės' }])
+    await expect(createFirstTrade(ana, 'Antra')).rejects.toThrow(/already has a Trade/)
+    expect((await tradesSeenBy(ana)).map((t) => t.name)).toEqual(['Keliai'])
+  })
 
-    await asUser(sql, ana, (tx) => tx`delete from public.trades where id = ${trade}`)
+  it('need a name and at least one Kind of work', async () => {
+    const ana = await signUp()
+
+    await expect(createFirstTrade(ana, ' ')).rejects.toThrow(/trades_name_check/)
+    await expect(createFirstTrade(ana, 'Keliai', [])).rejects.toThrow(/needs a Kind of work/)
     expect(await tradesSeenBy(ana)).toEqual([])
-  })
-
-  it('cannot be added, renamed, moved or removed by a User of another Workspace', async () => {
-    const ana = await signUp()
-    const ben = await signUp()
-    const bens = await workspaceOf(ben)
-    const bensTrade = await addTrade(ben, 'Vamzdynai')
-    const anasTrade = await addTrade(ana, 'Keliai')
-
-    await expect(asUser(sql, ana, (tx) => tx`
-      insert into public.trades (workspace_id, name) values (${bens}, 'Įkelta')`,
-    )).rejects.toThrow(/row-level security/)
-    const renamed = await asUser(sql, ana, (tx) => tx`update public.trades set name = 'Pakeista' where id = ${bensTrade}`)
-    const removed = await asUser(sql, ana, (tx) => tx`delete from public.trades where id = ${bensTrade}`)
-    expect([renamed.count, removed.count]).toEqual([0, 0])
-    await expect(asUser(sql, ana, (tx) => tx`
-      update public.trades set workspace_id = ${bens} where id = ${anasTrade}`,
-    )).rejects.toThrow(/permission denied/)
-
-    expect(await tradesSeenBy(ben)).toEqual([{ name: 'Vamzdynai' }])
-    expect(await tradesSeenBy(ana)).toEqual([{ name: 'Keliai' }])
-  })
-
-  it('hold Kinds of work that only their own Workspace can see or change', async () => {
-    const ana = await signUp()
-    const ben = await signUp()
-    const anasTrade = await addTrade(ana, 'Keliai')
-    const [roads, pipes, other] = [randomUUID(), randomUUID(), randomUUID()]
-    const kindsSeenBy = (user: string) =>
-      asUser(sql, user, (tx) => tx<{ trade_id: string; kind_id: string }[]>`
-        select trade_id, kind_id from public.trade_kinds order by kind_id`)
-
-    await asUser(sql, ana, (tx) => tx`
-      insert into public.trade_kinds (trade_id, kind_id) values (${anasTrade}, ${roads}), (${anasTrade}, ${pipes})`)
-    const anas = [roads, pipes].sort().map((kind_id) => ({ trade_id: anasTrade, kind_id }))
-    expect(await kindsSeenBy(ana)).toEqual(anas)
-    expect(await kindsSeenBy(ben)).toEqual([])
-
-    await expect(asUser(sql, ben, (tx) => tx`
-      insert into public.trade_kinds (trade_id, kind_id) values (${anasTrade}, ${other})`,
-    )).rejects.toThrow(/row-level security/)
-    const removed = await asUser(sql, ben, (tx) => tx`delete from public.trade_kinds where trade_id = ${anasTrade}`)
-    expect(removed.count).toBe(0)
-    expect(await kindsSeenBy(ana)).toEqual(anas)
-
-    await asUser(sql, ana, (tx) => tx`delete from public.trades where id = ${anasTrade}`)
     expect(await kindsSeenBy(ana)).toEqual([])
+  })
+
+  // The Account overlay (#21) has no way to edit Trades, and nothing else writes them.
+  it('cannot be added, renamed, moved or removed directly, nor their Kinds of work, in any Workspace', async () => {
+    const ana = await signUp()
+    const ben = await signUp()
+    const [anas, bens] = [await workspaceOf(ana), await workspaceOf(ben)]
+    const anasTrade = await createFirstTrade(ana, 'Keliai')
+    const bensTrade = await createFirstTrade(ben, 'Vamzdynai')
+    const anaTries = (run: (tx: TransactionSql) => Promise<unknown>) => () => asUser(sql, ana, run)
+
+    const attempts = [[anas, anasTrade], [bens, bensTrade]].flatMap(([workspace, trade]) => [
+      anaTries((tx) => tx`insert into public.trades (workspace_id, name) values (${workspace}, 'Antra')`),
+      anaTries((tx) => tx`update public.trades set name = 'Pakeista' where id = ${trade}`),
+      anaTries((tx) => tx`update public.trades set workspace_id = ${bens} where id = ${trade}`),
+      anaTries((tx) => tx`delete from public.trades where id = ${trade}`),
+      anaTries((tx) => tx`insert into public.trade_kinds (trade_id, kind_id) values (${trade}, ${randomUUID()})`),
+      anaTries((tx) => tx`delete from public.trade_kinds where trade_id = ${trade}`),
+    ])
+    for (const attempt of attempts) await expect(attempt()).rejects.toThrow(/permission denied/)
+
+    expect((await tradesSeenBy(ana)).map((t) => t.name)).toEqual(['Keliai'])
+    expect((await tradesSeenBy(ben)).map((t) => t.name)).toEqual(['Vamzdynai'])
+    expect(await kindsSeenBy(ana)).toHaveLength(1)
+    expect(await kindsSeenBy(ben)).toHaveLength(1)
+  })
+})
+
+// The rows of every public table that names this Workspace, and the Kinds of
+// work in this Trade: what a deleted Workspace must leave behind (nothing).
+const leftBehind = async (workspace: string, trade: string) => {
+  const tables = await sql<{ name: string }[]>`
+    select table_name as name from information_schema.columns
+    where table_schema = 'public' and column_name = 'workspace_id'
+    union select 'workspaces'`
+  const rows: Record<string, number> = {}
+  for (const { name } of tables) {
+    const column = name === 'workspaces' ? 'id' : 'workspace_id'
+    const [{ n }] = await sql<{ n: number }[]>`
+      select count(*)::int as n from ${sql('public.' + name)} where ${sql(column)} = ${workspace}`
+    if (n > 0) rows[name] = n
+  }
+  const [{ n }] = await sql<{ n: number }[]>`
+    select count(*)::int as n from public.trade_kinds where trade_id = ${trade}`
+  if (n > 0) rows.trade_kinds = n
+  return rows
+}
+
+describe('deleting a User', () => {
+  it('deletes their Workspace and everything in it when they were its last User', async () => {
+    const ana = await signUp()
+    const anas = await workspaceOf(ana)
+    const trade = await createFirstTrade(ana, 'Keliai')
+    await follow(ana, 901, 'watching')
+    expect(await leftBehind(anas, trade)).toEqual({
+      workspaces: 1, workspace_members: 1, trades: 1, follows: 1, trade_kinds: 1,
+    })
+
+    await deleteUser(auth, ana)
+    expect(await leftBehind(anas, trade)).toEqual({})
+  })
+
+  it('keeps a Workspace that still has a User, and deletes it with the last one', async () => {
+    const ana = await signUp()
+    const ben = await signUp()
+    const anas = await workspaceOf(ana)
+    const bens = await workspaceOf(ben)
+    // No screen adds a second User yet, so the database owner moves Ben in.
+    await sql`delete from public.workspace_members where user_id = ${ben}`
+    expect(await leftBehind(bens, randomUUID())).toEqual({})
+    await sql`insert into public.workspace_members (user_id, workspace_id) values (${ben}, ${anas})`
+    await follow(ana, 902, 'preparing')
+
+    await deleteUser(auth, ana)
+    expect(await workspaceOf(ben)).toBe(anas)
+    expect(await followsSeenBy(ben)).toEqual([{ notice_id: 902, stage: 'preparing' }])
+
+    await deleteUser(auth, ben)
+    expect(await leftBehind(anas, randomUUID())).toEqual({})
   })
 })
 
@@ -296,6 +359,9 @@ describe('a visitor who is not signed in', () => {
     )).rejects.toThrow(/permission denied/)
     await expect(asAnon(sql, (tx) => tx`
       insert into public.trades (workspace_id, name) values (${workspace}, 'Svetima')`,
+    )).rejects.toThrow(/permission denied/)
+    await expect(asAnon(sql, (tx) => tx`
+      select public.create_first_trade('Svetima', array[${randomUUID()}]::uuid[])`,
     )).rejects.toThrow(/permission denied/)
   })
 })
