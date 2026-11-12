@@ -1,0 +1,117 @@
+{
+  "model": "claude-sonnet-5-5",
+  "date": "2026-11-12",
+  "counted_input_tokens": 2246098,
+  "expected_output_tokens_per_tender": 8000,
+  "max_output_tokens": 32000,
+  "expected_usd": 5.6921,
+  "worst_usd": 9.2921,
+  "ledger_total_usd": 0.021068,
+  "tenders": [
+    {
+      "tender": "10324146",
+      "chars": 259760,
+      "counted_input_tokens": 143274,
+      "expected_usd": 0.3665,
+      "worst_usd": 0.6065
+    },
+    {
+      "tender": "10377061",
+      "chars": 182028,
+      "counted_input_tokens": 98985,
+      "expected_usd": 0.278,
+      "worst_usd": 0.518
+    },
+    {
+      "tender": "10378522",
+      "chars": 144762,
+      "counted_input_tokens": 78513,
+      "expected_usd": 0.237,
+      "worst_usd": 0.477
+    },
+    {
+      "tender": "10382017",
+      "chars": 238879,
+      "counted_input_tokens": 132034,
+      "expected_usd": 0.3441,
+      "worst_usd": 0.5841
+    },
+    {
+      "tender": "10383512",
+      "chars": 282421,
+      "counted_input_tokens": 144559,
+      "expected_usd": 0.3691,
+      "worst_usd": 0.6091
+    },
+    {
+      "tender": "10384200",
+      "chars": 432756,
+      "counted_input_tokens": 226048,
+      "expected_usd": 0.5321,
+      "worst_usd": 0.7721
+    },
+    {
+      "tender": "10387051",
+      "chars": 137529,
+      "counted_input_tokens": 46801,
+      "expected_usd": 0.1736,
+      "worst_usd": 0.4136
+    },
+    {
+      "tender": "10388453",
+      "chars": 24261,
+      "counted_input_tokens": 12450,
+      "expected_usd": 0.1049,
+      "worst_usd": 0.3449
+    },
+    {
+      "tender": "10389181",
+      "chars": 146901,
+      "counted_input_tokens": 71688,
+      "expected_usd": 0.2234,
+      "worst_usd": 0.4634
+    },
+    {
+      "tender": "10389970",
+      "chars": 176249,
+      "counted_input_tokens": 100183,
+      "expected_usd": 0.2804,
+      "worst_usd": 0.5204
+    },
+    {
+      "tender": "10392051",
+      "chars": 1274394,
+      "counted_input_tokens": 839922,
+      "expected_usd": 1.7598,
+      "worst_usd": 1.9998
+    },
+    {
+      "tender": "10393450",
+      "chars": 54640,
+      "counted_input_tokens": 28860,
+      "expected_usd": 0.1377,
+      "worst_usd": 0.3777
+    },
+    {
+      "tender": "10394052",
+      "chars": 84306,
+      "counted_input_tokens": 45917,
+      "expected_usd": 0.1718,
+      "worst_usd": 0.4118
+    },
+    {
+      "tender": "10396017",
+      "chars": 100025,
+      "counted_input_tokens": 54502,
+      "expected_usd": 0.189,
+      "worst_usd": 0.429
+    },
+    {
+      "tender": "10397525",
+      "chars": 419729,
+      "counted_input_tokens": 222362,
+      "expected_usd": 0.5247,
+      "worst_usd": 0.7647
+    }
+  ]
+}
