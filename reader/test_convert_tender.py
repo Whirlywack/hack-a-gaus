@@ -44,6 +44,15 @@ class ConvertTree(unittest.TestCase):
             self.assertEqual(e[n]["status"], "read")
             self.assertEqual(e[n]["chars"], 500)
 
+    def test_text_is_cleaned_as_the_handoff_did_before_it_is_measured_and_saved(self):
+        self.put("a.pdf")
+        raw = "a" * 200 + " x\r\n\n\n\n" + "b" * 200 + "\n\n"
+        e = self.run_tree(pdf=fake(raw))["a.pdf"]
+        with open(os.path.join(self.out, "a.pdf.txt"), encoding="utf-8") as f:
+            saved = f.read()
+        self.assertEqual(saved, "a" * 200 + " x\n\n" + "b" * 200 + "\n")
+        self.assertEqual(e["chars"], 404)
+
     def test_scanned_pdf_is_skipped_with_reason(self):
         self.put("scan.pdf")
         e = self.run_tree(pdf=fake("  \n "))["scan.pdf"]

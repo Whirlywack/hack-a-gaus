@@ -69,6 +69,14 @@ def _xls(path):
 DEFAULT_CONVERTERS = {"docx": _docx, "doc": _doc, "pdf": _pdf, "xlsx": _xlsx, "xls": _xls}
 
 
+def clean(text):
+    """The handoff's clean() from cascade/convert.py, unchanged: it ran on every converted text
+    before the text was measured and saved."""
+    text = text.replace(" ", " ").replace("\r", "")
+    text = re.sub(r"\n{3,}", "\n\n", text)
+    return text.strip() + "\n"
+
+
 def _safe_name(name):
     base = os.path.basename(name.replace("\\", "/")) or "x"
     return re.sub(r"[^\w.\- ()ąčęėįšųūžĄČĘĖĮŠŲŪŽ]", "_", base)
@@ -85,7 +93,7 @@ def _convert_one(path, label, text_dir, converters, entries):
         entries.append(_entry(label, "skipped", reason="unsupported file type %s" % (ext or "(none)")))
         return
     try:
-        text = converters[kind](path)
+        text = clean(converters[kind](path))
     except Exception as ex:
         entries.append(_entry(label, "skipped", reason="conversion failed (%s)" % type(ex).__name__))
         return
