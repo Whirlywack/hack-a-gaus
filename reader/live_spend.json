@@ -152,7 +152,277 @@
       "input_tokens": 224086,
       "output_tokens": 2189,
       "usd": 0.470062
+    },
+    {
+      "date": "2026-11-12",
+      "label": "score sonnet-2",
+      "tender": "10324146",
+      "model": "claude-sonnet-5-5",
+      "input_tokens": 145062,
+      "output_tokens": 5044,
+      "usd": 0.340564
+    },
+    {
+      "date": "2026-11-12",
+      "label": "score sonnet-2",
+      "tender": "10377061",
+      "model": "claude-sonnet-5-5",
+      "input_tokens": 100773,
+      "output_tokens": 4456,
+      "usd": 0.246106
+    },
+    {
+      "date": "2026-11-12",
+      "label": "score sonnet-2",
+      "tender": "10378522",
+      "model": "claude-sonnet-5-5",
+      "input_tokens": 80276,
+      "output_tokens": 2643,
+      "usd": 0.186982
+    },
+    {
+      "date": "2026-11-12",
+      "label": "score sonnet-2",
+      "tender": "10382017",
+      "model": "claude-sonnet-5-5",
+      "input_tokens": 133822,
+      "output_tokens": 3559,
+      "usd": 0.303234
+    },
+    {
+      "date": "2026-11-12",
+      "label": "score sonnet-2",
+      "tender": "10383512",
+      "model": "claude-sonnet-5-5",
+      "input_tokens": 146361,
+      "output_tokens": 3485,
+      "usd": 0.327572
+    },
+    {
+      "date": "2026-11-12",
+      "label": "score sonnet-2",
+      "tender": "10384200",
+      "model": "claude-sonnet-5-5",
+      "input_tokens": 227796,
+      "output_tokens": 3088,
+      "usd": 0.486472
+    },
+    {
+      "date": "2026-11-12",
+      "label": "score sonnet-2",
+      "tender": "10387051",
+      "model": "claude-sonnet-5-5",
+      "input_tokens": 48549,
+      "output_tokens": 2353,
+      "usd": 0.120628
+    },
+    {
+      "date": "2026-11-12",
+      "label": "score sonnet-2",
+      "tender": "10388453",
+      "model": "claude-sonnet-5-5",
+      "input_tokens": 14238,
+      "output_tokens": 1219,
+      "usd": 0.040666
+    },
+    {
+      "date": "2026-11-12",
+      "label": "score sonnet-2",
+      "tender": "10389181",
+      "model": "claude-sonnet-5-5",
+      "input_tokens": 73446,
+      "output_tokens": 3470,
+      "usd": 0.181592
+    },
+    {
+      "date": "2026-11-12",
+      "label": "score sonnet-2",
+      "tender": "10389970",
+      "model": "claude-sonnet-5-5",
+      "input_tokens": 101977,
+      "output_tokens": 1256,
+      "usd": 0.216514
+    },
+    {
+      "date": "2026-11-12",
+      "label": "score sonnet-2",
+      "tender": "10392051",
+      "model": "claude-sonnet-5-5",
+      "input_tokens": 841719,
+      "output_tokens": 3462,
+      "usd": 1.718058
+    },
+    {
+      "date": "2026-11-12",
+      "label": "score sonnet-2",
+      "tender": "10393450",
+      "model": "claude-sonnet-5-5",
+      "input_tokens": 30648,
+      "output_tokens": 1302,
+      "usd": 0.074316
+    },
+    {
+      "date": "2026-11-12",
+      "label": "score sonnet-2",
+      "tender": "10394052",
+      "model": "claude-sonnet-5-5",
+      "input_tokens": 47721,
+      "output_tokens": 2577,
+      "usd": 0.121212
+    },
+    {
+      "date": "2026-11-12",
+      "label": "score sonnet-2",
+      "tender": "10396017",
+      "model": "claude-sonnet-5-5",
+      "input_tokens": 56290,
+      "output_tokens": 1118,
+      "usd": 0.12376
+    },
+    {
+      "date": "2026-11-12",
+      "label": "score sonnet-2",
+      "tender": "10397525",
+      "model": "claude-sonnet-5-5",
+      "input_tokens": 224150,
+      "output_tokens": 2759,
+      "usd": 0.47589
+    },
+    {
+      "date": "2026-11-12",
+      "label": "score haiku-1",
+      "tender": "10324146",
+      "model": "claude-haiku-5-5",
+      "input_tokens": 145029,
+      "output_tokens": 6190,
+      "usd": 0.087989
+    },
+    {
+      "date": "2026-11-12",
+      "label": "score haiku-1",
+      "tender": "10377061",
+      "model": "claude-haiku-5-5",
+      "input_tokens": 100751,
+      "output_tokens": 7183,
+      "usd": 0.068333
+    },
+    {
+      "date": "2026-11-12",
+      "label": "score haiku-1",
+      "tender": "10378522",
+      "model": "claude-haiku-5-5",
+      "input_tokens": 80291,
+      "output_tokens": 4817,
+      "usd": 0.010438
+    },
+    {
+      "date": "2026-11-12",
+      "label": "score haiku-1",
+      "tender": "10382017",
+      "model": "claude-haiku-5-5",
+      "input_tokens": 133812,
+      "output_tokens": 5510,
+      "usd": 0.080681
+    },
+    {
+      "date": "2026-11-12",
+      "label": "score haiku-1",
+      "tender": "10383512",
+      "model": "claude-haiku-5-5",
+      "input_tokens": 146368,
+      "output_tokens": 4511,
+      "usd": 0.084461
+    },
+    {
+      "date": "2026-11-12",
+      "label": "score haiku-1",
+      "tender": "10384200",
+      "model": "claude-haiku-5-5",
+      "input_tokens": 227788,
+      "output_tokens": 6455,
+      "usd": 0.130031
+    },
+    {
+      "date": "2026-11-12",
+      "label": "score haiku-1",
+      "tender": "10387051",
+      "model": "claude-haiku-5-5",
+      "input_tokens": 48573,
+      "output_tokens": 5306,
+      "usd": 0.00751
+    },
+    {
+      "date": "2026-11-12",
+      "label": "score haiku-1",
+      "tender": "10388453",
+      "model": "claude-haiku-5-5",
+      "input_tokens": 14230,
+      "output_tokens": 2989,
+      "usd": 0.002917
+    },
+    {
+      "date": "2026-11-12",
+      "label": "score haiku-1",
+      "tender": "10389181",
+      "model": "claude-haiku-5-5",
+      "input_tokens": 73551,
+      "output_tokens": 7395,
+      "usd": 0.011053
+    },
+    {
+      "date": "2026-11-12",
+      "label": "score haiku-1",
+      "tender": "10389970",
+      "model": "claude-haiku-5-5",
+      "input_tokens": 101983,
+      "output_tokens": 1762,
+      "usd": 0.055397
+    },
+    {
+      "date": "2026-11-12",
+      "label": "score haiku-1",
+      "tender": "10392051",
+      "model": "claude-haiku-5-5",
+      "input_tokens": 841701,
+      "output_tokens": 2429,
+      "usd": 0.426923
+    },
+    {
+      "date": "2026-11-12",
+      "label": "score haiku-1",
+      "tender": "10393450",
+      "model": "claude-haiku-5-5",
+      "input_tokens": 30669,
+      "output_tokens": 4701,
+      "usd": 0.005417
+    },
+    {
+      "date": "2026-11-12",
+      "label": "score haiku-1",
+      "tender": "10394052",
+      "model": "claude-haiku-5-5",
+      "input_tokens": 47725,
+      "output_tokens": 3604,
+      "usd": 0.006574
+    },
+    {
+      "date": "2026-11-12",
+      "label": "score haiku-1",
+      "tender": "10396017",
+      "model": "claude-haiku-5-5",
+      "input_tokens": 56274,
+      "output_tokens": 6693,
+      "usd": 0.008974
+    },
+    {
+      "date": "2026-11-12",
+      "label": "score haiku-1",
+      "tender": "10397525",
+      "model": "claude-haiku-5-5",
+      "input_tokens": 224168,
+      "output_tokens": 7254,
+      "usd": 0.130219
     }
   ],
-  "total_usd": 4.973136
+  "total_usd": 11.053619
 }

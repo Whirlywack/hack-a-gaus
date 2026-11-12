@@ -2,6 +2,7 @@
   "status": "pending operator judgement",
   "title": "Scoring: sonnet-alone-offline against the 15 keys",
   "model": null,
+  "reader": null,
   "date": null,
   "per_field": {
     "qualification_requirements_set": {

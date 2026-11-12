@@ -199,24 +199,33 @@ def _brief(item):
 # Key items that a Reading may list or leave out without effect on the score, by tender, field and
 # the start of the key's quote. 10382017: the organic certificate of the offered product. The judged
 # scoring counts certificates at supplier level and credited the reader for tagging this one as a
-# product requirement (score_sonnet_alone.md, "Product-level vs supplier-level").
+# product requirement (score_sonnet_alone.md, "Product-level vs supplier-level"). A Reading item is
+# that same product item when it matches the key item, or when its quote names it.
 OPTIONAL_KEY_ITEMS = {
-    ("10382017", "certificates_or_licences"): ["produktai turi turėti ekologinės gamybos"],
+    ("10382017", "certificates_or_licences"): [
+        {"key_quote_start": "produktai turi turėti ekologinės gamybos", "reading_quote_has": "ekologinės gamybos"},
+    ],
 }
 
 
-def _optional(tender, field, item):
-    starts = OPTIONAL_KEY_ITEMS.get((str(tender), field), [])
-    return any(normalise(item.get("quote") or "").startswith(normalise(s)) for s in starts)
+def _optional_rules(tender, field):
+    return OPTIONAL_KEY_ITEMS.get((str(tender), field), [])
 
 
 def _list_cell(field, key, reading):
     k_items, r_items = _items(key, field), _items(reading, field)
-    optional = {i for i, k in enumerate(k_items) if _optional(key.get("tender_id"), field, k)}
+    rules = _optional_rules(key.get("tender_id"), field)
+    optional = {i for i, k in enumerate(k_items)
+                if any(normalise(k.get("quote") or "").startswith(normalise(r["key_quote_start"])) for r in rules)}
     pairs = _pair(k_items, r_items)
     matched_k = {i for i, _, _ in pairs}
-    # reading items that matched an optional key item count neither way
-    counted_r = [j for j in range(len(r_items)) if j not in {j for i, j, _ in pairs if i in optional}]
+    paired_to_needed = {j for i, j, _ in pairs if i not in optional}
+    markers = [normalise(rule["reading_quote_has"]) for rule in rules]
+    product_r = {j for j, item in enumerate(r_items) if j not in paired_to_needed
+                 and any(m in normalise(item.get("quote") or "") for m in markers)}
+    # reading items that are the optional key item count neither way
+    not_counted = {j for i, j, _ in pairs if i in optional} | product_r
+    counted_r = [j for j in range(len(r_items)) if j not in not_counted]
     needed = [i for i in range(len(k_items)) if i not in optional]
     unmatched_key = [_brief(k_items[i]) for i in needed if i not in matched_k]
     extra = [_brief(r_items[j]) for j in counted_r if j not in {j for _, j, _ in pairs}]
@@ -321,9 +330,18 @@ def ledger_total(path):
         return float(json.load(f).get("total_usd", 0.0))
 
 
+# The API bills about 1 700 input tokens more than count_tokens returns (the output schema).
+COUNT_MARGIN = 5_000
+
+
+def worst_case_usd(model, counted):
+    """The most one read can cost: its counted input plus a margin, and max_tokens of output."""
+    return reading_mod.usd(model, counted + COUNT_MARGIN, reading_mod.MAX_OUTPUT)
+
+
 def run_live(client, tenders, text_dir, raw_dir, model, label, ledger_path, cap_usd, today=None, log=lambda s: None):
     """Read each tender with the live model, one at a time. Before each one, its worst case (counted
-    input plus max_tokens of output) is added to the ledger's running total; if that would pass the
+    input, a margin and max_tokens of output) is added to the ledger's running total; if that would pass the
     cap, the run stops there. Each raw Reading is saved in raw_dir (gitignored: it holds Quotes).
     No document text is logged."""
     os.makedirs(raw_dir, exist_ok=True)
@@ -335,7 +353,7 @@ def run_live(client, tenders, text_dir, raw_dir, model, label, ledger_path, cap_
             continue
         folder = os.path.join(text_dir, tender)
         counted = reading_mod._count(client, model, *reading_mod.build_prompt(reading_mod.load_texts(folder), tender))
-        worst = reading_mod.usd(model, counted, reading_mod.MAX_OUTPUT)
+        worst = worst_case_usd(model, counted)
         total = ledger_total(ledger_path)
         if total + worst > cap_usd:
             stopped = "not read: the ledger (%.4f USD) plus this tender's worst case (%.4f USD) would pass %.2f USD" % (
@@ -539,6 +557,10 @@ EXPECTED_OUTPUT_TOKENS = 8_000
 KEY_NOTE = ("One of the 171 key Quotes is not found word for word in the converted text: 10384200 "
             "other_requirements[8] (a penalty clause). It is outside the eight scored fields, so it does "
             "not move the score; run through the Quote check, that item would read \"not found\".")
+RULE_NOTE = ("Scoring rules: items of a list field match by Quote (40 shared characters, or 80% of the "
+             "shorter Quote), failing that by name (listed below for checking). 10382017's organic certificate "
+             "is product-level, as judged in score_sonnet_alone.md: a Reading may list it or not. A tender "
+             "whose read failed or was not made scores as nothing found.")
 
 
 def _write(name, result, meta):
@@ -566,7 +588,7 @@ def _offline(args, keys):
         unfound = {t: c["unfound_quotes"] for t, c in checked.items()}
         records = {t: shown_record(c) for t, c in checked.items()}
     result = score_run(keys, records)
-    notes = [KEY_NOTE, "Readings scored: `%s`%s." % (os.path.relpath(args.folder, REPO),
+    notes = [KEY_NOTE, RULE_NOTE, "Readings scored: `%s`%s." % (os.path.relpath(args.folder, REPO),
                                                       ", after the Quote check" if args.check else "")]
     meta = {"title": "Scoring: %s against the 15 keys" % args.name, "notes": notes, "unfound": unfound}
     return result, meta
@@ -626,8 +648,7 @@ def run_meta(name, model, readings, ledger_path, reader, failures=None, date=Non
     label = _run_label(name)
     run_usd = sum(e["usd"] for e in entries if e.get("label") == label or e.get("label", "").startswith(label + " ("))
     skipped = {t: r["files_skipped"] for t, r in readings.items() if r and r["files_skipped"]}
-    notes = ["Reader: %s." % reader, KEY_NOTE,
-             "A tender whose read failed or was not made scores as nothing found.",
+    notes = ["Reader: %s." % reader, KEY_NOTE, RULE_NOTE,
              "Tokens of a failed read are in reader/live_spend.json, not in the table below."]
     if skipped:
         notes.append("Files left out because they did not fit the window: %s" % json.dumps(skipped, ensure_ascii=False))

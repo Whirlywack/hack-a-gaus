@@ -1,0 +1,194 @@
+{
+  "status": "pending operator judgement",
+  "title": "Scoring run sonnet-2 (claude-sonnet-5-5) against the 15 keys",
+  "model": "claude-sonnet-5-5",
+  "reader": "reader as merged to main at 825b917 (review-4), run from ticket-13 commit a9a62c0, which adds per-model pricing, the usage field and no fallback for Haiku",
+  "date": "2026-11-12",
+  "per_field": {
+    "qualification_requirements_set": {
+      "correct": 15,
+      "wrong": 0,
+      "missed": 0,
+      "invented": 0
+    },
+    "similar_contracts": {
+      "correct": 15,
+      "wrong": 0,
+      "missed": 0,
+      "invented": 0
+    },
+    "min_turnover": {
+      "correct": 15,
+      "wrong": 0,
+      "missed": 0,
+      "invented": 0
+    },
+    "certificates_or_licences": {
+      "correct": 12,
+      "wrong": 2,
+      "missed": 1,
+      "invented": 0
+    },
+    "named_specialists": {
+      "correct": 14,
+      "wrong": 1,
+      "missed": 0,
+      "invented": 0
+    },
+    "right_to_practice_required": {
+      "correct": 11,
+      "wrong": 3,
+      "missed": 0,
+      "invented": 1
+    },
+    "bid_security": {
+      "correct": 15,
+      "wrong": 0,
+      "missed": 0,
+      "invented": 0
+    },
+    "exclusion_grounds": {
+      "correct": 15,
+      "wrong": 0,
+      "missed": 0,
+      "invented": 0
+    }
+  },
+  "total": {
+    "correct": 112,
+    "wrong": 6,
+    "missed": 1,
+    "invented": 1,
+    "cells": 120
+  },
+  "wrong_or_invented": {
+    "qualification_requirements_set": [],
+    "similar_contracts": [],
+    "min_turnover": [],
+    "certificates_or_licences": [
+      "10324146",
+      "10377061"
+    ],
+    "named_specialists": [
+      "10324146"
+    ],
+    "right_to_practice_required": [
+      "10378522",
+      "10383512",
+      "10392051",
+      "10393450"
+    ],
+    "bid_security": [],
+    "exclusion_grounds": []
+  },
+  "usage": {
+    "10324146": {
+      "counted_input_tokens": 143344,
+      "input_tokens": 145062,
+      "output_tokens": 5044,
+      "usd": 0.340564,
+      "model": "claude-sonnet-5-5"
+    },
+    "10377061": {
+      "counted_input_tokens": 99055,
+      "input_tokens": 100773,
+      "output_tokens": 4456,
+      "usd": 0.246106,
+      "model": "claude-sonnet-5-5"
+    },
+    "10378522": {
+      "counted_input_tokens": 78558,
+      "input_tokens": 80276,
+      "output_tokens": 2643,
+      "usd": 0.186982,
+      "model": "claude-sonnet-5-5"
+    },
+    "10382017": {
+      "counted_input_tokens": 132104,
+      "input_tokens": 133822,
+      "output_tokens": 3559,
+      "usd": 0.303234,
+      "model": "claude-sonnet-5-5"
+    },
+    "10383512": {
+      "counted_input_tokens": 144643,
+      "input_tokens": 146361,
+      "output_tokens": 3485,
+      "usd": 0.327572,
+      "model": "claude-sonnet-5-5"
+    },
+    "10384200": {
+      "counted_input_tokens": 226078,
+      "input_tokens": 227796,
+      "output_tokens": 3088,
+      "usd": 0.486472,
+      "model": "claude-sonnet-5-5"
+    },
+    "10387051": {
+      "counted_input_tokens": 46831,
+      "input_tokens": 48549,
+      "output_tokens": 2353,
+      "usd": 0.120628,
+      "model": "claude-sonnet-5-5"
+    },
+    "10388453": {
+      "counted_input_tokens": 12520,
+      "input_tokens": 14238,
+      "output_tokens": 1219,
+      "usd": 0.040666,
+      "model": "claude-sonnet-5-5"
+    },
+    "10389181": {
+      "counted_input_tokens": 71728,
+      "input_tokens": 73446,
+      "output_tokens": 3470,
+      "usd": 0.181592,
+      "model": "claude-sonnet-5-5"
+    },
+    "10389970": {
+      "counted_input_tokens": 100259,
+      "input_tokens": 101977,
+      "output_tokens": 1256,
+      "usd": 0.216514,
+      "model": "claude-sonnet-5-5"
+    },
+    "10392051": {
+      "counted_input_tokens": 840001,
+      "input_tokens": 841719,
+      "output_tokens": 3462,
+      "usd": 1.718058,
+      "model": "claude-sonnet-5-5"
+    },
+    "10393450": {
+      "counted_input_tokens": 28930,
+      "input_tokens": 30648,
+      "output_tokens": 1302,
+      "usd": 0.074316,
+      "model": "claude-sonnet-5-5"
+    },
+    "10394052": {
+      "counted_input_tokens": 46003,
+      "input_tokens": 47721,
+      "output_tokens": 2577,
+      "usd": 0.121212,
+      "model": "claude-sonnet-5-5"
+    },
+    "10396017": {
+      "counted_input_tokens": 54572,
+      "input_tokens": 56290,
+      "output_tokens": 1118,
+      "usd": 0.12376,
+      "model": "claude-sonnet-5-5"
+    },
+    "10397525": {
+      "counted_input_tokens": 222432,
+      "input_tokens": 224150,
+      "output_tokens": 2759,
+      "usd": 0.47589,
+      "model": "claude-sonnet-5-5"
+    }
+  },
+  "failures": {},
+  "run_usd": 4.9636,
+  "ledger_total_usd": 11.0536
+}

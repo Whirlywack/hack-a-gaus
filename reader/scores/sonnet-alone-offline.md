@@ -4,6 +4,7 @@
 
 
 - One of the 171 key Quotes is not found word for word in the converted text: 10384200 other_requirements[8] (a penalty clause). It is outside the eight scored fields, so it does not move the score; run through the Quote check, that item would read "not found".
+- Scoring rules: items of a list field match by Quote (40 shared characters, or 80% of the shorter Quote), failing that by name (listed below for checking). 10382017's organic certificate is product-level, as judged in score_sonnet_alone.md: a Reading may list it or not. A tender whose read failed or was not made scores as nothing found.
 - Readings scored: `handoff-from-claude/readings/sonnet_alone`, after the Quote check.
 
 ## Per field

@@ -250,6 +250,14 @@ class ProductLevelKeyItem(unittest.TestCase):
     def test_product_certificate_alone_is_missed(self):
         self.assertEqual(self.verdict([self.organic]), "missed")
 
+    def test_product_certificate_quoted_from_its_proof_clause_is_still_the_product_item(self):
+        # run sonnet-2 quoted the proof clause, not the requirement the key quotes
+        proof = {"name": "Organic production certificate for the offered product (lot II only) or equivalent evidence",
+                 "quote": "galiojantys ekologinės gamybos sertifikatas išduotas siūlomam produktui, arba kiti "
+                          "lygiaverčiai įrodymai", "file": self.organic["file"]}
+        self.assertEqual(self.verdict([self.vmvt, proof]), "correct")
+        self.assertEqual(self.verdict([proof]), "missed")
+
 
 SONNET_ALONE = os.path.join(os.path.dirname(HERE), "..", "handoff-from-claude", "readings", "sonnet_alone")
 
@@ -449,7 +457,7 @@ class LiveRun(unittest.TestCase):
 
     def test_the_run_stops_before_a_tender_that_could_take_the_ledger_past_the_cap(self):
         from test_read_tender import FakeClient
-        # the worst case for one tender is its counted input plus max_tokens of output (0.32 USD here)
+        # the worst case for one tender is its counted input, a margin and max_tokens of output (0.33 USD here)
         self.start_ledger(14.80)
         client = FakeClient()
         run = self.run_live(client)
@@ -460,12 +468,19 @@ class LiveRun(unittest.TestCase):
 
     def test_the_total_is_checked_again_before_every_tender(self):
         from test_read_tender import FakeClient
-        self.start_ledger(14.675)  # room for one worst case (0.322), not for a second after the first
+        self.start_ledger(14.665)  # room for one worst case (0.332), not for a second after the first
         client = FakeClient()
         run = self.run_live(client)
         self.assertEqual(len(client.requests), 1)
         self.assertIn("22222222", run["failures"])
         self.assertLessEqual(self.ledger_total(), 15.0)
+
+    def test_worst_case_allows_for_tokens_the_count_does_not_see(self):
+        # the API bills about 1 700 tokens more than count_tokens returns (the output schema), which
+        # can lift a Haiku prompt counted just under 100 000 tokens into the dearer rate card
+        from score_keys import worst_case_usd
+        self.assertAlmostEqual(worst_case_usd("claude-haiku-5-5", 99_077),
+                               (99_077 + 5_000) * 0.5 / 1e6 + 32_000 * 2.5 / 1e6)
 
     def test_a_failed_read_is_recorded_and_the_run_goes_on(self):
         from test_read_tender import FakeClient

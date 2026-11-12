@@ -5,11 +5,11 @@
 - model: claude-sonnet-5-5
 - date: 2026-11-12
 - run usd: 4.9521
-- ledger total usd: 4.9731
+- ledger total usd: 11.0536
 
 - Reader: reader at d0c5b7b: reader/reading.py as on ticket-13 commit 5beb1d0, which is d0c5b7b plus per-model pricing, the usage field and no fallback for Haiku; the Sonnet prompt and request are those of d0c5b7b.
 - One of the 171 key Quotes is not found word for word in the converted text: 10384200 other_requirements[8] (a penalty clause). It is outside the eight scored fields, so it does not move the score; run through the Quote check, that item would read "not found".
-- A tender whose read failed or was not made scores as nothing found.
+- Scoring rules: items of a list field match by Quote (40 shared characters, or 80% of the shorter Quote), failing that by name (listed below for checking). 10382017's organic certificate is product-level, as judged in score_sonnet_alone.md: a Reading may list it or not. A tender whose read failed or was not made scores as nothing found.
 - Tokens of a failed read are in reader/live_spend.json, not in the table below.
 
 ## Per field
